@@ -149,3 +149,19 @@ nav a:hover{
 .product .buy{
     margin-top:15px;
 }
+
+.tag{
+    background:#d4af37;
+    color:black;
+    padding:5px 12px;
+    border-radius:15px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+
+.stars{
+    color:#d4af37;
+    margin:10px;
+    font-size:18px;
+}
