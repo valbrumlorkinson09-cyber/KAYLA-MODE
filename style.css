@@ -85,3 +85,12 @@ footer{
     object-fit:contain;
     margin-bottom:15px;
 }
+.buy{
+    display:inline-block;
+    background:#d4af37;
+    color:black;
+    padding:15px 30px;
+    border-radius:25px;
+    text-decoration:none;
+    font-weight:bold;
+}
