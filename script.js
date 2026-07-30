@@ -39,3 +39,18 @@ alert("❌ Nou pa jwenn pwodwi sa a");
 }
 
 }
+<script>
+const photoProduit = document.getElementById("photoProduit");
+const previewPhoto = document.getElementById("previewPhoto");
+
+photoProduit.addEventListener("change", function(){
+
+const file = this.files[0];
+
+if(file){
+const imageURL = URL.createObjectURL(file);
+previewPhoto.src = imageURL;
+}
+
+});
+</script>
