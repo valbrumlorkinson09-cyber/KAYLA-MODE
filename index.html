@@ -40,6 +40,8 @@
 
 </nav>
 
+
+
 <section class="banner">
 
 <h2>🔥 Nouvo Koleksyon 2026</h2>
@@ -53,6 +55,8 @@ Gade Koleksyon
 </a>
 
 </section>
+
+
 
 
 <section class="hero">
@@ -85,7 +89,6 @@ Achte Kounya
 
 
 
-
 <section id="categories" class="categories">
 
 <h2>Kategori</h2>
@@ -113,7 +116,7 @@ Achte Kounya
 
 </section>
 
-<section class="promo">
+  <section class="promo">
 
 <h2>🔥 Gwo Promo</h2>
 
@@ -142,26 +145,20 @@ Achte Kounya
 
 </div>
 
-
 </section>
-
-
 
 
 
 <section id="products" class="products">
 
-
 <h2>🔥 Nouvo Koleksyon</h2>
-
-
 
 
 <div class="product">
 
 <span class="tag">Nouvo</span>
 
-<img src="./images/Chargement de vos comptes Google Analytics… alt="Rob Elegant">
+<img src="images/robe.jpg" alt="Rob Elegant">
 
 <h3>👗 Rob Elegant</h3>
 
@@ -176,8 +173,6 @@ Achte
 </a>
 
 </div>
-
-
 
 
 
@@ -205,39 +200,26 @@ Achte
 
 
 
-
-
-
 <div class="product">
-
 
 <img src="images/sak.jpg" alt="Sak Fashion">
 
-
 <h3>👜 Sak Fashion</h3>
-
 
 <div class="stars">
 ★★★★★
 </div>
 
-
 <p>2000 Gdes</p>
-
 
 <a href="https://wa.me/50955545291" class="buy">
 Achte
 </a>
 
-
 </div>
 
 
-
 </section>
-
-
-
 
 
 
@@ -250,14 +232,22 @@ Achte
 
 </section>
 
+
+
+
+<section class="upload">
+
+<h2>📸 Ajoute foto pwodwi</h2>
+
 <label for="photoProduit" class="btn-photo">
 📸 Chwazi foto
 </label>
 
 <input type="file" id="photoProduit" accept="image/*" hidden>
 
-<img id="previewPhoto" width="200" style="margin-top:15px;">
+<img id="previewPhoto" width="200">
 
+</section>
 
 
 
@@ -269,6 +259,26 @@ Achte
 </footer>
 
 
+
+
+<script>
+
+const photoProduit = document.getElementById("photoProduit");
+const previewPhoto = document.getElementById("previewPhoto");
+
+photoProduit.addEventListener("change", function(){
+
+const file = this.files[0];
+
+if(file){
+
+previewPhoto.src = URL.createObjectURL(file);
+
+}
+
+});
+
+</script>
 
 
 <script src="script.js"></script>
