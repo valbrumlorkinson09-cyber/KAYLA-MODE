@@ -186,3 +186,30 @@ footer{
     background:#111;
     margin-top:30px;
 }
+.banner{
+
+background:#181818;
+text-align:center;
+padding:40px 20px;
+margin:20px;
+
+border-radius:20px;
+border:1px solid #d4af37;
+
+}
+
+
+.banner h2{
+
+color:#d4af37;
+font-size:30px;
+
+}
+
+
+.banner p{
+
+margin:20px 0;
+color:#ddd;
+
+}
