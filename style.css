@@ -213,3 +213,48 @@ margin:20px 0;
 color:#ddd;
 
 }
+.promo{
+
+padding:30px;
+text-align:center;
+
+}
+
+
+.promo-card{
+
+background:#181818;
+border:1px solid #d4af37;
+border-radius:20px;
+padding:20px;
+margin:15px auto;
+max-width:300px;
+
+}
+
+
+.old-price{
+
+text-decoration:line-through;
+color:#aaa;
+
+}
+
+
+.new-price{
+
+color:#d4af37;
+font-size:22px;
+font-weight:bold;
+
+}
+
+
+.promo-card span{
+
+background:#d4af37;
+color:black;
+padding:5px 10px;
+border-radius:15px;
+
+}
