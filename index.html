@@ -116,7 +116,7 @@ Achte Kounya
 
 </section>
 
-  <section class="promo">
+<section class="promo">
 
 <h2>🔥 Gwo Promo</h2>
 
@@ -235,23 +235,6 @@ Achte
 
 
 
-<section class="upload">
-
-<h2>📸 Ajoute foto pwodwi</h2>
-
-<label for="photoProduit" class="btn-photo">
-📸 Chwazi foto
-</label>
-
-<input type="file" id="photoProduit" accept="image/*" hidden>
-
-<img id="previewPhoto" width="200">
-
-</section>
-
-
-
-
 <footer>
 
 <p>© 2026 KAYLA MODE - Tout dwa rezève</p>
@@ -261,29 +244,9 @@ Achte
 
 
 
-<script>
-
-const photoProduit = document.getElementById("photoProduit");
-const previewPhoto = document.getElementById("previewPhoto");
-
-photoProduit.addEventListener("change", function(){
-
-const file = this.files[0];
-
-if(file){
-
-previewPhoto.src = URL.createObjectURL(file);
-
-}
-
-});
-
-</script>
-
-
 <script src="script.js"></script>
 
 
 </body>
 
-</html>
+</html>  
