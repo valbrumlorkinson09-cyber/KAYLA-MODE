@@ -258,3 +258,23 @@ padding:5px 10px;
 border-radius:15px;
 
 }
+.contact input,
+.contact select,
+.contact textarea{
+
+display:block;
+width:90%;
+max-width:350px;
+margin:15px auto;
+padding:12px;
+border-radius:10px;
+border:none;
+
+}
+
+
+.contact textarea{
+
+height:100px;
+
+}
