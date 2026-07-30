@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ht">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>KAYLA MODE Admin</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<h1>🔐 KAYLA MODE ADMIN</h1>
+
+<p>Jere pwodwi ou yo</p>
+
+</header>
+
+
+
+<section class="admin-box">
+
+<h2>📸 Ajoute nouvo pwodwi</h2>
+
+
+<label for="photoProduit" class="btn-photo">
+📸 Chwazi foto
+</label>
+
+<input type="file" id="photoProduit" accept="image/*" hidden>
+
+
+<img id="previewPhoto" width="200">
+
+
+
+<input type="text" id="nomProduit" placeholder="Non pwodwi">
+
+
+<input type="number" id="prixProduit" placeholder="Pri pwodwi">
+
+
+
+<button class="buy" onclick="ajouterProduit()">
+➕ Ajoute pwodwi
+</button>
+
+
+</section>
+
+
+
+<section id="listeProduits">
+
+<h2>🛍️ Pwodwi yo</h2>
+
+
+</section>
+
+
+
+
+<script src="admin.js"></script>
+
+
+</body>
+
+</html>
