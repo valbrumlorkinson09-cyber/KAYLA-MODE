@@ -5,6 +5,7 @@
     font-family:Arial, sans-serif;
 }
 
+
 body{
     background:#0d0d0d;
     color:white;
@@ -15,6 +16,14 @@ header{
     text-align:center;
     padding:30px;
     background:#111;
+}
+
+
+.logo{
+    width:120px;
+    height:120px;
+    object-fit:contain;
+    margin-bottom:15px;
 }
 
 
@@ -30,70 +39,9 @@ header p{
 }
 
 
-.hero{
-    text-align:center;
-    padding:50px 20px;
-}
 
+/* MENU */
 
-.hero h2{
-    font-size:30px;
-}
-
-
-.hero p{
-    margin:20px 0;
-}
-
-
-button{
-    background:#d4af37;
-    color:black;
-    border:none;
-    padding:15px 30px;
-    border-radius:25px;
-    font-weight:bold;
-}
-
-
-.categories,
-.products{
-    padding:30px;
-    text-align:center;
-}
-
-
-.box,
-.product{
-    background:#181818;
-    margin:15px;
-    padding:20px;
-    border-radius:15px;
-    border:1px solid #d4af37;
-}
-
-
-footer{
-    text-align:center;
-    padding:20px;
-    background:#111;
-    margin-top:30px;
-}
-.logo{
-    width:120px;
-    height:120px;
-    object-fit:contain;
-    margin-bottom:15px;
-}
-.buy{
-    display:inline-block;
-    background:#d4af37;
-    color:black;
-    padding:15px 30px;
-    border-radius:25px;
-    text-decoration:none;
-    font-weight:bold;
-}
 nav{
     display:flex;
     justify-content:center;
@@ -113,16 +61,83 @@ nav a{
 nav a:hover{
     color:#d4af37;
 }
-.product{
-    background:#181818;
-    border-radius:20px;
-    padding:20px;
-    margin:20px auto;
-    max-width:300px;
+
+
+
+/* HERO */
+
+.hero{
     text-align:center;
-    border:1px solid #d4af37;
+    padding:50px 20px;
 }
 
+
+.hero h2{
+    font-size:30px;
+}
+
+
+.hero p{
+    margin:20px 0;
+}
+
+
+
+/* RECHÈCH */
+
+.search{
+    margin:20px 0;
+}
+
+
+.search input{
+    padding:12px;
+    border-radius:20px;
+    border:none;
+    width:250px;
+}
+
+
+
+/* BOUTON */
+
+.buy,
+button{
+    display:inline-block;
+    background:#d4af37;
+    color:black;
+    padding:15px 30px;
+    border-radius:25px;
+    text-decoration:none;
+    font-weight:bold;
+    border:none;
+}
+
+
+
+/* KATEGORI */
+
+.categories,
+.products,
+.contact{
+    padding:30px;
+    text-align:center;
+}
+
+
+.box,
+.product{
+    background:#181818;
+    margin:15px auto;
+    padding:20px;
+    border-radius:20px;
+    border:1px solid #d4af37;
+    max-width:300px;
+}
+
+
+
+/* PRODUK */
 
 .product img{
     width:100%;
@@ -145,11 +160,6 @@ nav a:hover{
 }
 
 
-.product button,
-.product .buy{
-    margin-top:15px;
-}
-
 .tag{
     background:#d4af37;
     color:black;
@@ -164,4 +174,15 @@ nav a:hover{
     color:#d4af37;
     margin:10px;
     font-size:18px;
+}
+
+
+
+/* FOOTER */
+
+footer{
+    text-align:center;
+    padding:20px;
+    background:#111;
+    margin-top:30px;
 }
