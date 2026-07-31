@@ -1,56 +1,51 @@
-console.log("👑 KAYLA MODE pare!");
+// KAYLA MODE - Chaje pwodwi yo
+
+function afficherProduits(){
+
+    const productList = document.getElementById("productList");
+
+    if(!productList){
+        return;
+    }
 
 
-// RECHÈCH PWODWI
-
-function searchProduct(){
-
-let search = document
-.getElementById("searchBox")
-.value
-.toLowerCase();
+    let produits = JSON.parse(localStorage.getItem("produits")) || [];
 
 
-if(search.includes("rob")){
+    productList.innerHTML = "";
 
-alert("👗 Rob Elegant disponib - 2500 Gdes");
+
+    produits.forEach(function(produit){
+
+
+        productList.innerHTML += `
+
+        <div class="product">
+
+            <img src="${produit.image}" alt="${produit.nom}">
+
+            <h3>${produit.nom}</h3>
+
+            <div class="stars">
+            ★★★★★
+            </div>
+
+            <p>${produit.prix}</p>
+
+
+            <a href="https://wa.me/50955545291" class="buy">
+            Achte
+            </a>
+
+        </div>
+
+        `;
+
+
+    });
 
 }
 
 
-else if(search.includes("soulye")){
 
-alert("👟 Soulye Fashion disponib - 3000 Gdes");
-
-}
-
-
-else if(search.includes("sak")){
-
-alert("👜 Sak Fashion disponib - 2000 Gdes");
-
-}
-
-
-else{
-
-alert("❌ Nou pa jwenn pwodwi sa a");
-
-}
-
-}
-<script>
-const photoProduit = document.getElementById("photoProduit");
-const previewPhoto = document.getElementById("previewPhoto");
-
-photoProduit.addEventListener("change", function(){
-
-const file = this.files[0];
-
-if(file){
-const imageURL = URL.createObjectURL(file);
-previewPhoto.src = imageURL;
-}
-
-});
-</script>
+afficherProduits();
