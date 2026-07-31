@@ -17,23 +17,78 @@
 <body>
 
 
-<header>
+<header class="main-header">
 
-<h1>👗 KAYLA MODE</h1>
 
-<p>Suivi kòmann ou</p>
+<img 
+src="images/logo.png"
+class="logo"
+alt="KAYLA MODE"
+onerror="this.style.display='none'"
+>
+
+
+<h1>
+👗 KAYLA MODE
+</h1>
+
+
+<p>
+Suivi kòmann ou
+</p>
+
 
 </header>
+
+
+
+
+
+<nav class="menu">
+
+
+<a href="index.html">
+🏠 Akèy
+</a>
+
+
+<a href="boutik.html">
+🛍️ Boutik
+</a>
+
+
+<a href="cart.html">
+🛒 Panier
+</a>
+
+
+<a href="contact.html">
+📞 Kontak
+</a>
+
+
+</nav>
+
+
+
+
 
 
 
 <section class="products">
 
 
-<h2>📦 Chèche kòmann</h2>
+<h2>
+📦 Chèche kòmann ou
+</h2>
 
 
-<input id="telephone" placeholder="Antre nimewo telefòn ou">
+
+<input 
+id="telephone"
+placeholder="Antre nimewo telefòn ou"
+>
+
 
 
 <button class="buy" onclick="chacheKommann()">
@@ -41,6 +96,9 @@
 🔍 Chèche
 
 </button>
+
+
+
 
 
 
@@ -55,118 +113,199 @@
 
 
 
+
+
+
+<footer>
+
+<p>
+© 2026 KAYLA MODE - Tout dwa rezève
+</p>
+
+</footer>
+
+
+
+
+
+
+
+
 <script>
 
 
 function chacheKommann(){
 
 
-    let tel = document.getElementById("telephone").value;
 
+let tel = document.getElementById(
 
+"telephone"
 
-    let kommann = JSON.parse(
+).value.trim();
 
-        localStorage.getItem("kommann")
 
-    ) || [];
 
 
 
+let kommann = JSON.parse(
 
+localStorage.getItem("kommann")
 
-    let jwenn = kommann.filter(function(item){
+) || [];
 
 
-        return item.telefòn == tel;
 
 
-    });
 
 
+let jwenn = kommann.filter(function(item){
 
 
 
+return item.telephone == tel;
 
-    let box = document.getElementById("rezilta");
 
 
+});
 
 
 
-    if(jwenn.length === 0){
 
 
-        box.innerHTML = `
 
-        <p>
-        ❌ Pa jwenn kòmann.
-        </p>
 
-        `;
+let box = document.getElementById(
 
+"rezilta"
 
-        return;
+);
 
 
-    }
 
 
 
+if(jwenn.length===0){
 
 
 
-    box.innerHTML = "";
+box.innerHTML = `
 
 
+<div class="product">
 
 
+<h3>
 
-    jwenn.forEach(function(item){
+❌ Pa jwenn kòmann
 
+</h3>
 
 
-        box.innerHTML += `
+<p>
 
+Verifye nimewo telefòn lan.
 
-        <div class="product">
+</p>
 
 
-        <h3>
-        👗 ${item.pwodwi}
-        </h3>
+</div>
 
 
+`;
 
-        <p>
-        💰 ${item.pri}
-        </p>
 
 
+return;
 
-        <p>
-        📦 Kantite: ${item.kantite}
-        </p>
 
+}
 
 
 
-        <h3>
 
-        📌 ${item.status}
 
-        </h3>
 
+box.innerHTML="";
 
 
 
-        </div>
 
 
-        `;
 
+jwenn.forEach(function(item){
 
-    });
+
+
+box.innerHTML += `
+
+
+<div class="product">
+
+
+
+<h3>
+
+👗 ${item.pwodwi}
+
+</h3>
+
+
+
+
+<p>
+
+💰 Pri: ${item.pri}
+
+</p>
+
+
+
+
+<p>
+
+📦 Kantite: ${item.kantite}
+
+</p>
+
+
+
+
+<p>
+
+📍 Adrès: ${item.adresse || "Pa bay"}
+
+</p>
+
+
+
+
+<p>
+
+💳 Peman: ${item.peman || "Pa bay"}
+
+</p>
+
+
+
+
+<h3>
+
+📌 Status: ${item.status}
+
+</h3>
+
+
+
+</div>
+
+
+
+`;
+
+
+
+});
 
 
 
@@ -174,7 +313,11 @@ function chacheKommann(){
 
 
 
+
+
+
 </script>
+
 
 
 </body>
