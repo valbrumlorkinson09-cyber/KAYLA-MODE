@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ht">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>KAYLA MODE - Pwodwi</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<h1>👗 KAYLA MODE</h1>
+
+<p>Detay pwodwi</p>
+
+</header>
+
+
+
+
+
+<section id="productDetail" class="products">
+
+
+</section>
+
+
+
+
+
+<footer>
+
+<p>
+© 2026 KAYLA MODE - Tout dwa rezève
+</p>
+
+</footer>
+
+
+
+
+
+<script>
+
+
+let produit = JSON.parse(localStorage.getItem("produitChoisi"));
+
+
+
+const detail = document.getElementById("productDetail");
+
+
+
+if(produit){
+
+
+detail.innerHTML = `
+
+
+<div class="product">
+
+
+<span class="tag">
+
+${produit.tag || "Nouvo"}
+
+</span>
+
+
+
+<img src="${produit.image}">
+
+
+
+<h2>
+
+${produit.nom}
+
+</h2>
+
+
+
+
+<p>
+
+📂 ${produit.categorie || "Kategori"}
+
+</p>
+
+
+
+
+${
+produit.ancienPrix 
+? `<p class="old-price">${produit.ancienPrix}</p>`
+: ""
+}
+
+
+
+
+<p class="new-price">
+
+${produit.prix}
+
+</p>
+
+
+
+
+<a href="https://wa.me/50955545291" class="buy">
+
+🛒 Achte kounya
+
+</a>
+
+
+
+</div>
+
+
+`;
+
+
+
+}else{
+
+
+detail.innerHTML = `
+
+<h2>
+Pa gen pwodwi chwazi
+</h2>
+
+`;
+
+
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
