@@ -597,6 +597,7 @@ afficherProduits();
 afficherKomann();
 afficherKommann();
 afficherDashboard();
+grafikVant();
 // ===============================
 // DASHBOARD STATISTIK
 // ===============================
