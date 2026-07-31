@@ -56,25 +56,63 @@ function afficherProduits(){
         <div class="product">
 
 
+            <span class="tag">
+
+            ${produit.tag || "Nouvo"}
+
+            </span>
+
+
+
             <img src="${produit.image}" alt="${produit.nom}">
 
 
 
             <h3>
+
             ${produit.nom}
+
             </h3>
 
 
 
+
             <div class="stars">
+
             ★★★★★
+
             </div>
 
 
 
+
             <p>
-            ${produit.prix}
+
+            📂 ${produit.categorie || "Kategori"}
+
             </p>
+
+
+
+
+
+            ${
+            produit.ancienPrix 
+            ? `<p class="old-price">${produit.ancienPrix}</p>`
+            : ""
+            }
+
+
+
+
+
+            <p class="new-price">
+
+            ${produit.prix}
+
+            </p>
+
+
 
 
 
@@ -84,6 +122,7 @@ function afficherProduits(){
             Achte
 
             </a>
+
 
 
 
@@ -100,6 +139,8 @@ function afficherProduits(){
 
 
 }
+
+
 
 
 
@@ -130,10 +171,21 @@ function searchProduct(){
 
 
 
+
     produits.filter(function(produit){
 
 
-        return produit.nom.toLowerCase().includes(rech);
+
+        return (
+
+            produit.nom.toLowerCase().includes(rech) ||
+
+            produit.categorie.toLowerCase().includes(rech) ||
+
+            produit.tag.toLowerCase().includes(rech)
+
+        );
+
 
 
     }).forEach(function(produit){
@@ -147,18 +199,58 @@ function searchProduct(){
         <div class="product">
 
 
+        <span class="tag">
+
+        ${produit.tag || "Nouvo"}
+
+        </span>
+
+
+
         <img src="${produit.image}">
 
 
-        <h3>${produit.nom}</h3>
+
+        <h3>
+
+        ${produit.nom}
+
+        </h3>
+
+
+
+        <p>
+
+        📂 ${produit.categorie}
+
+        </p>
+
+
 
 
         <div class="stars">
+
         ★★★★★
+
         </div>
 
 
-        <p>${produit.prix}</p>
+
+
+        ${
+        produit.ancienPrix 
+        ? `<p class="old-price">${produit.ancienPrix}</p>`
+        : ""
+        }
+
+
+
+        <p class="new-price">
+
+        ${produit.prix}
+
+        </p>
+
 
 
 
@@ -167,6 +259,8 @@ function searchProduct(){
         Achte
 
         </a>
+
+
 
 
         </div>
@@ -182,7 +276,6 @@ function searchProduct(){
 
 
 }
-
 
 
 
