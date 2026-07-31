@@ -1,7 +1,7 @@
+let imageProduit = "";
+
 const photoProduit = document.getElementById("photoProduit");
 const previewPhoto = document.getElementById("previewPhoto");
-
-let imageProduit = "";
 
 
 photoProduit.addEventListener("change", function(){
@@ -35,10 +35,10 @@ return;
 }
 
 
-const produit = {
+let nouveauProduit = {
 
 nom: nom,
-prix: prix,
+prix: prix + " Gdes",
 image: imageProduit
 
 };
@@ -47,18 +47,53 @@ image: imageProduit
 let produits = JSON.parse(localStorage.getItem("produits")) || [];
 
 
-produits.push(produit);
+produits.push(nouveauProduit);
 
 
 localStorage.setItem("produits", JSON.stringify(produits));
 
 
-alert("Pwodwi ajoute avèk siksè ✅");
+afficherProduits();
 
 
-document.getElementById("nomProduit").value="";
-document.getElementById("prixProduit").value="";
-previewPhoto.src="";
+alert("Pwodwi ajoute ✅");
 
 
 }
+
+
+
+function afficherProduits(){
+
+const liste = document.getElementById("listeProduits");
+
+let produits = JSON.parse(localStorage.getItem("produits")) || [];
+
+
+liste.innerHTML = "<h2>🛍️ Pwodwi yo</h2>";
+
+
+produits.forEach(function(produit){
+
+
+liste.innerHTML += `
+
+<div class="product-admin">
+
+<img src="${produi.image}" width="120">
+
+<h3>${produit.nom}</h3>
+
+<p>${produit.prix}</p>
+
+</div>
+
+`;
+
+});
+
+
+}
+
+
+afficherProduits();
