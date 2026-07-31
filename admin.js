@@ -2,11 +2,9 @@ function loginAdmin(){
 
     const password = document.getElementById("adminPassword").value;
 
-
     if(password === "KAYLA2026"){
 
         document.getElementById("loginBox").style.display = "none";
-
         document.getElementById("adminPanel").style.display = "block";
 
     }else{
@@ -16,10 +14,24 @@ function loginAdmin(){
     }
 
 }
+
+
+
+function logoutAdmin(){
+
+    document.getElementById("loginBox").style.display = "block";
+    document.getElementById("adminPanel").style.display = "none";
+
+}
+
+
+
 let imageProduit = "";
+
 
 const photoProduit = document.getElementById("photoProduit");
 const previewPhoto = document.getElementById("previewPhoto");
+
 
 
 photoProduit.addEventListener("change", function(){
@@ -35,6 +47,7 @@ photoProduit.addEventListener("change", function(){
     }
 
 });
+
 
 
 
@@ -80,8 +93,10 @@ function ajouterProduit(){
     document.getElementById("nomProduit").value = "";
     document.getElementById("prixProduit").value = "";
     previewPhoto.src = "";
+    imageProduit = "";
 
 }
+
 
 
 
@@ -96,7 +111,8 @@ function afficherProduits(){
     liste.innerHTML = "<h2>🛍️ Pwodwi yo</h2>";
 
 
-    produits.forEach(function(produit){
+
+    produits.forEach(function(produit,index){
 
 
         liste.innerHTML += `
@@ -109,6 +125,12 @@ function afficherProduits(){
 
             <p>${produit.prix}</p>
 
+
+            <button onclick="supprimerProduit(${index})">
+            🗑️ Efase
+            </button>
+
+
         </div>
 
         `;
@@ -118,6 +140,29 @@ function afficherProduits(){
 
 
 }
+
+
+
+
+function supprimerProduit(index){
+
+    let produits = JSON.parse(localStorage.getItem("produits")) || [];
+
+
+    produits.splice(index,1);
+
+
+    localStorage.setItem("produits", JSON.stringify(produits));
+
+
+    afficherProduits();
+
+
+    alert("Pwodwi efase ✅");
+
+}
+
+
 
 
 
