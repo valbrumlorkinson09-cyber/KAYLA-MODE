@@ -13,6 +13,11 @@ function ouvriDetay(index){
     let produit = produits[index];
 
 
+    if(!produit){
+        return;
+    }
+
+
     localStorage.setItem(
         "produitChoisi",
         JSON.stringify(produit)
@@ -40,6 +45,8 @@ function jwennPanier(){
 
 
 
+
+
 function sovePanier(panier){
 
     localStorage.setItem(
@@ -51,12 +58,21 @@ function sovePanier(panier){
 
 
 
+
+
 function ajoutePanier(index){
 
 
     let produits = JSON.parse(localStorage.getItem("produits")) || [];
 
     let produit = produits[index];
+
+
+    if(!produit){
+        return;
+    }
+
+
 
     let panier = jwennPanier();
 
@@ -67,6 +83,8 @@ function ajoutePanier(index){
         return item.nom === produit.nom;
 
     });
+
+
 
 
 
@@ -104,6 +122,8 @@ function ajoutePanier(index){
 
 
 }
+
+
 
 
 
@@ -166,6 +186,12 @@ function ajouteFavori(index){
     let produit = produits[index];
 
 
+    if(!produit){
+        return;
+    }
+
+
+
     let favori = jwennFavori();
 
 
@@ -182,6 +208,7 @@ function ajouteFavori(index){
 
 
 
+
     if(deja){
 
 
@@ -191,6 +218,7 @@ function ajouteFavori(index){
 
 
     }
+
 
 
 
@@ -259,11 +287,9 @@ function afficherProduits(){
 
 
         return;
-        
 
     }
-
-    produits.forEach(function(produit,index){
+        produits.forEach(function(produit,index){
 
 
 
@@ -401,6 +427,14 @@ function searchProduct(){
     const searchBox = document.getElementById("searchBox");
 
 
+    if(!searchBox){
+
+        return;
+
+    }
+
+
+
     const rech = searchBox.value.toLowerCase();
 
 
@@ -433,7 +467,10 @@ function searchProduct(){
         return produit.nom.toLowerCase().includes(rech);
 
 
-    }).forEach(function(produit,index){
+    }).forEach(function(produit){
+
+
+        let index = produits.indexOf(produit);
 
 
 
@@ -447,11 +484,19 @@ function searchProduct(){
 
 
 
-        <h3>${produit.nom}</h3>
+        <h3>
+
+        ${produit.nom}
+
+        </h3>
 
 
 
-        <p>${produit.prix}</p>
+        <p>
+
+        ${produit.prix}
+
+        </p>
 
 
 
@@ -543,14 +588,6 @@ function afficherBadgePanier(){
 
 
 }
-
-
-
-
-
-
-
-
 // ===============================
 // VIDE PANIER
 // ===============================
@@ -563,6 +600,9 @@ function viderPanier(){
 
 
     afficherBadgePanier();
+
+
+    alert("Panier vide 🛒");
 
 
 }
@@ -621,7 +661,17 @@ function voyePanierWhatsApp(){
 
 
 
-    message += "💵 Total: "+totalPanier()+" Gdes";
+    message +=
+
+    "💵 Total: "+
+
+    totalPanier()
+
+    +
+
+    " Gdes";
+
+
 
 
 
@@ -648,10 +698,22 @@ function voyePanierWhatsApp(){
 
 
 // ===============================
-// START
+// START SYSTEM
 // ===============================
 
 
-afficherProduits();
+document.addEventListener(
 
-afficherBadgePanier();
+"DOMContentLoaded",
+
+function(){
+
+
+    afficherProduits();
+
+
+    afficherBadgePanier();
+
+
+
+});
