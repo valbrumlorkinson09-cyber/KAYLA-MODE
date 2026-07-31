@@ -1,8 +1,13 @@
+// KAYLA MODE - ADMIN SYSTEM
+
+
 let imageProduit = "";
 
 let editIndex = -1;
 
 
+
+// LOGIN
 
 function loginAdmin(){
 
@@ -14,6 +19,7 @@ function loginAdmin(){
         localStorage.setItem("adminLogin","true");
 
         document.getElementById("loginBox").style.display="none";
+
         document.getElementById("adminPanel").style.display="block";
 
     }else{
@@ -27,11 +33,13 @@ function loginAdmin(){
 
 
 
+
 function checkLogin(){
 
     if(localStorage.getItem("adminLogin") === "true"){
 
         document.getElementById("loginBox").style.display="none";
+
         document.getElementById("adminPanel").style.display="block";
 
     }
@@ -41,11 +49,14 @@ function checkLogin(){
 
 
 
+
+
 function logoutAdmin(){
 
     localStorage.removeItem("adminLogin");
 
     document.getElementById("loginBox").style.display="block";
+
     document.getElementById("adminPanel").style.display="none";
 
 }
@@ -54,10 +65,19 @@ function logoutAdmin(){
 
 
 
+
+
+
+// PHOTO PRODUIT
+
+
 const photoProduit = document.getElementById("photoProduit");
+
 const previewPhoto = document.getElementById("previewPhoto");
 
 
+
+if(photoProduit){
 
 photoProduit.addEventListener("change",function(){
 
@@ -74,89 +94,40 @@ photoProduit.addEventListener("change",function(){
 
 });
 
+}
 
 
 
 
+
+
+
+
+
+// AJOUTE / MODIFYE PRODUIT
 
 
 function ajouterProduit(){
 
 
-    const nom = document.getElementById("nomProduit").value;
+const nom = document.getElementById("nomProduit").value;
 
-    const prix = document.getElementById("prixProduit").value;
+const prix = document.getElementById("prixProduit").value;
 
-    const ancienPrix = document.getElementById("ancienPrix").value;
+const ancienPrix = document.getElementById("ancienPrix").value;
 
-    const categorie = document.getElementById("categorieProduit").value;
+const categorie = document.getElementById("categorieProduit").value;
 
-    const tag = document.getElementById("tagProduit").value;
-
-
-
-    if(nom==="" || prix==="" || imageProduit===""){
-
-        alert("Ranpli tout enfòmasyon yo");
-
-        return;
-
-    }
+const tag = document.getElementById("tagProduit").value;
 
 
 
 
-    let produit = {
+if(nom==="" || prix==="" || imageProduit===""){
 
-        nom: nom,
+alert("Ranpli tout enfòmasyon yo ❌");
 
-        prix: prix + " Gdes",
-
-        ancienPrix: ancienPrix ? ancienPrix + " Gdes" : "",
-
-        categorie: categorie,
-
-        tag: tag,
-
-        image: imageProduit
-
-    };
-
-
-
-
-
-    let produits = JSON.parse(localStorage.getItem("produits")) || [];
-
-
-
-
-
-    if(editIndex === -1){
-
-        produits.push(produit);
-
-    }else{
-
-        produits[editIndex]=produit;
-
-        editIndex=-1;
-
-    }
-
-
-
-
-
-    localStorage.setItem("produits",JSON.stringify(produits));
-
-
-
-    afficherProduits();
-
-
-
-    netwayeFom();
+return;
 
 }
 
@@ -164,108 +135,188 @@ function ajouterProduit(){
 
 
 
-function netwayeFom(){
+let produit = {
 
 
-    document.getElementById("nomProduit").value="";
+nom:nom,
 
-    document.getElementById("prixProduit").value="";
+prix:prix+" Gdes",
 
-    document.getElementById("ancienPrix").value="";
+ancienPrix:ancienPrix ? ancienPrix+" Gdes" : "",
 
-    previewPhoto.src="";
+categorie:categorie,
 
-    imageProduit="";
+tag:tag,
+
+image:imageProduit
+
+
+};
+
+
+
+
+
+let produits = JSON.parse(localStorage.getItem("produits")) || [];
+
+
+
+
+if(editIndex === -1){
+
+    produits.push(produit);
+
+}else{
+
+    produits[editIndex]=produit;
+
+    editIndex=-1;
 
 }
 
 
 
+
+
+localStorage.setItem(
+"produits",
+JSON.stringify(produits)
+);
+
+
+
+afficherProduits();
+
+
+
+netwayeForm();
+
+}
+
+
+
+
+
+
+
+
+
+function netwayeForm(){
+
+
+document.getElementById("nomProduit").value="";
+
+document.getElementById("prixProduit").value="";
+
+document.getElementById("ancienPrix").value="";
+
+previewPhoto.src="";
+
+imageProduit="";
+
+}
+
+
+
+
+
+
+
+
+
+// AFFICHAGE PRODUITS
 
 
 function afficherProduits(){
 
 
-    const liste=document.getElementById("listeProduits");
+const liste=document.getElementById("listeProduits");
 
 
-    let produits=JSON.parse(localStorage.getItem("produits")) || [];
+if(!liste){
 
+return;
 
-
-    if(document.getElementById("totalProduits")){
-
-        document.getElementById("totalProduits").innerHTML=produits.length;
-
-    }
+}
 
 
 
-
-    liste.innerHTML="<h2>🛍️ Pwodwi yo</h2>";
-
+let produits = JSON.parse(localStorage.getItem("produits")) || [];
 
 
 
+if(document.getElementById("totalProduits")){
 
-    produits.forEach(function(produit,index){
+document.getElementById("totalProduits").innerHTML=produits.length;
 
-
-
-        liste.innerHTML += `
-
-
-        <div class="product-admin">
+}
 
 
-        <img src="${produit.image}" width="120">
 
-
-        <h3>${produit.tag} ${produit.nom}</h3>
-
-
-        <p>
-        ${produit.ancienPrix ? produit.ancienPrix+" ➜ " : ""}
-        ${produit.prix}
-        </p>
-
-
-        <p>
-        📂 ${produit.categorie}
-        </p>
+liste.innerHTML="<h2>🛍️ Pwodwi yo</h2>";
 
 
 
 
-        <button onclick="modifierProduit(${index})">
-
-        ✏️ Modifye
-
-        </button>
+produits.forEach(function(produit,index){
 
 
 
-
-        <button onclick="supprimerProduit(${index})">
-
-        🗑️ Efase
-
-        </button>
+liste.innerHTML += `
 
 
-
-        </div>
-
+<div class="product-admin">
 
 
-        `;
+<img src="${produit.image}" width="120">
+
+
+<h3>${produit.tag} ${produit.nom}</h3>
+
+
+<p>
+
+${produit.ancienPrix ? produit.ancienPrix+" ➜ " : ""}
+
+${produit.prix}
+
+</p>
+
+
+<p>📂 ${produit.categorie}</p>
 
 
 
-    });
+
+<button onclick="modifierProduit(${index})">
+
+✏️ Modifye
+
+</button>
+
+
+
+<button onclick="supprimerProduit(${index})">
+
+🗑️ Efase
+
+</button>
+
+
+
+</div>
+
+
+`;
+
+
+
+});
 
 
 }
+
+
 
 
 
@@ -276,34 +327,36 @@ function afficherProduits(){
 function modifierProduit(index){
 
 
-    let produits = JSON.parse(localStorage.getItem("produits")) || [];
+let produits = JSON.parse(localStorage.getItem("produits")) || [];
 
 
-    let produit = produits[index];
+let produit = produits[index];
 
 
 
-    document.getElementById("nomProduit").value=produit.nom;
+document.getElementById("nomProduit").value=produit.nom;
 
-    document.getElementById("prixProduit").value=produit.prix.replace(" Gdes","");
+document.getElementById("prixProduit").value=produit.prix.replace(" Gdes","");
 
-    document.getElementById("ancienPrix").value=produit.ancienPrix.replace(" Gdes","");
+document.getElementById("ancienPrix").value=produit.ancienPrix.replace(" Gdes","");
 
+document.getElementById("categorieProduit").value=produit.categorie;
 
-    document.getElementById("categorieProduit").value=produit.categorie;
-
-    document.getElementById("tagProduit").value=produit.tag;
-
-
-    imageProduit=produit.image;
-
-    previewPhoto.src=produit.image;
+document.getElementById("tagProduit").value=produit.tag;
 
 
-    editIndex=index;
+
+imageProduit=produit.image;
+
+previewPhoto.src=produit.image;
+
+
+
+editIndex=index;
 
 
 }
+
 
 
 
@@ -314,18 +367,21 @@ function modifierProduit(index){
 function supprimerProduit(index){
 
 
-    let produits = JSON.parse(localStorage.getItem("produits")) || [];
+let produits = JSON.parse(localStorage.getItem("produits")) || [];
 
 
-    produits.splice(index,1);
-
-
-
-    localStorage.setItem("produits",JSON.stringify(produits));
+produits.splice(index,1);
 
 
 
-    afficherProduits();
+localStorage.setItem(
+"produits",
+JSON.stringify(produits)
+);
+
+
+
+afficherProduits();
 
 
 }
@@ -334,56 +390,193 @@ function supprimerProduit(index){
 
 
 
+
+
+
+
+// CHERCHE PRODUIT
 
 
 function rechercherProduit(){
 
 
-    const rech=document.getElementById("searchAdmin").value.toLowerCase();
+let rech=document.getElementById("searchAdmin").value.toLowerCase();
 
 
-    let produits=JSON.parse(localStorage.getItem("produits")) || [];
-
-
-
-    let rezilta=produits.filter(function(produit){
-
-
-        return produit.nom.toLowerCase().includes(rech);
-
-
-    });
+let produits=JSON.parse(localStorage.getItem("produits")) || [];
 
 
 
-
-    const liste=document.getElementById("listeProduits");
-
-
-    liste.innerHTML="<h2>🔍 Rezilta</h2>";
+let rezilta = produits.filter(function(p){
 
 
-
-    rezilta.forEach(function(produit){
-
-
-        liste.innerHTML+=`
-
-        <div class="product-admin">
-
-        <h3>${produit.nom}</h3>
-
-        <p>${produit.prix}</p>
-
-        </div>
-
-        `;
+return p.nom.toLowerCase().includes(rech);
 
 
-    });
+});
+
+
+
+const liste=document.getElementById("listeProduits");
+
+
+liste.innerHTML="<h2>🔍 Rezilta</h2>";
+
+
+
+rezilta.forEach(function(p){
+
+
+liste.innerHTML += `
+
+
+<div class="product-admin">
+
+
+<h3>${p.nom}</h3>
+
+<p>${p.prix}</p>
+
+
+</div>
+
+
+`;
+
+
+});
 
 
 }
+
+
+
+
+
+
+
+
+
+// SYSTEM KÒMANN
+
+
+function afficherKomann(){
+
+
+const liste=document.getElementById("listeKomann");
+
+
+if(!liste){
+
+return;
+
+}
+
+
+
+let komann = JSON.parse(localStorage.getItem("komann")) || [];
+
+
+
+if(document.getElementById("totalKomann")){
+
+document.getElementById("totalKomann").innerHTML=komann.length;
+
+}
+
+
+
+
+liste.innerHTML="<h2>📦 Kòmann kliyan yo</h2>";
+
+
+
+if(komann.length===0){
+
+liste.innerHTML += "<p>Pa gen kòmann.</p>";
+
+return;
+
+}
+
+
+
+
+komann.forEach(function(k,index){
+
+
+liste.innerHTML += `
+
+
+<div class="product-admin">
+
+
+<h3>🛍️ ${k.produit}</h3>
+
+
+<p>💰 ${k.pri}</p>
+
+
+<p>📦 Kantite: ${k.kantite}</p>
+
+
+<p>👤 ${k.kliyan}</p>
+
+
+<p>📞 ${k.telefon}</p>
+
+
+<p>📅 ${k.dat}</p>
+
+
+
+<button onclick="efaseKomann(${index})">
+
+🗑️ Efase
+
+</button>
+
+
+
+</div>
+
+
+`;
+
+
+});
+
+
+}
+
+
+
+
+
+
+
+function efaseKomann(index){
+
+
+let komann = JSON.parse(localStorage.getItem("komann")) || [];
+
+
+komann.splice(index,1);
+
+
+
+localStorage.setItem(
+"komann",
+JSON.stringify(komann)
+);
+
+
+
+afficherKomann();
+
+
+}
+
 
 
 
@@ -393,3 +586,5 @@ function rechercherProduit(){
 checkLogin();
 
 afficherProduits();
+
+afficherKomann();
