@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ht">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>KAYLA MODE - Panier</title>
+
+
+<link rel="stylesheet" href="style.css">
+
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<h1>🛒 KAYLA MODE</h1>
+
+<p>Panier mwen</p>
+
+</header>
+
+
+
+
+
+<section class="products">
+
+
+<h2>🛍️ Pwodwi nan panier</h2>
+
+
+
+<div id="cartList">
+
+
+</div>
+
+
+
+
+<h2 id="cartTotal">
+
+Total: 0 Gdes
+
+</h2>
+
+
+
+
+
+<button class="buy" onclick="voyePanierWhatsApp()">
+
+📲 Voye kòmann
+
+</button>
+
+
+
+
+<button class="buy" onclick="viderPanier()">
+
+🗑️ Vide panier
+
+</button>
+
+
+
+</section>
+
+
+
+
+
+
+
+<footer>
+
+<p>
+
+© 2026 KAYLA MODE - Tout dwa rezève
+
+</p>
+
+</footer>
+
+
+
+
+
+
+
+
+<script>
+
+
+function jwennPanier(){
+
+    return JSON.parse(localStorage.getItem("panier")) || [];
+
+}
+
+
+
+
+
+function sovePanier(panier){
+
+    localStorage.setItem(
+        "panier",
+        JSON.stringify(panier)
+    );
+
+}
+
+
+
+
+
+function afficherPanier(){
+
+
+let panier = jwennPanier();
+
+
+let cartList = document.getElementById("cartList");
+
+
+let total = 0;
+
+
+
+cartList.innerHTML="";
+
+
+
+
+if(panier.length === 0){
+
+
+cartList.innerHTML = `
+
+<p>
+🛒 Panier la vid
+</p>
+
+`;
+
+return;
+
+
+}
+
+
+
+
+
+
+panier.forEach(function(item,index){
+
+
+
+let pri = parseInt(
+item.prix.replace(/\D/g,'')
+);
+
+
+
+total += pri * item.kantite;
+
+
+
+
+
+cartList.innerHTML += `
+
+
+<div class="product">
+
+
+
+<img src="${item.image}">
+
+
+
+<h3>
+
+${item.nom}
+
+</h3>
+
+
+
+
+<p>
+
+💰 ${item.prix}
+
+</p>
+
+
+
+
+<p>
+
+📦 Kantite: ${item.kantite}
+
+</p>
+
+
+
+
+<button onclick="chanjeKantite(${index},1)">
+
+➕
+
+</button>
+
+
+
+
+<button onclick="chanjeKantite(${index},-1)">
+
+➖
+
+</button>
+
+
+
+
+<button onclick="efasePanier(${index})">
+
+🗑️ Efase
+
+</button>
+
+
+
+
+</div>
+
+
+
+`;
+
+
+
+});
+
+
+
+
+
+document.getElementById("cartTotal").innerHTML =
+
+"Total: "+total+" Gdes";
+
+
+
+}
+
+
+
+
+
+
+
+
+function chanjeKantite(index,valeur){
+
+
+let panier = jwennPanier();
+
+
+
+panier[index].kantite += valeur;
+
+
+
+if(panier[index].kantite <=0){
+
+panier.splice(index,1);
+
+}
+
+
+
+sovePanier(panier);
+
+
+afficherPanier();
+
+
+}
+
+
+
+
+
+
+
+function efasePanier(index){
+
+
+let panier = jwennPanier();
+
+
+panier.splice(index,1);
+
+
+
+sovePanier(panier);
+
+
+
+afficherPanier();
+
+
+}
+
+
+
+
+
+
+
+function viderPanier(){
+
+
+localStorage.removeItem("panier");
+
+
+afficherPanier();
+
+
+}
+
+
+
+
+
+
+
+function voyePanierWhatsApp(){
+
+
+let panier = jwennPanier();
+
+
+
+if(panier.length===0){
+
+alert("Panier la vid ❌");
+
+return;
+
+}
+
+
+
+
+let message="🛒 KAYLA MODE - KÒMAND\n\n";
+
+
+
+panier.forEach(function(item){
+
+
+message +=
+
+"👗 "+item.nom+
+
+"\n📦 Kantite: "+item.kantite+
+
+"\n💰 "+item.prix+
+
+"\n\n";
+
+
+});
+
+
+
+message += document.getElementById("cartTotal").innerText;
+
+
+
+
+window.open(
+
+"https://wa.me/50955545291?text="+encodeURIComponent(message),
+
+"_blank"
+
+);
+
+
+}
+
+
+
+
+
+
+afficherPanier();
+
+
+</script>
+
+
+
+</body>
+
+  </html>
