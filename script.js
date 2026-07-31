@@ -1,11 +1,13 @@
 // KAYLA MODE - SCRIPT PRINCIPAL
 
 
+
 function ouvriDetay(index){
 
     let produits = JSON.parse(localStorage.getItem("produits")) || [];
 
     let produit = produits[index];
+
 
     localStorage.setItem(
         "produitChoisi",
@@ -16,6 +18,8 @@ function ouvriDetay(index){
     window.location.href = "product.html";
 
 }
+
+
 
 
 
@@ -44,6 +48,7 @@ function afficherProduits(){
 
 
 
+
     if(produits.length === 0){
 
 
@@ -55,11 +60,9 @@ function afficherProduits(){
 
         `;
 
-
         return;
 
     }
-
 
 
 
@@ -140,21 +143,13 @@ function afficherProduits(){
 
 
 
+
         <button onclick="ouvriDetay(${index})">
 
         👁️ Gade detay
 
         </button>
 
-
-
-
-
-        <a href="https://wa.me/50955545291" class="buy">
-
-        Achte
-
-        </a>
 
 
 
@@ -212,11 +207,7 @@ function searchProduct(){
 
         return (
 
-            produit.nom.toLowerCase().includes(rech) ||
-
-            produit.categorie.toLowerCase().includes(rech) ||
-
-            produit.tag.toLowerCase().includes(rech)
+            produit.nom.toLowerCase().includes(rech)
 
         );
 
@@ -236,10 +227,19 @@ function searchProduct(){
         <img src="${produit.image}">
 
 
-        <h3>${produit.nom}</h3>
+        <h3>
+
+        ${produit.nom}
+
+        </h3>
 
 
-        <p>${produit.prix}</p>
+        <p>
+
+        ${produit.prix}
+
+        </p>
+
 
 
 
