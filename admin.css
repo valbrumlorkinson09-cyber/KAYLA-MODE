@@ -17,12 +17,15 @@ body{
 
 
 
+
 header{
 
     padding:25px;
     background:#111;
+    border-bottom:1px solid #d4af37;
 
 }
+
 
 
 header h1{
@@ -41,7 +44,7 @@ header h1{
 #loginBox{
 
     width:90%;
-    max-width:350px;
+    max-width:380px;
     margin:80px auto;
     background:#111;
     padding:30px;
@@ -56,11 +59,23 @@ header h1{
 
 
 
+
+#adminPanel{
+
+    padding-bottom:40px;
+
+}
+
+
+
+
+
+
 .admin-box,
 .search-admin{
 
     width:90%;
-    max-width:450px;
+    max-width:600px;
     margin:25px auto;
     background:#111;
     padding:25px;
@@ -74,9 +89,9 @@ header h1{
 
 
 
-
 input,
-select{
+select,
+textarea{
 
     width:90%;
     padding:13px;
@@ -92,16 +107,16 @@ select{
 
 
 
+
 .btn-photo{
 
     display:inline-block;
     background:#d4af37;
-    color:black;
+    color:#000;
     padding:13px 20px;
     border-radius:12px;
     cursor:pointer;
     font-weight:bold;
-    margin:15px;
 
 }
 
@@ -123,12 +138,11 @@ select{
 
 
 
-
 .buy,
 button{
 
     background:#d4af37;
-    color:black;
+    color:#000;
     padding:13px 25px;
     border-radius:25px;
     border:none;
@@ -140,8 +154,8 @@ button{
 
 
 
-.buy:hover,
-button:hover{
+button:hover,
+.buy:hover{
 
     transform:scale(1.05);
 
@@ -153,16 +167,21 @@ button:hover{
 
 
 
-
 /* DASHBOARD */
+
 
 .dashboard{
 
-    display:flex;
-    justify-content:center;
-    margin:20px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+    width:90%;
+    margin:25px auto;
 
 }
+
+
+
 
 
 
@@ -172,7 +191,6 @@ button:hover{
     padding:20px;
     border-radius:20px;
     border:1px solid #d4af37;
-    width:250px;
 
 }
 
@@ -186,16 +204,28 @@ button:hover{
 
 
 
+.stat p{
+
+    font-size:25px;
+    margin-top:10px;
+
+}
 
 
 
-#listeProduits{
+
+
+
+
+#listeProduits,
+#listeKommann{
 
     width:90%;
-    max-width:600px;
+    max-width:700px;
     margin:30px auto;
 
 }
+
 
 
 
@@ -206,11 +236,14 @@ button:hover{
 
     background:#111;
     padding:20px;
-    margin:15px;
+    margin:15px auto;
     border-radius:20px;
     border:1px solid #333;
 
 }
+
+
+
 
 
 
@@ -226,12 +259,15 @@ button:hover{
 
 
 
+
+
 .product-admin h3{
 
-    margin:15px 0;
     color:#d4af37;
+    margin:15px 0;
 
 }
+
 
 
 
@@ -245,20 +281,10 @@ button:hover{
 
 
 
-
-.search-admin button{
-
-    margin-top:10px;
-
-}
-
-
-
-
-
-
+/* RESPONSIVE */
 
 @media(max-width:600px){
+
 
 
 header h1{
@@ -268,10 +294,20 @@ header h1{
 }
 
 
+
 .admin-box,
 .search-admin{
 
     width:95%;
+
+}
+
+
+
+.product-admin img{
+
+    width:120px;
+    height:120px;
 
 }
 
