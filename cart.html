@@ -7,12 +7,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
 <title>KAYLA MODE - Panier</title>
 
-
 <link rel="stylesheet" href="style.css">
-
 
 </head>
 
@@ -20,13 +17,67 @@
 <body>
 
 
-<header>
+<header class="main-header">
 
-<h1>🛒 KAYLA MODE</h1>
 
-<p>Panier mwen</p>
+<img 
+src="images/logo.png"
+class="logo"
+alt="KAYLA MODE"
+onerror="this.style.display='none'"
+>
+
+
+<h1>
+🛒 KAYLA MODE
+</h1>
+
+
+<p>
+Panier mwen
+</p>
+
 
 </header>
+
+
+
+
+
+
+<nav class="menu">
+
+
+<a href="index.html">
+🏠 Akèy
+</a>
+
+
+<a href="boutik.html">
+🛍️ Boutik
+</a>
+
+
+<a href="categories.html">
+👗 Kategori
+</a>
+
+
+<a href="cart.html">
+🛒 Panier 
+<span id="cartCount">0</span>
+</a>
+
+
+<a href="contact.html">
+📞 Kontak
+</a>
+
+
+</nav>
+
+
+
 
 
 
@@ -35,12 +86,14 @@
 <section class="products">
 
 
-<h2>🛍️ Pwodwi nan panier</h2>
+<h2>
+🛍️ Pwodwi nan panier
+</h2>
+
 
 
 
 <div id="cartList">
-
 
 </div>
 
@@ -57,11 +110,14 @@ Total: 0 Gdes
 
 
 
+
+
 <button class="buy" onclick="voyePanierWhatsApp()">
 
-📲 Voye kòmann
+📲 Voye kòmann WhatsApp
 
 </button>
+
 
 
 
@@ -71,6 +127,7 @@ Total: 0 Gdes
 🗑️ Vide panier
 
 </button>
+
 
 
 
@@ -84,13 +141,16 @@ Total: 0 Gdes
 
 <footer>
 
+
 <p>
 
 © 2026 KAYLA MODE - Tout dwa rezève
 
 </p>
 
+
 </footer>
+
 
 
 
@@ -104,7 +164,13 @@ Total: 0 Gdes
 
 function jwennPanier(){
 
-    return JSON.parse(localStorage.getItem("panier")) || [];
+
+return JSON.parse(
+
+localStorage.getItem("panier")
+
+) || [];
+
 
 }
 
@@ -112,14 +178,20 @@ function jwennPanier(){
 
 
 
-function sovePanier(panier){
+function sovePanier(data){
 
-    localStorage.setItem(
-        "panier",
-        JSON.stringify(panier)
-    );
+
+localStorage.setItem(
+
+"panier",
+
+JSON.stringify(data)
+
+);
+
 
 }
+
 
 
 
@@ -131,28 +203,32 @@ function afficherPanier(){
 let panier = jwennPanier();
 
 
-let cartList = document.getElementById("cartList");
+let box = document.getElementById("cartList");
 
 
 let total = 0;
 
 
 
-cartList.innerHTML="";
+box.innerHTML="";
 
 
 
 
-if(panier.length === 0){
+
+if(panier.length===0){
 
 
-cartList.innerHTML = `
+box.innerHTML=
 
-<p>
-🛒 Panier la vid
-</p>
+"<p>🛒 Panier la vid</p>";
 
-`;
+
+
+document.getElementById("cartTotal").innerHTML=
+
+"Total: 0 Gdes";
+
 
 return;
 
@@ -168,8 +244,12 @@ panier.forEach(function(item,index){
 
 
 
-let pri = parseInt(
-item.prix.replace(/\D/g,'')
+let pri = Number(
+
+String(item.prix)
+
+.replace(/\D/g,'')
+
 );
 
 
@@ -180,7 +260,8 @@ total += pri * item.kantite;
 
 
 
-cartList.innerHTML += `
+box.innerHTML += `
+
 
 
 <div class="product">
@@ -199,13 +280,11 @@ ${item.nom}
 
 
 
+<p class="new-price">
 
-<p>
-
-💰 ${item.prix}
+${item.prix}
 
 </p>
-
 
 
 
@@ -218,12 +297,12 @@ ${item.nom}
 
 
 
+
 <button onclick="chanjeKantite(${index},1)">
 
 ➕
 
 </button>
-
 
 
 
@@ -248,7 +327,6 @@ ${item.nom}
 </div>
 
 
-
 `;
 
 
@@ -265,7 +343,13 @@ document.getElementById("cartTotal").innerHTML =
 
 
 
+
+
+afficherBadge();
+
+
 }
+
 
 
 
@@ -277,6 +361,7 @@ document.getElementById("cartTotal").innerHTML =
 function chanjeKantite(index,valeur){
 
 
+
 let panier = jwennPanier();
 
 
@@ -285,9 +370,12 @@ panier[index].kantite += valeur;
 
 
 
+
 if(panier[index].kantite <=0){
 
+
 panier.splice(index,1);
+
 
 }
 
@@ -296,7 +384,9 @@ panier.splice(index,1);
 sovePanier(panier);
 
 
+
 afficherPanier();
+
 
 
 }
@@ -310,7 +400,9 @@ afficherPanier();
 function efasePanier(index){
 
 
+
 let panier = jwennPanier();
+
 
 
 panier.splice(index,1);
@@ -324,7 +416,9 @@ sovePanier(panier);
 afficherPanier();
 
 
+
 }
+
 
 
 
@@ -341,7 +435,51 @@ localStorage.removeItem("panier");
 afficherPanier();
 
 
+alert("Panier vide 🛒");
+
+
 }
+
+
+
+
+
+
+
+function afficherBadge(){
+
+
+let badge=document.getElementById("cartCount");
+
+
+
+if(!badge){
+
+return;
+
+}
+
+
+
+let kantite=0;
+
+
+
+jwennPanier().forEach(function(item){
+
+
+kantite += item.kantite;
+
+
+});
+
+
+
+badge.innerHTML=kantite;
+
+
+}
+
 
 
 
@@ -352,35 +490,44 @@ afficherPanier();
 function voyePanierWhatsApp(){
 
 
-let panier = jwennPanier();
+let panier=jwennPanier();
 
 
 
 if(panier.length===0){
 
+
 alert("Panier la vid ❌");
 
+
 return;
+
 
 }
 
 
 
 
-let message="🛒 KAYLA MODE - KÒMAND\n\n";
+
+let mesaj=
+
+"🛒 KAYLA MODE - NOUVO KÒMAND\n\n";
+
+
 
 
 
 panier.forEach(function(item){
 
 
-message +=
+
+mesaj +=
 
 "👗 "+item.nom+
 
 "\n📦 Kantite: "+item.kantite+
 
-"\n💰 "+item.prix+
+"\n💰 Pri: "+item.prix+
 
 "\n\n";
 
@@ -389,21 +536,29 @@ message +=
 
 
 
-message += document.getElementById("cartTotal").innerText;
+
+mesaj +=
+
+"🙏 Mèsi pou konfyans ou";
+
 
 
 
 
 window.open(
 
-"https://wa.me/50955545291?text="+encodeURIComponent(message),
+"https://wa.me/50955545291?text="+
+
+encodeURIComponent(mesaj),
 
 "_blank"
 
 );
 
 
+
 }
+
 
 
 
@@ -419,4 +574,4 @@ afficherPanier();
 
 </body>
 
-  </html>
+</html>
