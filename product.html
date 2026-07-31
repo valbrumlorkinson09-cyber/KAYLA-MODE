@@ -4,9 +4,10 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>KAYLA MODE - Pwodwi</title>
+<title>KAYLA MODE - Detay pwodwi</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -27,9 +28,11 @@
 
 
 
+
 <section id="productDetail" class="products">
 
 </section>
+
 
 
 
@@ -49,7 +52,13 @@
 <script>
 
 
-let produit = JSON.parse(localStorage.getItem("produitChoisi"));
+let produit = JSON.parse(
+
+localStorage.getItem("produitChoisi")
+
+);
+
+
 
 const detail = document.getElementById("productDetail");
 
@@ -57,23 +66,40 @@ const detail = document.getElementById("productDetail");
 
 
 
-function voyeKommann(){
+// ===============================
+// KOMANTE SYSTEM
+// ===============================
 
 
-let non = document.getElementById("nonClient").value;
-
-let phone = document.getElementById("phoneClient").value;
-
-let kantite = document.getElementById("kantite").value;
+function jwennKomante(){
 
 
+    return JSON.parse(
 
-if(non==="" || phone==="" || kantite===""){
+    localStorage.getItem(
+    "komante_"+produit.nom
+    )
+
+    ) || [];
 
 
-alert("Ranpli tout enfòmasyon yo ❌");
+}
 
-return;
+
+
+
+
+
+function soveKomante(data){
+
+
+    localStorage.setItem(
+
+    "komante_"+produit.nom,
+
+    JSON.stringify(data)
+
+    );
 
 
 }
@@ -81,77 +107,74 @@ return;
 
 
 
-let nouvoKomann = {
-
-
-produit: produit.nom,
-
-pri: produit.prix,
-
-kantite: kantite,
-
-kliyan: non,
-
-telefon: phone,
-
-dat: new Date().toLocaleString()
-
-
-};
 
 
 
-
-let komann = JSON.parse(localStorage.getItem("komann")) || [];
-
-
-
-komann.push(nouvoKomann);
+function voyeKomante(){
 
 
 
-localStorage.setItem(
-"komann",
-JSON.stringify(komann)
-);
+    let non = document.getElementById("nonClient").value;
+
+
+    let mesaj = document.getElementById("mesajClient").value;
+
+
+    let star = document.getElementById("starClient").value;
 
 
 
 
 
+    if(non==="" || mesaj===""){
 
-let mesaj = `
 
-🛍️ KAYLA MODE NOUVO KOMMANN
+        alert("Ranpli tout enfòmasyon yo ❌");
 
-👗 Pwodwi: ${produit.nom}
 
-💰 Pri: ${produit.prix}
+        return;
 
-📦 Kantite: ${kantite}
-
-👤 Kliyan: ${non}
-
-📞 Telefòn: ${phone}
-
-`;
+    }
 
 
 
 
-let whatsapp = 
-"https://wa.me/50955545291?text=" 
-+ encodeURIComponent(mesaj);
+
+    let komante = jwennKomante();
 
 
 
-window.open(whatsapp,"_blank");
+
+    komante.push({
+
+
+        non:non,
+
+        mesaj:mesaj,
+
+        star:star
+
+
+    });
+
+
+
+
+
+    soveKomante(komante);
+
+
+
+
+    alert("Mèsi pou opinyon ou ❤️");
+
+
+
+    location.reload();
 
 
 
 }
-
-
 
 
 
@@ -165,9 +188,7 @@ if(produit){
 detail.innerHTML = `
 
 
-
 <div class="product">
-
 
 
 <span class="tag">
@@ -194,22 +215,13 @@ ${produit.nom}
 
 
 
+
 <p>
 
 📂 ${produit.categorie || "Kategori"}
 
 </p>
 
-
-
-
-
-
-${
-produit.ancienPrix 
-? `<p class="old-price">${produit.ancienPrix}</p>`
-:""
-}
 
 
 
@@ -226,7 +238,7 @@ ${produit.prix}
 
 <h3>
 
-📝 Fè kòmann
+⭐ Evalye pwodwi sa
 
 </h3>
 
@@ -234,30 +246,85 @@ ${produit.prix}
 
 
 
-<input id="nonClient" placeholder="Non ou">
+<select id="starClient">
+
+
+<option value="⭐⭐⭐⭐⭐">
+⭐⭐⭐⭐⭐
+</option>
+
+
+<option value="⭐⭐⭐⭐">
+⭐⭐⭐⭐
+</option>
+
+
+<option value="⭐⭐⭐">
+⭐⭐⭐
+</option>
+
+
+<option value="⭐⭐">
+⭐⭐
+</option>
+
+
+<option value="⭐">
+⭐
+</option>
 
 
 
-<input id="phoneClient" placeholder="Nimewo WhatsApp ou">
-
-
-
-<input id="kantite" type="number" placeholder="Kantite">
+</select>
 
 
 
 
 
-<button class="buy" onclick="voyeKommann()">
+<h3>
 
-🛒 Voye kòmann
+💬 Kite yon kòmantè
+
+</h3>
+
+
+
+
+
+<input 
+id="nonClient"
+placeholder="Non ou">
+
+
+
+
+
+<textarea 
+id="mesajClient"
+placeholder="Ekri opinyon ou">
+</textarea>
+
+
+
+
+
+<button class="buy" onclick="voyeKomante()">
+
+📩 Voye kòmantè
 
 </button>
 
 
 
+
+
+<div id="listeKomante">
+
 </div>
 
+
+
+</div>
 
 
 `;
@@ -267,11 +334,10 @@ ${produit.prix}
 }else{
 
 
-
 detail.innerHTML = `
 
 <h2>
-Pa gen pwodwi chwazi ❌
+Pa gen pwodwi chwazi
 </h2>
 
 `;
@@ -279,12 +345,279 @@ Pa gen pwodwi chwazi ❌
 
 
 }
+ // ===============================
+// AFFICHAGE KOMANTE
+// ===============================
+
+
+function afficherKomante(){
+
+
+    let box = document.getElementById("listeKomante");
 
 
 
-</script>
+    if(!box){
+
+        return;
+
+    }
 
 
-</body>
 
-</html>
+
+
+    let komante = jwennKomante();
+
+
+
+
+    if(komante.length === 0){
+
+
+        box.innerHTML = `
+
+        <h3>
+        💬 Pa gen kòmantè ankò
+        </h3>
+
+        `;
+
+
+        return;
+
+    }
+
+
+
+
+
+
+
+    box.innerHTML = `
+
+    <h3>
+    💬 Kòmantè kliyan yo
+    </h3>
+
+    `;
+
+
+
+
+
+
+    komante.forEach(function(item){
+
+
+
+        box.innerHTML += `
+
+
+        <div class="comment-box">
+
+
+        <h4>
+
+        👤 ${item.non}
+
+        </h4>
+
+
+
+        <p>
+
+        ${item.star}
+
+        </p>
+
+
+
+        <p>
+
+        ${item.mesaj}
+
+        </p>
+
+
+
+        </div>
+
+
+
+        `;
+
+
+
+    });
+
+
+
+}
+
+
+
+
+
+
+
+
+// ===============================
+// KALKIL MOYÈN NÒT
+// ===============================
+
+
+function mwayenStar(){
+
+
+    let komante = jwennKomante();
+
+
+
+    if(komante.length === 0){
+
+        return "Pa gen nòt ankò";
+
+    }
+
+
+
+
+
+    let total = 0;
+
+
+
+
+    komante.forEach(function(item){
+
+
+
+        total += item.star.length;
+
+
+
+    });
+
+
+
+
+
+    let rezilta = Math.round(
+
+    total / komante.length
+
+    );
+
+
+
+
+
+    let zetwal = "";
+
+
+
+
+
+    for(let i=0;i<rezilta;i++){
+
+
+        zetwal += "⭐";
+
+
+    }
+
+
+
+
+
+    return zetwal;
+
+
+
+}
+
+
+
+
+
+
+
+
+// ===============================
+// AJOUTE INFO NÒT SOU PWODWI
+// ===============================
+
+
+function afficherNote(){
+
+
+    let product = document.querySelector(".product");
+
+
+
+    if(!product){
+
+        return;
+
+    }
+
+
+
+
+
+    let info = document.createElement("p");
+
+
+
+    info.innerHTML = `
+
+    ⭐ Nòt kliyan:
+
+    ${mwayenStar()}
+
+    `;
+
+
+
+    product.insertBefore(
+
+    info,
+
+    product.children[3]
+
+    );
+
+
+
+}
+
+
+
+
+
+
+
+afficherKomante();
+
+afficherNote();
+ 
+// ===============================
+// PROTEKSYON CHAJMAN PAJ
+// ===============================
+
+
+window.addEventListener(
+
+"load",
+
+function(){
+
+
+    afficherKomante();
+
+
+    afficherNote();
+
+
+}); 
