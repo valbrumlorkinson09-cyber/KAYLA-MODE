@@ -415,3 +415,13 @@ nav{
 
 
 }
+#cartCount{
+
+background:#d4af37;
+color:black;
+padding:3px 8px;
+border-radius:50%;
+font-size:12px;
+font-weight:bold;
+
+        }
