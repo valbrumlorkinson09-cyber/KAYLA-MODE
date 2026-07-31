@@ -4,6 +4,7 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>KAYLA MODE Admin</title>
@@ -18,15 +19,30 @@
 
 <div id="loginBox">
 
-<h2>🔐 KAYLA MODE ADMIN</h2>
 
-<input type="password" id="adminPassword" placeholder="Antre modpas la">
+<h2>
+🔐 KAYLA MODE ADMIN
+</h2>
+
+
+<input 
+type="password"
+id="adminPassword"
+placeholder="Antre modpas la"
+>
+
 
 <button class="buy" onclick="loginAdmin()">
+
 Antre
+
 </button>
 
+
+
 </div>
+
+
 
 
 
@@ -35,16 +51,30 @@ Antre
 <div id="adminPanel" style="display:none;">
 
 
+
+
+
 <header>
 
-<h1>🔐 KAYLA MODE ADMIN</h1>
 
-<p>Jere pwodwi ak kòmann yo</p>
+<h1>
+🔐 KAYLA MODE ADMIN
+</h1>
+
+
+<p>
+Jere pwodwi ak kòmann yo
+</p>
+
+
 
 
 <button class="buy" onclick="logoutAdmin()">
+
 🚪 Dekonekte
+
 </button>
+
 
 
 </header>
@@ -54,46 +84,75 @@ Antre
 
 
 
+
+
+
 <section class="dashboard">
 
 
-<div class="stat">
-
-<h3>📦 Total pwodwi</h3>
-
-<p id="totalProduits">0</p>
-
-</div>
-
-
 
 <div class="stat">
 
-<h3>🛒 Total kòmann</h3>
+<h3>
+📦 Total pwodwi
+</h3>
 
-<p id="totalKommann">0</p>
+<p id="totalProduits">
+0
+</p>
 
-</div>
-
-
-
-
-<div class="stat">
-
-<h3>💰 Total lavant</h3>
-
-<p id="totalVant">0 Gdes</p>
 
 </div>
 
 
 
 
+
 <div class="stat">
 
-<h3>👥 Kliyan</h3>
+<h3>
+🛒 Total kòmann
+</h3>
 
-<p id="totalKliyan">0</p>
+<p id="totalKommann">
+0
+</p>
+
+
+</div>
+
+
+
+
+
+<div class="stat">
+
+<h3>
+💰 Total lavant
+</h3>
+
+<p id="totalVant">
+0 Gdes
+</p>
+
+
+</div>
+
+
+
+
+
+
+<div class="stat">
+
+<h3>
+👥 Kliyan
+</h3>
+
+<p id="totalKliyan">
+0
+</p>
+
 
 </div>
 
@@ -101,13 +160,8 @@ Antre
 
 </section>
 
-<section class="admin-box">
 
-<h2>📈 Rezime lavant</h2>
 
-<canvas id="salesChart"></canvas>
-
-</section>
 
 
 
@@ -116,11 +170,17 @@ Antre
 <section class="admin-box">
 
 
-<h2>📸 Ajoute / Modifye pwodwi</h2>
+<h2>
+📸 Ajoute pwodwi
+</h2>
 
 
 
-<label for="photoProduit" class="btn-photo">
+
+<label 
+for="photoProduit"
+class="btn-photo"
+>
 
 📸 Chwazi foto
 
@@ -128,25 +188,60 @@ Antre
 
 
 
-<input type="file" id="photoProduit" accept="image/*" hidden>
+
+<input 
+type="file"
+id="photoProduit"
+accept="image/*"
+hidden
+>
 
 
 
-<img id="previewPhoto" width="200" style="margin-top:15px;border-radius:10px;">
+
+
+<img 
+id="previewPhoto"
+width="200"
+>
 
 
 
 
 
-<input type="text" id="nomProduit" placeholder="Non pwodwi">
+
+
+<input 
+id="nomProduit"
+placeholder="Non pwodwi"
+>
 
 
 
-<input type="number" id="prixProduit" placeholder="Nouvo pri">
 
 
 
-<input type="number" id="ancienPrix" placeholder="Ansyen pri">
+<input 
+id="prixProduit"
+type="number"
+placeholder="Pri nouvo"
+>
+
+
+
+
+
+
+
+<input 
+id="ancienPrix"
+type="number"
+placeholder="Ansyen pri"
+>
+
+
+
+
 
 
 
@@ -154,15 +249,37 @@ Antre
 
 <select id="categorieProduit">
 
-<option value="Fanm">👗 Fanm</option>
 
-<option value="Gason">👔 Gason</option>
+<option value="Fanm">
 
-<option value="Soulye">👟 Soulye</option>
+👗 Fanm
 
-<option value="Sak">👜 Sak</option>
+</option>
+
+
+<option value="Gason">
+
+👔 Gason
+
+</option>
+
+
+<option value="Soulye">
+
+👟 Soulye
+
+</option>
+
+
+<option value="Sak">
+
+👜 Sak
+
+</option>
+
 
 </select>
+
 
 
 
@@ -171,11 +288,23 @@ Antre
 
 <select id="tagProduit">
 
-<option value="Nouvo">🆕 Nouvo</option>
 
-<option value="Promo">🔥 Promo</option>
+<option value="Nouvo">
+
+🆕 Nouvo
+
+</option>
+
+
+<option value="Promo">
+
+🔥 Promo
+
+</option>
+
 
 </select>
+
 
 
 
@@ -199,13 +328,21 @@ Antre
 
 
 
-<section class="search-admin">
+
+<section class="admin-box">
 
 
-<h2>🔍 Chèche pwodwi</h2>
+<h2>
+🔍 Chèche pwodwi
+</h2>
 
 
-<input type="text" id="searchAdmin" placeholder="Chèche...">
+
+<input 
+id="searchAdmin"
+placeholder="Chèche pwodwi..."
+>
+
 
 
 
@@ -216,42 +353,61 @@ Antre
 </button>
 
 
-</section>
-
-
-
-
-
-
-
-<section id="listeProduits">
-
-<h2>🛍️ Pwodwi yo</h2>
 
 </section>
+
+
+
+
+
+
+
+
+
 <section class="admin-box">
 
-<h2>📦 Kòmann kliyan yo</h2>
+
+<h2>
+🛍️ Lis pwodwi yo
+</h2>
+
+
+
+<div id="listeProduits">
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<section class="admin-box">
+
+
+<h2>
+📦 Kòmann kliyan yo
+</h2>
+
+
 
 <div id="listeKommann">
 
 </div>
 
 
-</section>
-
-
-
-
-
-
-<section id="listeKomann">
-
-
-<h2>📦 Kòmann kliyan yo</h2>
-
 
 </section>
+
+
+
 
 
 
@@ -259,6 +415,8 @@ Antre
 
 
 </div>
+
+
 
 
 
