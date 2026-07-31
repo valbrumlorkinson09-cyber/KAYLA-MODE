@@ -7,8 +7,8 @@ function loginAdmin(){
 
         localStorage.setItem("adminLogin","true");
 
-        document.getElementById("loginBox").style.display = "none";
-        document.getElementById("adminPanel").style.display = "block";
+        document.getElementById("loginBox").style.display="none";
+        document.getElementById("adminPanel").style.display="block";
 
     }else{
 
@@ -20,13 +20,12 @@ function loginAdmin(){
 
 
 
-
 function checkLogin(){
 
     if(localStorage.getItem("adminLogin") === "true"){
 
-        document.getElementById("loginBox").style.display = "none";
-        document.getElementById("adminPanel").style.display = "block";
+        document.getElementById("loginBox").style.display="none";
+        document.getElementById("adminPanel").style.display="block";
 
     }
 
@@ -35,21 +34,22 @@ function checkLogin(){
 
 
 
-
 function logoutAdmin(){
 
     localStorage.removeItem("adminLogin");
 
-    document.getElementById("loginBox").style.display = "block";
-    document.getElementById("adminPanel").style.display = "none";
+    document.getElementById("loginBox").style.display="block";
+    document.getElementById("adminPanel").style.display="none";
 
 }
 
 
 
 
-
 let imageProduit = "";
+
+let editIndex = -1;
+
 
 
 const photoProduit = document.getElementById("photoProduit");
@@ -57,16 +57,16 @@ const previewPhoto = document.getElementById("previewPhoto");
 
 
 
-photoProduit.addEventListener("change", function(){
+photoProduit.addEventListener("change",function(){
 
-    const file = this.files[0];
+    const file=this.files[0];
 
 
     if(file){
 
-        imageProduit = URL.createObjectURL(file);
+        imageProduit=URL.createObjectURL(file);
 
-        previewPhoto.src = imageProduit;
+        previewPhoto.src=imageProduit;
 
     }
 
@@ -76,15 +76,15 @@ photoProduit.addEventListener("change", function(){
 
 
 
-
 function ajouterProduit(){
 
-    const nom = document.getElementById("nomProduit").value;
-    const prix = document.getElementById("prixProduit").value;
+    const nom=document.getElementById("nomProduit").value;
+
+    const prix=document.getElementById("prixProduit").value;
 
 
 
-    if(nom === "" || prix === "" || imageProduit === ""){
+    if(nom==="" || prix===""){
 
         alert("Ranpli tout enfòmasyon yo");
 
@@ -94,29 +94,39 @@ function ajouterProduit(){
 
 
 
+    let produits=JSON.parse(localStorage.getItem("produits")) || [];
 
-    let nouveauProduit = {
 
-        nom: nom,
 
-        prix: prix + " Gdes",
+    let produit={
 
-        image: imageProduit
+        nom:nom,
+
+        prix:prix+" Gdes",
+
+        image:imageProduit
 
     };
 
 
 
 
-    let produits = JSON.parse(localStorage.getItem("produits")) || [];
+    if(editIndex === -1){
+
+        produits.push(produit);
+
+    }else{
+
+        produits[editIndex]=produit;
+
+        editIndex=-1;
+
+    }
 
 
 
-    produits.push(nouveauProduit);
 
-
-
-    localStorage.setItem("produits", JSON.stringify(produits));
+    localStorage.setItem("produits",JSON.stringify(produits));
 
 
 
@@ -124,22 +134,15 @@ function ajouterProduit(){
 
 
 
-    alert("Pwodwi ajoute avèk siksè ✅");
+    document.getElementById("nomProduit").value="";
 
+    document.getElementById("prixProduit").value="";
 
+    previewPhoto.src="";
 
-    document.getElementById("nomProduit").value = "";
-
-    document.getElementById("prixProduit").value = "";
-
-    previewPhoto.src = "";
-
-    imageProduit = "";
+    imageProduit="";
 
 }
-
-
-
 
 
 
@@ -148,48 +151,50 @@ function ajouterProduit(){
 function afficherProduits(){
 
 
-    const liste = document.getElementById("listeProduits");
+    const liste=document.getElementById("listeProduits");
 
 
-    let produits = JSON.parse(localStorage.getItem("produits")) || [];
+    let produits=JSON.parse(localStorage.getItem("produits")) || [];
 
 
 
-    liste.innerHTML = "<h2>🛍️ Pwodwi yo</h2>";
+    if(document.getElementById("totalProduits")){
 
+        document.getElementById("totalProduits").innerHTML=produits.length;
+
+    }
+
+
+
+    liste.innerHTML="<h2>🛍️ Pwodwi yo</h2>";
 
 
 
     produits.forEach(function(produit,index){
 
 
-
-        liste.innerHTML += `
-
+        liste.innerHTML+=`
 
         <div class="product-admin">
 
-
         <img src="${produit.image}" width="120">
 
-
         <h3>${produit.nom}</h3>
-
 
         <p>${produit.prix}</p>
 
 
-
-        <button onclick="supprimerProduit(${index})">
-
-        🗑️ Efase
-
+        <button onclick="modifierProduit(${index})">
+        ✏️ Modifye
         </button>
 
 
+        <button onclick="supprimerProduit(${index})">
+        🗑️ Efase
+        </button>
+
 
         </div>
-
 
         `;
 
@@ -204,31 +209,103 @@ function afficherProduits(){
 
 
 
-
 function supprimerProduit(index){
 
 
-    let produits = JSON.parse(localStorage.getItem("produits")) || [];
-
+    let produits=JSON.parse(localStorage.getItem("produits")) || [];
 
 
     produits.splice(index,1);
 
 
 
-    localStorage.setItem("produits", JSON.stringify(produits));
-
+    localStorage.setItem("produits",JSON.stringify(produits));
 
 
     afficherProduits();
 
 
+}
 
-    alert("Pwodwi efase ✅");
+
+
+
+
+function modifierProduit(index){
+
+
+    let produits=JSON.parse(localStorage.getItem("produits")) || [];
+
+
+    let produit=produits[index];
+
+
+    document.getElementById("nomProduit").value=produit.nom;
+
+
+    document.getElementById("prixProduit").value=produit.prix.replace(" Gdes","");
+
+
+    imageProduit=produit.image;
+
+
+    previewPhoto.src=produit.image;
+
+
+    editIndex=index;
 
 
 }
 
+
+
+
+
+function rechercherProduit(){
+
+
+    let rech=document.getElementById("searchAdmin").value.toLowerCase();
+
+
+    let produits=JSON.parse(localStorage.getItem("produits")) || [];
+
+
+    let filtre=produits.filter(function(p){
+
+        return p.nom.toLowerCase().includes(rech);
+
+    });
+
+
+
+    const liste=document.getElementById("listeProduits");
+
+
+    liste.innerHTML="<h2>🔍 Rezilta</h2>";
+
+
+
+    filtre.forEach(function(produit){
+
+
+        liste.innerHTML+=`
+
+        <div class="product-admin">
+
+        <img src="${produit.image}" width="120">
+
+        <h3>${produit.nom}</h3>
+
+        <p>${produit.prix}</p>
+
+        </div>
+
+        `;
+
+    });
+
+
+}
 
 
 
