@@ -1,3 +1,9 @@
+let imageProduit = "";
+
+let editIndex = -1;
+
+
+
 function loginAdmin(){
 
     const password = document.getElementById("adminPassword").value;
@@ -17,6 +23,7 @@ function loginAdmin(){
     }
 
 }
+
 
 
 
@@ -46,11 +53,6 @@ function logoutAdmin(){
 
 
 
-let imageProduit = "";
-
-let editIndex = -1;
-
-
 
 const photoProduit = document.getElementById("photoProduit");
 const previewPhoto = document.getElementById("previewPhoto");
@@ -64,7 +66,7 @@ photoProduit.addEventListener("change",function(){
 
     if(file){
 
-        imageProduit=URL.createObjectURL(file);
+        imageProduit = URL.createObjectURL(file);
 
         previewPhoto.src=imageProduit;
 
@@ -76,15 +78,24 @@ photoProduit.addEventListener("change",function(){
 
 
 
+
+
 function ajouterProduit(){
 
-    const nom=document.getElementById("nomProduit").value;
 
-    const prix=document.getElementById("prixProduit").value;
+    const nom = document.getElementById("nomProduit").value;
+
+    const prix = document.getElementById("prixProduit").value;
+
+    const ancienPrix = document.getElementById("ancienPrix").value;
+
+    const categorie = document.getElementById("categorieProduit").value;
+
+    const tag = document.getElementById("tagProduit").value;
 
 
 
-    if(nom==="" || prix===""){
+    if(nom==="" || prix==="" || imageProduit===""){
 
         alert("Ranpli tout enfòmasyon yo");
 
@@ -94,19 +105,29 @@ function ajouterProduit(){
 
 
 
-    let produits=JSON.parse(localStorage.getItem("produits")) || [];
 
+    let produit = {
 
+        nom: nom,
 
-    let produit={
+        prix: prix + " Gdes",
 
-        nom:nom,
+        ancienPrix: ancienPrix ? ancienPrix + " Gdes" : "",
 
-        prix:prix+" Gdes",
+        categorie: categorie,
 
-        image:imageProduit
+        tag: tag,
+
+        image: imageProduit
 
     };
+
+
+
+
+
+    let produits = JSON.parse(localStorage.getItem("produits")) || [];
+
 
 
 
@@ -126,6 +147,7 @@ function ajouterProduit(){
 
 
 
+
     localStorage.setItem("produits",JSON.stringify(produits));
 
 
@@ -134,9 +156,22 @@ function ajouterProduit(){
 
 
 
+    netwayeFom();
+
+}
+
+
+
+
+
+function netwayeFom(){
+
+
     document.getElementById("nomProduit").value="";
 
     document.getElementById("prixProduit").value="";
+
+    document.getElementById("ancienPrix").value="";
 
     previewPhoto.src="";
 
@@ -166,37 +201,65 @@ function afficherProduits(){
 
 
 
+
     liste.innerHTML="<h2>🛍️ Pwodwi yo</h2>";
+
+
 
 
 
     produits.forEach(function(produit,index){
 
 
-        liste.innerHTML+=`
+
+        liste.innerHTML += `
+
 
         <div class="product-admin">
 
+
         <img src="${produit.image}" width="120">
 
-        <h3>${produit.nom}</h3>
 
-        <p>${produit.prix}</p>
+        <h3>${produit.tag} ${produit.nom}</h3>
+
+
+        <p>
+        ${produit.ancienPrix ? produit.ancienPrix+" ➜ " : ""}
+        ${produit.prix}
+        </p>
+
+
+        <p>
+        📂 ${produit.categorie}
+        </p>
+
+
 
 
         <button onclick="modifierProduit(${index})">
+
         ✏️ Modifye
+
         </button>
+
+
 
 
         <button onclick="supprimerProduit(${index})">
+
         🗑️ Efase
+
         </button>
+
 
 
         </div>
 
+
+
         `;
+
 
 
     });
@@ -209,45 +272,30 @@ function afficherProduits(){
 
 
 
-function supprimerProduit(index){
-
-
-    let produits=JSON.parse(localStorage.getItem("produits")) || [];
-
-
-    produits.splice(index,1);
-
-
-
-    localStorage.setItem("produits",JSON.stringify(produits));
-
-
-    afficherProduits();
-
-
-}
-
-
-
-
 
 function modifierProduit(index){
 
 
-    let produits=JSON.parse(localStorage.getItem("produits")) || [];
+    let produits = JSON.parse(localStorage.getItem("produits")) || [];
 
 
-    let produit=produits[index];
+    let produit = produits[index];
+
 
 
     document.getElementById("nomProduit").value=produit.nom;
 
-
     document.getElementById("prixProduit").value=produit.prix.replace(" Gdes","");
+
+    document.getElementById("ancienPrix").value=produit.ancienPrix.replace(" Gdes","");
+
+
+    document.getElementById("categorieProduit").value=produit.categorie;
+
+    document.getElementById("tagProduit").value=produit.tag;
 
 
     imageProduit=produit.image;
-
 
     previewPhoto.src=produit.image;
 
@@ -261,20 +309,51 @@ function modifierProduit(index){
 
 
 
+
+
+function supprimerProduit(index){
+
+
+    let produits = JSON.parse(localStorage.getItem("produits")) || [];
+
+
+    produits.splice(index,1);
+
+
+
+    localStorage.setItem("produits",JSON.stringify(produits));
+
+
+
+    afficherProduits();
+
+
+}
+
+
+
+
+
+
+
 function rechercherProduit(){
 
 
-    let rech=document.getElementById("searchAdmin").value.toLowerCase();
+    const rech=document.getElementById("searchAdmin").value.toLowerCase();
 
 
     let produits=JSON.parse(localStorage.getItem("produits")) || [];
 
 
-    let filtre=produits.filter(function(p){
 
-        return p.nom.toLowerCase().includes(rech);
+    let rezilta=produits.filter(function(produit){
+
+
+        return produit.nom.toLowerCase().includes(rech);
+
 
     });
+
 
 
 
@@ -285,14 +364,12 @@ function rechercherProduit(){
 
 
 
-    filtre.forEach(function(produit){
+    rezilta.forEach(function(produit){
 
 
         liste.innerHTML+=`
 
         <div class="product-admin">
-
-        <img src="${produit.image}" width="120">
 
         <h3>${produit.nom}</h3>
 
@@ -302,10 +379,12 @@ function rechercherProduit(){
 
         `;
 
+
     });
 
 
 }
+
 
 
 
