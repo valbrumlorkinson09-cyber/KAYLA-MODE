@@ -516,7 +516,14 @@ liste.innerHTML += `
 
 <p>💰 ${k.pri}</p>
 
+<p>
+📍 Adrès: ${item.adresse || "Pa bay"}
+</p>
 
+
+<p>
+💳 Peman: ${item.peman || "Pa chwazi"}
+</p>
 <p>📦 Kantite: ${k.kantite}</p>
 
 
