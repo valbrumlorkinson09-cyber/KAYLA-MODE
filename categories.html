@@ -4,9 +4,10 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Kategori - KAYLA MODE</title>
+<title>Kategori | KAYLA MODE</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -16,45 +17,246 @@
 <body>
 
 
-<header>
+<header class="main-header">
 
-<h1>KAYLA MODE 👗</h1>
 
-<p>Kategori pwodwi yo</p>
+<img 
+src="images/logo.png"
+class="logo"
+alt="KAYLA MODE"
+onerror="this.style.display='none'"
+>
+
+
+<h1>
+👗 KAYLA MODE
+</h1>
+
+
+<p>
+Kategori pwodwi yo
+</p>
+
 
 </header>
 
 
 
+
+
+<nav class="menu">
+
+
+<a href="index.html">
+🏠 Akèy
+</a>
+
+
+<a href="boutik.html">
+🛍️ Boutik
+</a>
+
+
+<a href="categories.html">
+👗 Kategori
+</a>
+
+
+<a href="cart.html">
+🛒 Panier
+</a>
+
+
+<a href="contact.html">
+📞 Kontak
+</a>
+
+
+</nav>
+
+
+
+
+
+
+
 <section class="categories">
 
-<h2>Chwazi Kategori</h2>
+
+<h2>
+🔥 Chwazi Kategori
+</h2>
 
 
-<div class="box">
+
+<div class="category-container">
+
+
+<div class="box" onclick="filtreKategori('Fanm')">
+
 👗 Fanm
+
 </div>
 
 
-<div class="box">
+
+<div class="box" onclick="filtreKategori('Gason')">
+
 👔 Gason
+
 </div>
 
 
-<div class="box">
+
+<div class="box" onclick="filtreKategori('Soulye')">
+
 👟 Soulye
+
 </div>
 
 
-<div class="box">
+
+<div class="box" onclick="filtreKategori('Sak')">
+
 👜 Sak & Akseswa
+
 </div>
+
+
+
+</div>
+
 
 
 </section>
 
 
 
+
+
+
+
+
+<div id="productList" class="products">
+
+</div>
+
+
+
+
+
+
+
+<script>
+
+
+function filtreKategori(kategori){
+
+
+
+let produits = JSON.parse(
+
+localStorage.getItem("produits")
+
+) || [];
+
+
+
+
+let box = document.getElementById(
+
+"productList"
+
+);
+
+
+
+box.innerHTML="";
+
+
+
+
+
+let rezilta = produits.filter(function(item){
+
+
+
+return item.categorie == kategori;
+
+
+
+});
+
+
+
+
+
+
+if(rezilta.length===0){
+
+
+
+box.innerHTML=
+
+"<p>❌ Pa gen pwodwi nan kategori sa.</p>";
+
+return;
+
+
+}
+
+
+
+
+
+rezilta.forEach(function(item){
+
+
+
+box.innerHTML += `
+
+
+<div class="product">
+
+
+<img src="${item.image}">
+
+
+<h3>
+
+${item.nom}
+
+</h3>
+
+
+<p>
+
+${item.prix}
+
+</p>
+
+
+
+</div>
+
+
+`;
+
+
+
+});
+
+
+
+}
+
+
+
+</script>
+
+
+
+
 </body>
 
-</html>
+  </html>
