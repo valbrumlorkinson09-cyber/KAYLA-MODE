@@ -617,6 +617,145 @@ window.addEventListener("load", function(){
 
 
 });
+// ===============================
+// SISTÈM KÒMANN
+// ===============================
+
+
+function soveKommann(kommann){
+
+
+    let kommannYo = JSON.parse(
+
+        localStorage.getItem("kommann")
+
+    ) || [];
+
+
+
+    kommannYo.push(kommann);
+
+
+
+    localStorage.setItem(
+
+        "kommann",
+
+        JSON.stringify(kommannYo)
+
+    );
+
+
+}
+
+
+
+
+
+
+
+function voyeKommann(){
+
+
+
+    let non = document.getElementById("nonClient").value;
+
+
+    let phone = document.getElementById("phoneClient").value;
+
+
+    let kantite = document.getElementById("kantite").value;
+
+
+
+
+
+    if(non==="" || phone==="" || kantite===""){
+
+
+        alert("Ranpli tout enfòmasyon yo ❌");
+
+
+        return;
+
+    }
+
+
+
+
+
+    let kòmann = {
+
+
+        pwodwi: produit.nom,
+
+
+        pri: produit.prix,
+
+
+        kantite: kantite,
+
+
+        non: non,
+
+
+        telefòn: phone,
+
+
+        status:"An atant"
+
+
+    };
+
+
+
+
+
+    soveKommann(kòmann);
+
+
+
+
+
+    let mesaj = `
+
+🛍️ KAYLA MODE - NOUVO KÒMANN
+
+👗 Pwodwi: ${produit.nom}
+
+💰 Pri: ${produit.prix}
+
+📦 Kantite: ${kantite}
+
+👤 Non: ${non}
+
+📞 Telefòn: ${phone}
+
+📌 Status: An atant
+
+`;
+
+
+
+
+
+    let url =
+
+    "https://wa.me/50955545291?text="
+
+    +
+
+    encodeURIComponent(mesaj);
+
+
+
+
+
+    window.open(url,"_blank");
+
+
+
+}    
 </script>
 
 
