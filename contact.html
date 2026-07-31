@@ -4,9 +4,10 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Kontak - KAYLA MODE</title>
+<title>Kontak | KAYLA MODE</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -16,47 +17,258 @@
 <body>
 
 
-<header>
+<header class="main-header">
 
-<h1>KAYLA MODE 📞</h1>
 
-<p>Kontakte nou</p>
+<img 
+src="images/logo.png"
+class="logo"
+alt="KAYLA MODE"
+onerror="this.style.display='none'"
+>
+
+
+<h1>
+👗 KAYLA MODE
+</h1>
+
+
+<p>
+Kontakte nou
+</p>
+
 
 </header>
 
 
 
+
+
+<nav class="menu">
+
+
+<a href="index.html">
+🏠 Akèy
+</a>
+
+
+<a href="boutik.html">
+🛍️ Boutik
+</a>
+
+
+<a href="categories.html">
+👗 Kategori
+</a>
+
+
+<a href="cart.html">
+🛒 Panier
+</a>
+
+
+</nav>
+
+
+
+
+
+
+
 <section class="contact">
 
-<h2>🛒 Fè Kòmand</h2>
 
-<input type="text" placeholder="Non ou">
+<h2>
+🛒 Fè Kòmand
+</h2>
 
-<input type="text" placeholder="Nimewo telefòn">
 
-<select>
 
-<option>Chwazi peman</option>
 
-<option>NatCash</option>
+<input 
+id="nom"
+type="text"
+placeholder="Non ou"
+>
 
-<option>MonCash</option>
+
+
+
+
+<input 
+id="telephone"
+type="text"
+placeholder="Nimewo WhatsApp ou"
+>
+
+
+
+
+<input 
+id="adresse"
+type="text"
+placeholder="Adrès livrezon ou"
+>
+
+
+
+
+
+
+<select id="peman">
+
+
+<option value="Cash">
+💵 Peye lè livrezon
+</option>
+
+
+<option value="MonCash">
+📱 MonCash
+</option>
+
+
+<option value="NatCash">
+📱 NatCash
+</option>
+
 
 </select>
 
 
-<textarea placeholder="Ekri pwodwi ou vle a"></textarea>
 
 
-<a href="https://wa.me/50955545291" class="buy">
-Voye Kòmand
-</a>
+
+
+
+<textarea 
+id="mesaj"
+placeholder="Ekri pwodwi ou vle a">
+</textarea>
+
+
+
+
+
+
+
+<button class="buy" onclick="voyeKontak()">
+
+📲 Voye Kòmand
+
+</button>
+
+
 
 
 </section>
 
 
 
+
+
+
+
+<footer>
+
+<p>
+
+© 2026 KAYLA MODE - Tout dwa rezève
+
+</p>
+
+</footer>
+
+
+
+
+
+
+
+
+<script>
+
+
+function voyeKontak(){
+
+
+
+let non=document.getElementById("nom").value;
+
+
+let tel=document.getElementById("telephone").value;
+
+
+let adr=document.getElementById("adresse").value;
+
+
+let peman=document.getElementById("peman").value;
+
+
+let mesaj=document.getElementById("mesaj").value;
+
+
+
+
+
+if(non==="" || tel==="" || mesaj===""){
+
+
+alert("Ranpli enfòmasyon yo ❌");
+
+return;
+
+
+}
+
+
+
+
+
+let text=`
+
+🛍️ KAYLA MODE - KÒMAND
+
+
+👤 Non: ${non}
+
+📞 Telefòn: ${tel}
+
+📍 Adrès: ${adr}
+
+💳 Peman: ${peman}
+
+
+👗 Pwodwi:
+
+${mesaj}
+
+
+`;
+
+
+
+
+
+window.open(
+
+"https://wa.me/50955545291?text="+
+
+encodeURIComponent(text),
+
+"_blank"
+
+);
+
+
+
+}
+
+
+</script>
+
+
+
 </body>
 
-</html>
+  </html>
