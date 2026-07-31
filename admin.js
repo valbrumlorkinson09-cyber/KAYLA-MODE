@@ -729,3 +729,73 @@ function afficherDashboard(){
 
 
         }
+// ===============================
+// GRAFIK LAVANT
+// ===============================
+
+
+function grafikVant(){
+
+
+    let kommann = JSON.parse(
+
+        localStorage.getItem("kommann")
+
+    ) || [];
+
+
+
+    let total = 0;
+
+
+
+    kommann.forEach(function(item){
+
+
+        let pri = parseInt(
+
+            item.pri.replace(/\D/g,'')
+
+        );
+
+
+        total += pri * Number(item.kantite);
+
+
+    });
+
+
+
+
+
+    let canvas = document.getElementById("salesChart");
+
+
+
+    if(!canvas){
+
+        return;
+
+    }
+
+
+
+    let ctx = canvas.getContext("2d");
+
+
+
+    ctx.font = "18px Arial";
+
+
+    ctx.fillText(
+
+        "💰 Total lavant: " + total + " Gdes",
+
+        20,
+
+        50
+
+    );
+
+
+}
