@@ -1,1 +1,17 @@
-
+[
+  {
+    "nom": "Rob Elegant",
+    "prix": "2500 Gdes",
+    "image": "images/robe.jpg"
+  },
+  {
+    "nom": "Soulye Fashion",
+    "prix": "3000 Gdes",
+    "image": "images/soulye.jpg"
+  },
+  {
+    "nom": "Sak Fashion",
+    "prix": "2000 Gdes",
+    "image": "images/sak.jpg"
+  }
+]
