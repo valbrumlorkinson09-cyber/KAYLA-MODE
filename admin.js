@@ -1,3 +1,21 @@
+function loginAdmin(){
+
+    const password = document.getElementById("adminPassword").value;
+
+
+    if(password === "KAYLA2026"){
+
+        document.getElementById("loginBox").style.display = "none";
+
+        document.getElementById("adminPanel").style.display = "block";
+
+    }else{
+
+        alert("Modpas la pa bon ❌");
+
+    }
+
+}
 let imageProduit = "";
 
 const photoProduit = document.getElementById("photoProduit");
