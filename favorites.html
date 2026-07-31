@@ -17,13 +17,59 @@
 <body>
 
 
-<header>
+<header class="main-header">
 
-<h1>❤️ KAYLA MODE</h1>
 
-<p>Pwodwi mwen renmen</p>
+<img 
+src="images/logo.png"
+class="logo"
+alt="KAYLA MODE"
+onerror="this.style.display='none'"
+>
+
+
+<h1>
+❤️ KAYLA MODE
+</h1>
+
+
+<p>
+Pwodwi mwen renmen
+</p>
+
 
 </header>
+
+
+
+
+
+<nav class="menu">
+
+
+<a href="index.html">
+🏠 Akèy
+</a>
+
+
+<a href="boutik.html">
+🛍️ Boutik
+</a>
+
+
+<a href="categories.html">
+👗 Kategori
+</a>
+
+
+<a href="cart.html">
+🛒 Panier
+</a>
+
+
+</nav>
+
+
 
 
 
@@ -31,12 +77,16 @@
 <section class="products">
 
 
-<h2>❤️ Favori mwen yo</h2>
+<h2>
+❤️ Favori mwen yo
+</h2>
+
 
 
 <div id="favoriteList">
 
 </div>
+
 
 
 </section>
@@ -45,11 +95,17 @@
 
 
 
+
+
 <footer>
 
+
 <p>
+
 © 2026 KAYLA MODE - Tout dwa rezève
+
 </p>
+
 
 </footer>
 
@@ -64,7 +120,13 @@
 
 function jwennFavori(){
 
-return JSON.parse(localStorage.getItem("favori")) || [];
+
+return JSON.parse(
+
+localStorage.getItem("favori")
+
+) || [];
+
 
 }
 
@@ -72,12 +134,18 @@ return JSON.parse(localStorage.getItem("favori")) || [];
 
 
 
-function soveFavori(favori){
+
+function soveFavori(data){
+
 
 localStorage.setItem(
+
 "favori",
-JSON.stringify(favori)
+
+JSON.stringify(data)
+
 );
+
 
 }
 
@@ -90,29 +158,31 @@ JSON.stringify(favori)
 function afficherFavori(){
 
 
-let favori = jwennFavori();
+let favori=jwennFavori();
 
 
-let liste = document.getElementById("favoriteList");
+let box=document.getElementById(
 
+"favoriteList"
 
-
-liste.innerHTML="";
-
-
+);
 
 
 
-if(favori.length === 0){
+box.innerHTML="";
 
 
-liste.innerHTML = `
 
-<p>
-❤️ Ou poko gen pwodwi favori.
-</p>
 
-`;
+
+
+if(favori.length===0){
+
+
+box.innerHTML=
+
+"<p>❤️ Ou poko gen pwodwi favori.</p>";
+
 
 return;
 
@@ -124,35 +194,40 @@ return;
 
 
 
-
-favori.forEach(function(produit,index){
-
+favori.forEach(function(item,index){
 
 
-liste.innerHTML += `
 
+box.innerHTML += `
 
 
 <div class="product">
 
 
 
-<img src="${produit.image}">
+<img src="${item.image}">
 
 
 
 <h3>
 
-${produit.nom}
+${item.nom}
 
 </h3>
 
 
 
-
 <p>
 
-${produit.prix}
+📂 ${item.categorie || "Kategori"}
+
+</p>
+
+
+
+<p class="new-price">
+
+${item.prix}
 
 </p>
 
@@ -170,11 +245,11 @@ ${produit.prix}
 
 
 
-<a href="https://wa.me/50955545291" class="buy">
+<button onclick="achteFavori(${index})">
 
 🛒 Achte
 
-</a>
+</button>
 
 
 
@@ -198,10 +273,11 @@ ${produit.prix}
 
 
 
+
 function retireFavori(index){
 
 
-let favori = jwennFavori();
+let favori=jwennFavori();
 
 
 
@@ -223,11 +299,50 @@ afficherFavori();
 
 
 
+
+
+
+function achteFavori(index){
+
+
+let produit=jwennFavori()[index];
+
+
+
+let mesaj=`
+
+🛍️ KAYLA MODE - KÒMAND
+
+👗 Pwodwi: ${produit.nom}
+
+💰 Pri: ${produit.prix}
+
+`;
+
+
+window.open(
+
+"https://wa.me/50955545291?text="+
+
+encodeURIComponent(mesaj),
+
+"_blank"
+
+);
+
+
+}
+
+
+
+
+
+
 afficherFavori();
 
 
-</script>
 
+</script>
 
 
 
