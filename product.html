@@ -27,13 +27,9 @@
 
 
 
-
-
 <section id="productDetail" class="products">
 
 </section>
-
-
 
 
 
@@ -48,8 +44,12 @@
 
 
 
-
 <script>
+
+
+// ===============================
+// CHARGE PWODWI
+// ===============================
 
 
 let produit = JSON.parse(
@@ -66,19 +66,47 @@ const detail = document.getElementById("productDetail");
 
 
 
+
 // ===============================
-// KOMANTE SYSTEM
+// KOMANTE + RATING SYSTEM
 // ===============================
 
 
-function jwennKomante(){
+function kleKomante(){
+
+
+    if(!produit){
+
+        return "";
+
+    }
+
+
+    return "avis_" + produit.nom;
+
+
+}
+
+
+
+
+
+function jwennAvis(){
+
+
+    let kle = kleKomante();
+
+
+    if(kle===""){
+
+        return [];
+
+    }
 
 
     return JSON.parse(
 
-    localStorage.getItem(
-    "komante_"+produit.nom
-    )
+        localStorage.getItem(kle)
 
     ) || [];
 
@@ -90,14 +118,17 @@ function jwennKomante(){
 
 
 
-function soveKomante(data){
+function soveAvis(avis){
+
+
+    let kle = kleKomante();
 
 
     localStorage.setItem(
 
-    "komante_"+produit.nom,
+        kle,
 
-    JSON.stringify(data)
+        JSON.stringify(avis)
 
     );
 
@@ -109,69 +140,20 @@ function soveKomante(data){
 
 
 
-
-function voyeKomante(){
-
+function zetwal(n){
 
 
-    let non = document.getElementById("nonClient").value;
+    let rezilta="";
 
 
-    let mesaj = document.getElementById("mesajClient").value;
+    for(let i=0;i<n;i++){
 
-
-    let star = document.getElementById("starClient").value;
-
-
-
-
-
-    if(non==="" || mesaj===""){
-
-
-        alert("Ranpli tout enfòmasyon yo ❌");
-
-
-        return;
+        rezilta += "⭐";
 
     }
 
 
-
-
-
-    let komante = jwennKomante();
-
-
-
-
-    komante.push({
-
-
-        non:non,
-
-        mesaj:mesaj,
-
-        star:star
-
-
-    });
-
-
-
-
-
-    soveKomante(komante);
-
-
-
-
-    alert("Mèsi pou opinyon ou ❤️");
-
-
-
-    location.reload();
-
+    return rezilta;
 
 
 }
@@ -181,8 +163,90 @@ function voyeKomante(){
 
 
 
-if(produit){
+// ===============================
+// VOYE AVIS
+// ===============================
 
+
+function voyeAvis(){
+
+
+    let non = document.getElementById("nonClient").value;
+
+
+    let mesaj = document.getElementById("mesajClient").value;
+
+
+    let note = document.getElementById("noteClient").value;
+
+
+
+
+
+    if(non==="" || mesaj===""){
+
+
+        alert("Ranpli enfòmasyon yo ❌");
+
+
+        return;
+
+    }
+
+
+
+
+    let avis = jwennAvis();
+
+
+
+
+
+    avis.push({
+
+
+        non:non,
+
+
+        mesaj:mesaj,
+
+
+        note:Number(note)
+
+
+
+    });
+
+
+
+
+
+    soveAvis(avis);
+
+
+
+
+
+    alert("Mèsi pou kòmantè ou ❤️");
+
+
+
+    location.reload();
+
+
+}
+
+
+
+
+
+
+// ===============================
+// AFFICHE PWODWI
+// ===============================
+
+
+if(produit){
 
 
 detail.innerHTML = `
@@ -191,11 +255,13 @@ detail.innerHTML = `
 <div class="product">
 
 
+
 <span class="tag">
 
 ${produit.tag || "Nouvo"}
 
 </span>
+
 
 
 
@@ -235,44 +301,40 @@ ${produit.prix}
 
 
 
-
 <h3>
 
-⭐ Evalye pwodwi sa
+⭐ Bay pwodwi a yon nòt
 
 </h3>
 
 
 
+<select id="noteClient">
 
 
-<select id="starClient">
-
-
-<option value="⭐⭐⭐⭐⭐">
+<option value="5">
 ⭐⭐⭐⭐⭐
 </option>
 
 
-<option value="⭐⭐⭐⭐">
+<option value="4">
 ⭐⭐⭐⭐
 </option>
 
 
-<option value="⭐⭐⭐">
+<option value="3">
 ⭐⭐⭐
 </option>
 
 
-<option value="⭐⭐">
+<option value="2">
 ⭐⭐
 </option>
 
 
-<option value="⭐">
+<option value="1">
 ⭐
 </option>
-
 
 
 </select>
@@ -283,34 +345,25 @@ ${produit.prix}
 
 <h3>
 
-💬 Kite yon kòmantè
+💬 Kòmantè ou
 
 </h3>
 
 
 
 
-
-<input 
-id="nonClient"
-placeholder="Non ou">
+<input id="nonClient" placeholder="Non ou">
 
 
 
-
-
-<textarea 
-id="mesajClient"
-placeholder="Ekri opinyon ou">
-</textarea>
+<textarea id="mesajClient" placeholder="Ekri kòmantè ou"></textarea>
 
 
 
 
+<button class="buy" onclick="voyeAvis()">
 
-<button class="buy" onclick="voyeKomante()">
-
-📩 Voye kòmantè
+📩 Voye
 
 </button>
 
@@ -318,7 +371,7 @@ placeholder="Ekri opinyon ou">
 
 
 
-<div id="listeKomante">
+<div id="listeAvis">
 
 </div>
 
@@ -345,15 +398,60 @@ Pa gen pwodwi chwazi
 
 
 }
- // ===============================
-// AFFICHAGE KOMANTE
+// ===============================
+// AFFICHE KOMANTÈ + RATING
 // ===============================
 
 
-function afficherKomante(){
+function mwayenNòt(){
 
 
-    let box = document.getElementById("listeKomante");
+    let avis = jwennAvis();
+
+
+
+    if(avis.length === 0){
+
+
+        return 0;
+
+    }
+
+
+
+
+
+    let total = 0;
+
+
+
+    avis.forEach(function(item){
+
+
+        total += item.note;
+
+
+    });
+
+
+
+
+
+    return Math.round(total / avis.length);
+
+
+}
+
+
+
+
+
+
+
+function afficherNòt(){
+
+
+    let box = document.getElementById("listeAvis");
 
 
 
@@ -367,38 +465,45 @@ function afficherKomante(){
 
 
 
-    let komante = jwennKomante();
+    let avis = jwennAvis();
 
 
 
-
-    if(komante.length === 0){
-
-
-        box.innerHTML = `
-
-        <h3>
-        💬 Pa gen kòmantè ankò
-        </h3>
-
-        `;
-
-
-        return;
-
-    }
+    let moy = mwayenNòt();
 
 
 
 
 
+    let html = `
 
 
-    box.innerHTML = `
 
     <h3>
-    💬 Kòmantè kliyan yo
+
+    ⭐ Evalyasyon kliyan
+
     </h3>
+
+
+
+    <p>
+
+    Nòt mwayèn:
+
+    ${moy > 0 ? zetwal(moy) : "Pa gen nòt ankò"}
+
+    </p>
+
+
+
+    <p>
+
+    👥 ${avis.length} kliyan bay opinyon
+
+    </p>
+
+
 
     `;
 
@@ -407,14 +512,37 @@ function afficherKomante(){
 
 
 
-    komante.forEach(function(item){
+
+    if(avis.length === 0){
 
 
 
-        box.innerHTML += `
+        html += `
+
+        <p>
+        💬 Pa gen kòmantè ankò
+        </p>
+
+        `;
+
+
+
+    }
+
+
+
+
+
+    avis.forEach(function(item){
+
+
+
+        html += `
+
 
 
         <div class="comment-box">
+
 
 
         <h4>
@@ -425,11 +553,14 @@ function afficherKomante(){
 
 
 
+
         <p>
 
-        ${item.star}
+        ${zetwal(item.note)}
 
         </p>
+
+
 
 
 
@@ -438,6 +569,7 @@ function afficherKomante(){
         ${item.mesaj}
 
         </p>
+
 
 
 
@@ -453,85 +585,10 @@ function afficherKomante(){
 
 
 
-}
 
 
 
-
-
-
-
-
-// ===============================
-// KALKIL MOYÈN NÒT
-// ===============================
-
-
-function mwayenStar(){
-
-
-    let komante = jwennKomante();
-
-
-
-    if(komante.length === 0){
-
-        return "Pa gen nòt ankò";
-
-    }
-
-
-
-
-
-    let total = 0;
-
-
-
-
-    komante.forEach(function(item){
-
-
-
-        total += item.star.length;
-
-
-
-    });
-
-
-
-
-
-    let rezilta = Math.round(
-
-    total / komante.length
-
-    );
-
-
-
-
-
-    let zetwal = "";
-
-
-
-
-
-    for(let i=0;i<rezilta;i++){
-
-
-        zetwal += "⭐";
-
-
-    }
-
-
-
-
-
-    return zetwal;
+    box.innerHTML = html;
 
 
 
@@ -542,82 +599,27 @@ function mwayenStar(){
 
 
 
-
-
 // ===============================
-// AJOUTE INFO NÒT SOU PWODWI
+// CHAJ KOMANTÈ YO
 // ===============================
 
 
-function afficherNote(){
-
-
-    let product = document.querySelector(".product");
-
-
-
-    if(!product){
-
-        return;
-
-    }
-
-
-
-
-
-    let info = document.createElement("p");
-
-
-
-    info.innerHTML = `
-
-    ⭐ Nòt kliyan:
-
-    ${mwayenStar()}
-
-    `;
-
-
-
-    product.insertBefore(
-
-    info,
-
-    product.children[3]
-
-    );
-
-
-
-}
-
-
-
-
-
-
-
-afficherKomante();
-
-afficherNote();
- 
-// ===============================
-// PROTEKSYON CHAJMAN PAJ
+afficherNòt();
+   // ===============================
+// RAFRECHI Apre CHAJMAN
 // ===============================
 
 
-window.addEventListener(
-
-"load",
-
-function(){
+window.addEventListener("load", function(){
 
 
-    afficherKomante();
+    afficherNòt();
 
 
-    afficherNote();
+});
+</script>
 
 
-}); 
+</body>
+
+</html>    
