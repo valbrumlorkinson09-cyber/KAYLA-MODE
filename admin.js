@@ -6,15 +6,15 @@ const previewPhoto = document.getElementById("previewPhoto");
 
 photoProduit.addEventListener("change", function(){
 
-const file = this.files[0];
+    const file = this.files[0];
 
-if(file){
+    if(file){
 
-imageProduit = URL.createObjectURL(file);
+        imageProduit = URL.createObjectURL(file);
 
-previewPhoto.src = imageProduit;
+        previewPhoto.src = imageProduit;
 
-}
+    }
 
 });
 
@@ -22,78 +22,85 @@ previewPhoto.src = imageProduit;
 
 function ajouterProduit(){
 
-const nom = document.getElementById("nomProduit").value;
-const prix = document.getElementById("prixProduit").value;
+    const nom = document.getElementById("nomProduit").value;
+    const prix = document.getElementById("prixProduit").value;
 
 
-if(nom === "" || prix === "" || imageProduit === ""){
+    if(nom === "" || prix === "" || imageProduit === ""){
 
-alert("Ranpli tout enfòmasyon yo");
+        alert("Ranpli tout enfòmasyon yo");
 
-return;
+        return;
+
+    }
+
+
+    let nouveauProduit = {
+
+        nom: nom,
+        prix: prix + " Gdes",
+        image: imageProduit
+
+    };
+
+
+    let produits = JSON.parse(localStorage.getItem("produits")) || [];
+
+
+    produits.push(nouveauProduit);
+
+
+    localStorage.setItem("produits", JSON.stringify(produits));
+
+
+    afficherProduits();
+
+
+    alert("Pwodwi ajoute avèk siksè ✅");
+
+
+    document.getElementById("nomProduit").value = "";
+    document.getElementById("prixProduit").value = "";
+    previewPhoto.src = "";
 
 }
 
-
-let nouveauProduit = {
-
-nom: nom,
-prix: prix + " Gdes",
-image: imageProduit
-
-};
-
-
-let produits = JSON.parse(localStorage.getItem("produits")) || [];
-
-
-produits.push(nouveauProduit);
-
-
-localStorage.setItem("produits", JSON.stringify(produits));
-
-
-afficherProduits();
-
-
-alert("Pwodwi ajoute ✅");
-
-
-}
 
 
 
 function afficherProduits(){
 
-const liste = document.getElementById("listeProduits");
+    const liste = document.getElementById("listeProduits");
 
-let produits = JSON.parse(localStorage.getItem("produits")) || [];
-
-
-liste.innerHTML = "<h2>🛍️ Pwodwi yo</h2>";
+    let produits = JSON.parse(localStorage.getItem("produits")) || [];
 
 
-produits.forEach(function(produit){
+    liste.innerHTML = "<h2>🛍️ Pwodwi yo</h2>";
 
 
-liste.innerHTML += `
+    produits.forEach(function(produit){
 
-<div class="product-admin">
 
-<img src="${produi.image}" width="120">
+        liste.innerHTML += `
 
-<h3>${produit.nom}</h3>
+        <div class="product-admin">
 
-<p>${produit.prix}</p>
+            <img src="${produit.image}" width="120">
 
-</div>
+            <h3>${produit.nom}</h3>
 
-`;
+            <p>${produit.prix}</p>
 
-});
+        </div>
+
+        `;
+
+
+    });
 
 
 }
+
 
 
 afficherProduits();
