@@ -17,19 +17,71 @@
 <body>
 
 
-<header>
+<header class="main-header">
 
-<h1>👗 KAYLA MODE</h1>
+<img 
+src="images/logo.png"
+class="logo"
+alt="KAYLA MODE"
+onerror="this.style.display='none'"
+>
 
-<p>Detay pwodwi</p>
+
+<h1>
+👗 KAYLA MODE
+</h1>
+
+
+<p>
+Detay pwodwi
+</p>
+
 
 </header>
 
 
 
+
+
+<nav class="menu">
+
+
+<a href="index.html">
+🏠 Akèy
+</a>
+
+
+<a href="boutik.html">
+🛍️ Boutik
+</a>
+
+
+<a href="cart.html">
+🛒 Panier
+</a>
+
+
+<a href="contact.html">
+📞 Kontak
+</a>
+
+
+</nav>
+
+
+
+
+
+
+
 <section id="productDetail" class="products">
 
+
 </section>
+
+
+
+
 
 
 
@@ -40,6 +92,8 @@
 </p>
 
 </footer>
+
+
 
 
 
@@ -60,19 +114,22 @@ localStorage.getItem("produitChoisi")
 
 
 
-const detail = document.getElementById("productDetail");
+const detail = document.getElementById(
 
+"productDetail"
+
+);
 
 
 
 
 
 // ===============================
-// KOMANTE + RATING SYSTEM
+// SYSTEM AVIS
 // ===============================
 
 
-function kleKomante(){
+function kleAvis(){
 
 
     if(!produit){
@@ -82,7 +139,7 @@ function kleKomante(){
     }
 
 
-    return "avis_" + produit.nom;
+    return "avis_"+produit.nom;
 
 
 }
@@ -94,14 +151,8 @@ function kleKomante(){
 function jwennAvis(){
 
 
-    let kle = kleKomante();
+    let kle = kleAvis();
 
-
-    if(kle===""){
-
-        return [];
-
-    }
 
 
     return JSON.parse(
@@ -110,25 +161,20 @@ function jwennAvis(){
 
     ) || [];
 
-
 }
 
 
 
 
 
-
-function soveAvis(avis){
-
-
-    let kle = kleKomante();
+function soveAvis(data){
 
 
     localStorage.setItem(
 
-        kle,
+        kleAvis(),
 
-        JSON.stringify(avis)
+        JSON.stringify(data)
 
     );
 
@@ -143,113 +189,34 @@ function soveAvis(avis){
 function zetwal(n){
 
 
-    let rezilta="";
+    let star="";
 
 
     for(let i=0;i<n;i++){
 
-        rezilta += "⭐";
+
+        star+="⭐";
+
 
     }
 
 
-    return rezilta;
+    return star;
 
 
 }
-
-
-
-
-
-
+ 
 // ===============================
-// VOYE AVIS
-// ===============================
-
-
-function voyeAvis(){
-
-
-    let non = document.getElementById("nonClient").value;
-
-
-    let mesaj = document.getElementById("mesajClient").value;
-
-
-    let note = document.getElementById("noteClient").value;
-
-
-
-
-
-    if(non==="" || mesaj===""){
-
-
-        alert("Ranpli enfòmasyon yo ❌");
-
-
-        return;
-
-    }
-
-
-
-
-    let avis = jwennAvis();
-
-
-
-
-
-    avis.push({
-
-
-        non:non,
-
-
-        mesaj:mesaj,
-
-
-        note:Number(note)
-
-
-
-    });
-
-
-
-
-
-    soveAvis(avis);
-
-
-
-
-
-    alert("Mèsi pou kòmantè ou ❤️");
-
-
-
-    location.reload();
-
-
-}
-
-
-
-
-
-
-// ===============================
-// AFFICHE PWODWI
+// AFFICHAGE PWODWI
 // ===============================
 
 
 if(produit){
 
 
+
 detail.innerHTML = `
+
 
 
 <div class="product">
@@ -266,7 +233,10 @@ ${produit.tag || "Nouvo"}
 
 
 
-<img src="${produit.image}">
+<img 
+src="${produit.image}" 
+alt="${produit.nom}"
+>
 
 
 
@@ -301,6 +271,118 @@ ${produit.prix}
 
 
 
+
+
+
+<h3>
+
+📦 Kantite
+
+</h3>
+
+
+<input 
+type="number"
+id="kantite"
+value="1"
+min="1"
+>
+
+
+
+
+
+
+
+<h3>
+
+👤 Enfòmasyon kliyan
+
+</h3>
+
+
+
+<input 
+id="nonClient"
+placeholder="Non ou"
+>
+
+
+
+<input 
+id="phoneClient"
+placeholder="Nimewo WhatsApp ou"
+>
+
+
+
+
+<input 
+id="adrèsClient"
+placeholder="Adrès livrezon ou"
+>
+
+
+
+
+
+
+
+<h3>
+
+💳 Mwayen peman
+
+</h3>
+
+
+
+<select id="mwayenPeman">
+
+
+<option value="Cash">
+
+💵 Peye lè livrezon
+
+</option>
+
+
+<option value="MonCash">
+
+📱 MonCash
+
+</option>
+
+
+<option value="NatCash">
+
+📱 NatCash
+
+</option>
+
+
+</select>
+
+
+
+
+
+
+
+<button 
+class="buy"
+onclick="voyeKommann()"
+>
+
+🛒 Pase kòmann
+
+</button>
+
+
+
+
+
+
+
 <h3>
 
 ⭐ Bay pwodwi a yon nòt
@@ -309,35 +391,49 @@ ${produit.prix}
 
 
 
+
 <select id="noteClient">
 
 
 <option value="5">
+
 ⭐⭐⭐⭐⭐
+
 </option>
 
 
 <option value="4">
+
 ⭐⭐⭐⭐
+
 </option>
 
 
 <option value="3">
+
 ⭐⭐⭐
+
 </option>
 
 
 <option value="2">
+
 ⭐⭐
+
 </option>
 
 
 <option value="1">
+
 ⭐
+
 </option>
 
 
+
 </select>
+
+
 
 
 
@@ -352,39 +448,26 @@ ${produit.prix}
 
 
 
-<input id="nonClient" placeholder="Non ou">
 
-<input id="phoneClient" placeholder="Nimewo WhatsApp ou">
-
-<input id="adrèsClient" placeholder="Adrès livrezon ou">
-
-
-<select id="mwayenPeman">
-
-<option value="Cash">
-💵 Peye lè livrezon
-</option>
-
-<option value="MonCash">
-📱 MonCash
-</option>
-
-<option value="NatCash">
-📱 NatCash
-</option>
-
-</select>
-
-<textarea id="mesajClient" placeholder="Ekri kòmantè ou"></textarea>
+<textarea 
+id="mesajClient"
+placeholder="Ekri opinyon ou..."
+></textarea>
 
 
 
 
-<button class="buy" onclick="voyeAvis()">
 
-📩 Voye
+
+<button 
+class="buy"
+onclick="voyeAvis()"
+>
+
+📩 Voye kòmantè
 
 </button>
+
 
 
 
@@ -396,7 +479,10 @@ ${produit.prix}
 
 
 
+
+
 </div>
+
 
 
 `;
@@ -417,26 +503,104 @@ Pa gen pwodwi chwazi
 
 
 }
+
+
+
+
+
+
+
 // ===============================
-// AFFICHE KOMANTÈ + RATING
+// VOYE AVIS
 // ===============================
 
 
-function mwayenNòt(){
+function voyeAvis(){
+
+
+let non = document.getElementById("nonClient").value;
+
+
+let mesaj = document.getElementById("mesajClient").value;
+
+
+let note = Number(
+
+document.getElementById("noteClient").value
+
+);
+
+
+
+
+
+if(non==="" || mesaj===""){
+
+
+alert("Ranpli enfòmasyon yo ❌");
+
+return;
+
+
+}
+
+
+
+
+
+let avis = jwennAvis();
+
+
+
+
+
+avis.push({
+
+
+non:non,
+
+
+mesaj:mesaj,
+
+
+note:note
+
+
+});
+
+
+
+
+
+soveAvis(avis);
+
+
+
+alert("Mèsi pou opinyon ou ❤️");
+
+
+location.reload();
+
+
+
+    }
+
+// ===============================
+// AFFICHAGE AVIS
+// ===============================
+
+
+function mwayenNot(){
 
 
     let avis = jwennAvis();
 
 
-
     if(avis.length === 0){
-
 
         return 0;
 
     }
-
-
 
 
 
@@ -455,8 +619,8 @@ function mwayenNòt(){
 
 
 
-
     return Math.round(total / avis.length);
+
 
 
 }
@@ -467,10 +631,14 @@ function mwayenNòt(){
 
 
 
-function afficherNòt(){
+function afficherAvis(){
 
 
-    let box = document.getElementById("listeAvis");
+    let box = document.getElementById(
+
+        "listeAvis"
+
+    );
 
 
 
@@ -488,7 +656,7 @@ function afficherNòt(){
 
 
 
-    let moy = mwayenNòt();
+    let moy = mwayenNot();
 
 
 
@@ -497,11 +665,8 @@ function afficherNòt(){
     let html = `
 
 
-
     <h3>
-
     ⭐ Evalyasyon kliyan
-
     </h3>
 
 
@@ -523,30 +688,9 @@ function afficherNòt(){
     </p>
 
 
-
     `;
 
 
-
-
-
-
-
-    if(avis.length === 0){
-
-
-
-        html += `
-
-        <p>
-        💬 Pa gen kòmantè ankò
-        </p>
-
-        `;
-
-
-
-    }
 
 
 
@@ -559,9 +703,7 @@ function afficherNòt(){
         html += `
 
 
-
         <div class="comment-box">
-
 
 
         <h4>
@@ -569,7 +711,6 @@ function afficherNòt(){
         👤 ${item.non}
 
         </h4>
-
 
 
 
@@ -581,14 +722,11 @@ function afficherNòt(){
 
 
 
-
-
         <p>
 
         ${item.mesaj}
 
         </p>
-
 
 
 
@@ -606,7 +744,6 @@ function afficherNòt(){
 
 
 
-
     box.innerHTML = html;
 
 
@@ -618,33 +755,17 @@ function afficherNòt(){
 
 
 
-// ===============================
-// CHAJ KOMANTÈ YO
-// ===============================
 
 
-afficherNòt();
-   // ===============================
-// RAFRECHI Apre CHAJMAN
-// ===============================
-
-
-window.addEventListener("load", function(){
-
-
-    afficherNòt();
-
-
-});
 // ===============================
 // SISTÈM KÒMANN
 // ===============================
 
 
-function soveKommann(kommann){
+function soveKommann(data){
 
 
-    let kommannYo = JSON.parse(
+    let kommann = JSON.parse(
 
         localStorage.getItem("kommann")
 
@@ -652,7 +773,11 @@ function soveKommann(kommann){
 
 
 
-    kommannYo.push(kommann);
+
+
+    kommann.push(data);
+
+
 
 
 
@@ -660,9 +785,10 @@ function soveKommann(kommann){
 
         "kommann",
 
-        JSON.stringify(kommannYo)
+        JSON.stringify(kommann)
 
     );
+
 
 
 }
@@ -673,8 +799,8 @@ function soveKommann(kommann){
 
 
 
-function voyeKommann(){
 
+function voyeKommann(){
 
 
     let non = document.getElementById("nonClient").value;
@@ -685,9 +811,14 @@ function voyeKommann(){
 
     let kantite = document.getElementById("kantite").value;
 
-let adresse = document.getElementById("adrèsClient").value;
 
-let peman = document.getElementById("mwayenPeman").value;
+    let adresse = document.getElementById("adrèsClient").value;
+
+
+    let peman = document.getElementById("mwayenPeman").value;
+
+
+
 
 
 
@@ -705,7 +836,10 @@ let peman = document.getElementById("mwayenPeman").value;
 
 
 
+
+
     let kòmann = {
+
 
 
         pwodwi: produit.nom,
@@ -714,21 +848,27 @@ let peman = document.getElementById("mwayenPeman").value;
         pri: produit.prix,
 
 
-        kantite: kantite,
+        kantite:Number(kantite),
 
 
-        non: non,
+        non:non,
 
 
-        telefòn: phone,
+        telefòn:phone,
+
+
+        adresse:adresse,
+
+
+        peman:peman,
 
 
         status:"An atant"
 
-adresse: adresse,
 
-peman: peman,
     };
+
+
 
 
 
@@ -740,9 +880,11 @@ peman: peman,
 
 
 
+
     let mesaj = `
 
 🛍️ KAYLA MODE - NOUVO KÒMANN
+
 
 👗 Pwodwi: ${produit.nom}
 
@@ -754,9 +896,15 @@ peman: peman,
 
 📞 Telefòn: ${phone}
 
+📍 Adrès: ${adresse}
+
+💳 Peman: ${peman}
+
 📌 Status: An atant
 
 `;
+
+
 
 
 
@@ -774,11 +922,43 @@ peman: peman,
 
 
 
+
+
     window.open(url,"_blank");
 
 
+}
 
-}    
+
+
+
+
+
+
+
+// ===============================
+// START
+// ===============================
+
+
+afficherAvis();
+
+
+
+window.addEventListener(
+
+"load",
+
+function(){
+
+
+    afficherAvis();
+
+
+});
+
+
+
 </script>
 
 
