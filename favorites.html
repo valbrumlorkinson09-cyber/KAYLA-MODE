@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ht">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>KAYLA MODE - Favori</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<h1>❤️ KAYLA MODE</h1>
+
+<p>Pwodwi mwen renmen</p>
+
+</header>
+
+
+
+
+<section class="products">
+
+
+<h2>❤️ Favori mwen yo</h2>
+
+
+<div id="favoriteList">
+
+</div>
+
+
+</section>
+
+
+
+
+
+<footer>
+
+<p>
+© 2026 KAYLA MODE - Tout dwa rezève
+</p>
+
+</footer>
+
+
+
+
+
+
+
+<script>
+
+
+function jwennFavori(){
+
+return JSON.parse(localStorage.getItem("favori")) || [];
+
+}
+
+
+
+
+
+function soveFavori(favori){
+
+localStorage.setItem(
+"favori",
+JSON.stringify(favori)
+);
+
+}
+
+
+
+
+
+
+
+function afficherFavori(){
+
+
+let favori = jwennFavori();
+
+
+let liste = document.getElementById("favoriteList");
+
+
+
+liste.innerHTML="";
+
+
+
+
+
+if(favori.length === 0){
+
+
+liste.innerHTML = `
+
+<p>
+❤️ Ou poko gen pwodwi favori.
+</p>
+
+`;
+
+return;
+
+
+}
+
+
+
+
+
+
+
+favori.forEach(function(produit,index){
+
+
+
+liste.innerHTML += `
+
+
+
+<div class="product">
+
+
+
+<img src="${produit.image}">
+
+
+
+<h3>
+
+${produit.nom}
+
+</h3>
+
+
+
+
+<p>
+
+${produit.prix}
+
+</p>
+
+
+
+
+
+<button onclick="retireFavori(${index})">
+
+❌ Retire
+
+</button>
+
+
+
+
+
+<a href="https://wa.me/50955545291" class="buy">
+
+🛒 Achte
+
+</a>
+
+
+
+</div>
+
+
+
+`;
+
+
+
+});
+
+
+
+}
+
+
+
+
+
+
+
+function retireFavori(index){
+
+
+let favori = jwennFavori();
+
+
+
+favori.splice(index,1);
+
+
+
+soveFavori(favori);
+
+
+
+afficherFavori();
+
+
+
+}
+
+
+
+
+
+afficherFavori();
+
+
+</script>
+
+
+
+
+</body>
+
+</html>
