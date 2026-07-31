@@ -30,6 +30,7 @@ Antre
 
 
 
+
 <div id="adminPanel" style="display:none;">
 
 
@@ -39,6 +40,7 @@ Antre
 
 <p>Jere pwodwi ou yo</p>
 
+
 <button class="buy" onclick="logoutAdmin()">
 🚪 Dekonekte
 </button>
@@ -47,17 +49,41 @@ Antre
 
 
 
+
+<section class="dashboard">
+
+
+<div class="stat">
+
+<h3>📦 Total pwodwi</h3>
+
+<p id="totalProduits">0</p>
+
+</div>
+
+
+</section>
+
+
+
+
+
 <section class="admin-box">
 
-<h2>📸 Ajoute nouvo pwodwi</h2>
+
+<h2>📸 Ajoute / Modifye pwodwi</h2>
+
 
 
 <label for="photoProduit" class="btn-photo">
+
 📸 Chwazi foto
+
 </label>
 
 
 <input type="file" id="photoProduit" accept="image/*" hidden>
+
 
 
 <img id="previewPhoto" width="200" style="margin-top:15px;border-radius:10px;">
@@ -72,7 +98,9 @@ Antre
 
 
 <button class="buy" onclick="ajouterProduit()">
-➕ Ajoute pwodwi
+
+➕ Sove pwodwi
+
 </button>
 
 
@@ -80,7 +108,35 @@ Antre
 
 
 
+
+
+
+<section class="search-admin">
+
+
+<h2>🔍 Chèche pwodwi</h2>
+
+
+<input type="text" id="searchAdmin" placeholder="Chèche...">
+
+
+<button onclick="rechercherProduit()">
+
+🔍 Chèche
+
+</button>
+
+
+</section>
+
+
+
+
+
+
+
 <section id="listeProduits">
+
 
 <h2>🛍️ Pwodwi yo</h2>
 
@@ -88,7 +144,10 @@ Antre
 </section>
 
 
+
+
 </div>
+
 
 
 
