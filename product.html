@@ -27,12 +27,9 @@
 
 
 
-
 <section id="productDetail" class="products">
 
-
 </section>
-
 
 
 
@@ -54,8 +51,6 @@
 
 let produit = JSON.parse(localStorage.getItem("produitChoisi"));
 
-
-
 const detail = document.getElementById("productDetail");
 
 
@@ -65,30 +60,69 @@ const detail = document.getElementById("productDetail");
 function voyeKommann(){
 
 
-    let non = document.getElementById("nonClient").value;
+let non = document.getElementById("nonClient").value;
 
-    let phone = document.getElementById("phoneClient").value;
+let phone = document.getElementById("phoneClient").value;
 
-    let kantite = document.getElementById("kantite").value;
-
-
-
-    if(non === "" || phone === "" || kantite === ""){
-
-
-        alert("Ranpli tout enfòmasyon yo ❌");
-
-        return;
-
-    }
+let kantite = document.getElementById("kantite").value;
 
 
 
+if(non==="" || phone==="" || kantite===""){
 
 
-    let message = `
+alert("Ranpli tout enfòmasyon yo ❌");
 
-🛍️ *KAYLA MODE - NOUVO KOMMANN*
+return;
+
+
+}
+
+
+
+
+let nouvoKomann = {
+
+
+produit: produit.nom,
+
+pri: produit.prix,
+
+kantite: kantite,
+
+kliyan: non,
+
+telefon: phone,
+
+dat: new Date().toLocaleString()
+
+
+};
+
+
+
+
+let komann = JSON.parse(localStorage.getItem("komann")) || [];
+
+
+
+komann.push(nouvoKomann);
+
+
+
+localStorage.setItem(
+"komann",
+JSON.stringify(komann)
+);
+
+
+
+
+
+
+let mesaj = `
+
+🛍️ KAYLA MODE NOUVO KOMMANN
 
 👗 Pwodwi: ${produit.nom}
 
@@ -96,7 +130,7 @@ function voyeKommann(){
 
 📦 Kantite: ${kantite}
 
-👤 Non kliyan: ${non}
+👤 Kliyan: ${non}
 
 📞 Telefòn: ${phone}
 
@@ -105,11 +139,14 @@ function voyeKommann(){
 
 
 
-    let url = "https://wa.me/50955545291?text=" + encodeURIComponent(message);
+let whatsapp = 
+"https://wa.me/50955545291?text=" 
++ encodeURIComponent(mesaj);
 
 
 
-    window.open(url,"_blank");
+window.open(whatsapp,"_blank");
+
 
 
 }
@@ -120,7 +157,9 @@ function voyeKommann(){
 
 
 
+
 if(produit){
+
 
 
 detail.innerHTML = `
@@ -128,6 +167,7 @@ detail.innerHTML = `
 
 
 <div class="product">
+
 
 
 <span class="tag">
@@ -154,7 +194,6 @@ ${produit.nom}
 
 
 
-
 <p>
 
 📂 ${produit.categorie || "Kategori"}
@@ -165,13 +204,12 @@ ${produit.nom}
 
 
 
+
 ${
 produit.ancienPrix 
 ? `<p class="old-price">${produit.ancienPrix}</p>`
-: ""
+:""
 }
-
-
 
 
 
@@ -181,7 +219,6 @@ produit.ancienPrix
 ${produit.prix}
 
 </p>
-
 
 
 
@@ -211,13 +248,11 @@ ${produit.prix}
 
 
 
-
 <button class="buy" onclick="voyeKommann()">
 
 🛒 Voye kòmann
 
 </button>
-
 
 
 
@@ -232,10 +267,11 @@ ${produit.prix}
 }else{
 
 
+
 detail.innerHTML = `
 
 <h2>
-Pa gen pwodwi chwazi
+Pa gen pwodwi chwazi ❌
 </h2>
 
 `;
@@ -243,6 +279,7 @@ Pa gen pwodwi chwazi
 
 
 }
+
 
 
 </script>
