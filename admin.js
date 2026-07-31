@@ -596,3 +596,136 @@ afficherProduits();
 
 afficherKomann();
 afficherKommann();
+
+// ===============================
+// DASHBOARD STATISTIK
+// ===============================
+
+
+function afficherDashboard(){
+
+
+    let produits = JSON.parse(
+
+        localStorage.getItem("produits")
+
+    ) || [];
+
+
+
+    let kommann = JSON.parse(
+
+        localStorage.getItem("kommann")
+
+    ) || [];
+
+
+
+
+
+    let totalProduits = document.getElementById("totalProduits");
+
+    let totalKommann = document.getElementById("totalKommann");
+
+    let totalVant = document.getElementById("totalVant");
+
+    let totalKliyan = document.getElementById("totalKliyan");
+
+
+
+
+
+    if(totalProduits){
+
+        totalProduits.innerHTML = produits.length;
+
+    }
+
+
+
+
+
+    if(totalKommann){
+
+        totalKommann.innerHTML = kommann.length;
+
+    }
+
+
+
+
+
+    let lajan = 0;
+
+
+
+    kommann.forEach(function(item){
+
+
+
+        let pri = parseInt(
+
+            item.pri.replace(/\D/g,'')
+
+        );
+
+
+
+        let kantite = Number(item.kantite);
+
+
+
+        lajan += pri * kantite;
+
+
+
+    });
+
+
+
+
+
+    if(totalVant){
+
+        totalVant.innerHTML = lajan + " Gdes";
+
+    }
+
+
+
+
+
+
+    let kliyan = [];
+
+
+
+    kommann.forEach(function(item){
+
+
+        if(!kliyan.includes(item.telefòn)){
+
+
+            kliyan.push(item.telefòn);
+
+
+        }
+
+
+    });
+
+
+
+
+
+    if(totalKliyan){
+
+
+        totalKliyan.innerHTML = kliyan.length;
+
+
+    }
+
+
+
+        }
