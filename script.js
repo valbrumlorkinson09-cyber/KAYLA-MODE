@@ -1,30 +1,59 @@
-// KAYLA MODE - SCRIPT PRINCIPAL
+ // KAYLA MODE - SCRIPT PRINCIPAL
 // PANIER + FAVORI SYSTEM
+
+
+// ===============================
+// DATABASE
+// ===============================
+
+
+function jwennProduits(){
+
+    return JSON.parse(
+        localStorage.getItem("produits")
+    ) || [];
+
+}
+
+
+
 
 
 // ===============================
 // OUVRI DETAY PWODWI
 // ===============================
 
+
 function ouvriDetay(index){
 
-    let produits = JSON.parse(localStorage.getItem("produits")) || [];
+
+    let produits = jwennProduits();
+
 
     let produit = produits[index];
 
 
+
     if(!produit){
+
         return;
+
     }
 
 
+
     localStorage.setItem(
+
         "produitChoisi",
+
         JSON.stringify(produit)
+
     );
 
 
-    window.location.href = "product.html";
+
+    window.location.href="product.html";
+
 
 }
 
@@ -33,26 +62,32 @@ function ouvriDetay(index){
 
 
 // ===============================
-// PANIER SYSTEM
+// PANIER
 // ===============================
 
 
 function jwennPanier(){
 
-    return JSON.parse(localStorage.getItem("panier")) || [];
+    return JSON.parse(
+        localStorage.getItem("panier")
+    ) || [];
 
 }
-
 
 
 
 
 function sovePanier(panier){
 
+
     localStorage.setItem(
+
         "panier",
+
         JSON.stringify(panier)
+
     );
+
 
 }
 
@@ -63,13 +98,17 @@ function sovePanier(panier){
 function ajoutePanier(index){
 
 
-    let produits = JSON.parse(localStorage.getItem("produits")) || [];
+    let produits = jwennProduits();
+
 
     let produit = produits[index];
 
 
+
     if(!produit){
+
         return;
+
     }
 
 
@@ -78,9 +117,13 @@ function ajoutePanier(index){
 
 
 
-    let dejaGenyen = panier.find(function(item){
+
+
+    let jwenn = panier.find(function(item){
+
 
         return item.nom === produit.nom;
+
 
     });
 
@@ -88,27 +131,36 @@ function ajoutePanier(index){
 
 
 
-    if(dejaGenyen){
 
-        dejaGenyen.kantite++;
+    if(jwenn){
+
+
+        jwenn.kantite++;
+
 
     }else{
 
 
         panier.push({
 
+
             nom: produit.nom,
+
 
             prix: produit.prix,
 
+
             image: produit.image,
 
+
             kantite:1
+
 
         });
 
 
     }
+
 
 
 
@@ -134,6 +186,7 @@ function totalPanier(){
 
     let panier = jwennPanier();
 
+
     let total = 0;
 
 
@@ -141,12 +194,19 @@ function totalPanier(){
     panier.forEach(function(item){
 
 
-        let pri = parseInt(
-            item.prix.replace(/\D/g,'')
+
+        let pri = Number(
+
+            String(item.prix)
+
+            .replace(/\D/g,'')
+
         );
 
 
+
         total += pri * item.kantite;
+
 
 
     });
@@ -162,17 +222,23 @@ function totalPanier(){
 
 
 
+
+
 // ===============================
-// FAVORI SYSTEM ❤️
+// FAVORI
 // ===============================
 
 
 function jwennFavori(){
 
-    return JSON.parse(localStorage.getItem("favori")) || [];
+
+    return JSON.parse(
+
+        localStorage.getItem("favori")
+
+    ) || [];
 
 }
-
 
 
 
@@ -180,19 +246,25 @@ function jwennFavori(){
 function ajouteFavori(index){
 
 
-    let produits = JSON.parse(localStorage.getItem("produits")) || [];
+    let produits = jwennProduits();
 
 
     let produit = produits[index];
 
 
+
     if(!produit){
+
         return;
+
     }
 
 
 
+
+
     let favori = jwennFavori();
+
 
 
 
@@ -204,6 +276,7 @@ function ajouteFavori(index){
 
 
     });
+
 
 
 
@@ -246,6 +319,8 @@ function ajouteFavori(index){
 
 
 
+
+
 // ===============================
 // AFFICHAGE PWODWI
 // ===============================
@@ -254,46 +329,55 @@ function ajouteFavori(index){
 function afficherProduits(){
 
 
-    const productList = document.getElementById("productList");
+    let box = document.getElementById(
+
+        "productList"
+
+    );
 
 
 
-    if(!productList){
+    if(!box){
 
         return;
+
+    }
+
+
+
+
+
+    let produits = jwennProduits();
+
+
+
+    box.innerHTML="";
+
+
+
+
+
+    if(produits.length===0){
+
+
+        box.innerHTML=
+
+        "<p>🛍️ Pa gen pwodwi pou kounya.</p>";
+
+        return;
+
 
     }
 
 
 
-    let produits = JSON.parse(localStorage.getItem("produits")) || [];
+
+
+    produits.forEach(function(produit,index){
 
 
 
-    productList.innerHTML = "";
-
-
-
-    if(produits.length === 0){
-
-
-        productList.innerHTML = `
-
-        <p>
-        🛍️ Pa gen pwodwi pou kounya.
-        </p>
-
-        `;
-
-
-        return;
-
-    }
-        produits.forEach(function(produit,index){
-
-
-
-        productList.innerHTML += `
+        box.innerHTML += `
 
 
         <div class="product">
@@ -307,20 +391,15 @@ function afficherProduits(){
 
 
 
-
-        <img src="${produit.image}" alt="${produit.nom}">
-
-
+        <img src="${produit.image || ''}">
 
 
 
         <h3>
 
-        ${produit.nom}
+        ${produit.nom || "Pwodwi"}
 
         </h3>
-
-
 
 
 
@@ -332,8 +411,6 @@ function afficherProduits(){
 
 
 
-
-
         <p>
 
         📂 ${produit.categorie || "Kategori"}
@@ -342,35 +419,19 @@ function afficherProduits(){
 
 
 
-
-
-        ${
-        produit.ancienPrix 
-        ? `<p class="old-price">${produit.ancienPrix}</p>`
-        : ""
-        }
-
-
-
-
-
         <p class="new-price">
 
-        ${produit.prix}
+        ${produit.prix || "0 Gdes"}
 
         </p>
 
 
 
-
-
         <button onclick="ajoutePanier(${index})">
 
-        🛒 Ajoute nan panier
+        🛒 Panier
 
         </button>
-
-
 
 
 
@@ -382,24 +443,18 @@ function afficherProduits(){
 
 
 
-
-
         <button onclick="ouvriDetay(${index})">
 
-        👁️ Gade detay
+        👁️ Detay
 
         </button>
-
-
 
 
 
         </div>
 
 
-
         `;
-
 
 
     });
@@ -414,40 +469,32 @@ function afficherProduits(){
 
 
 
-
-
 // ===============================
-// RECHÈCH PWODWI
+// RECHÈCH
 // ===============================
 
 
 function searchProduct(){
 
 
-    const searchBox = document.getElementById("searchBox");
 
+    let input=document.getElementById(
 
-    if(!searchBox){
+        "searchBox"
 
-        return;
-
-    }
-
-
-
-    const rech = searchBox.value.toLowerCase();
+    );
 
 
 
-    let produits = JSON.parse(localStorage.getItem("produits")) || [];
+    let box=document.getElementById(
+
+        "productList"
+
+    );
 
 
 
-    const productList = document.getElementById("productList");
-
-
-
-    if(!productList){
+    if(!input || !box){
 
         return;
 
@@ -455,26 +502,51 @@ function searchProduct(){
 
 
 
-    productList.innerHTML = "";
+
+
+    let rech=input.value.toLowerCase();
+
+
+
+    let produits=jwennProduits();
 
 
 
 
 
-    produits.filter(function(produit){
-
-
-        return produit.nom.toLowerCase().includes(rech);
-
-
-    }).forEach(function(produit){
-
-
-        let index = produits.indexOf(produit);
+    let rezilta=produits.filter(function(item){
 
 
 
-        productList.innerHTML += `
+        return item.nom
+
+        .toLowerCase()
+
+        .includes(rech);
+
+
+
+    });
+
+
+
+
+
+    box.innerHTML="";
+
+
+
+
+
+    rezilta.forEach(function(produit){
+
+
+
+        let index=produits.indexOf(produit);
+
+
+
+        box.innerHTML += `
 
 
         <div class="product">
@@ -483,48 +555,24 @@ function searchProduct(){
         <img src="${produit.image}">
 
 
-
-        <h3>
-
-        ${produit.nom}
-
-        </h3>
+        <h3>${produit.nom}</h3>
 
 
-
-        <p>
-
-        ${produit.prix}
-
-        </p>
-
-
+        <p>${produit.prix}</p>
 
 
         <button onclick="ajoutePanier(${index})">
 
-        🛒 Ajoute nan panier
+        🛒 Panier
 
         </button>
-
-
-
-
-        <button onclick="ajouteFavori(${index})">
-
-        ❤️ Favori
-
-        </button>
-
-
 
 
         <button onclick="ouvriDetay(${index})">
 
-        👁️ Gade detay
+        👁️ Detay
 
         </button>
-
 
 
         </div>
@@ -539,7 +587,6 @@ function searchProduct(){
 
 
 }
-
 
 
 
@@ -555,7 +602,11 @@ function searchProduct(){
 function afficherBadgePanier(){
 
 
-    const badge = document.getElementById("cartCount");
+    let badge=document.getElementById(
+
+        "cartCount"
+
+    );
 
 
 
@@ -567,42 +618,24 @@ function afficherBadgePanier(){
 
 
 
-    let panier = jwennPanier();
 
 
-    let kantite = 0;
+    let total=0;
 
 
 
-    panier.forEach(function(item){
+    jwennPanier().forEach(function(item){
 
 
-        kantite += item.kantite;
+        total += item.kantite;
 
 
     });
 
 
 
-    badge.innerHTML = kantite;
 
-
-}
-// ===============================
-// VIDE PANIER
-// ===============================
-
-
-function viderPanier(){
-
-
-    localStorage.removeItem("panier");
-
-
-    afficherBadgePanier();
-
-
-    alert("Panier vide 🛒");
+    badge.innerHTML=total;
 
 
 }
@@ -615,18 +648,18 @@ function viderPanier(){
 
 
 // ===============================
-// VOYE PANIER WHATSAPP
+// WHATSAPP
 // ===============================
 
 
 function voyePanierWhatsApp(){
 
 
-    let panier = jwennPanier();
+    let panier=jwennPanier();
 
 
 
-    if(panier.length === 0){
+    if(panier.length===0){
 
 
         alert("Panier la vid ❌");
@@ -638,20 +671,25 @@ function voyePanierWhatsApp(){
 
 
 
-    let message = "🛒 KAYLA MODE - NOUVO KÒMANN\n\n";
+
+    let mesaj=
+
+    "🛒 KAYLA MODE\n\n";
+
+
 
 
 
     panier.forEach(function(item){
 
 
-        message +=
+        mesaj +=
 
         "👗 "+item.nom+
 
-        "\n📦 Kantite: "+item.kantite+
+        "\n📦 "+item.kantite+
 
-        "\n💰 Pri: "+item.prix+
+        "\n💰 "+item.prix+
 
         "\n\n";
 
@@ -661,32 +699,24 @@ function voyePanierWhatsApp(){
 
 
 
-    message +=
 
-    "💵 Total: "+
+    mesaj +=
 
-    totalPanier()
-
-    +
-
-    " Gdes";
+    "💵 Total: "+totalPanier()+" Gdes";
 
 
 
 
 
+    window.open(
 
-    let url =
+    "https://wa.me/50955545291?text="+
 
-    "https://wa.me/50955545291?text="
+    encodeURIComponent(mesaj),
 
-    +
+    "_blank"
 
-    encodeURIComponent(message);
-
-
-
-    window.open(url,"_blank");
+    );
 
 
 }
@@ -697,8 +727,9 @@ function voyePanierWhatsApp(){
 
 
 
+
 // ===============================
-// START SYSTEM
+// START
 // ===============================
 
 
@@ -713,7 +744,6 @@ function(){
 
 
     afficherBadgePanier();
-
 
 
 });
