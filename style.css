@@ -425,3 +425,47 @@ font-size:12px;
 font-weight:bold;
 
         }
+.comment-box{
+
+background:#181818;
+
+border:1px solid #d4af37;
+
+border-radius:15px;
+
+padding:15px;
+
+margin:15px auto;
+
+max-width:350px;
+
+text-align:left;
+
+}
+
+
+.comment-box h4{
+
+color:#d4af37;
+
+margin-bottom:10px;
+
+}
+
+
+.comment-box p{
+
+margin:8px 0;
+
+}
+
+
+#starClient{
+
+padding:10px;
+
+border-radius:10px;
+
+margin:10px;
+
+}
