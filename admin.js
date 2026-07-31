@@ -588,3 +588,4 @@ checkLogin();
 afficherProduits();
 
 afficherKomann();
+afficherKommann();
