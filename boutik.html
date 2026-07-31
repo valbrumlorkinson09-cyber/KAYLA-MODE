@@ -1,105 +1,185 @@
 <!DOCTYPE html>
 <html lang="ht">
 
+
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Boutik - KAYLA MODE</title>
+<title>Boutik | KAYLA MODE</title>
 
 <link rel="stylesheet" href="style.css">
 
 </head>
 
 
+
 <body>
 
 
-<header>
 
-<h1>KAYLA MODE 🛍️</h1>
+<header class="main-header">
 
-<p>Boutik nou an</p>
+
+<img 
+src="images/logo.png" 
+class="logo"
+alt="KAYLA MODE"
+onerror="this.style.display='none'"
+>
+
+
+<h1>
+👗 KAYLA MODE
+</h1>
+
+
+<p>
+Boutik ofisyèl nou an
+</p>
+
 
 </header>
 
 
 
-<section id="products" class="products">
-
-<h2>🔥 Koleksyon KAYLA MODE</h2>
 
 
-<div class="product">
 
-<span class="tag">Nouvo</span>
+<nav class="menu">
 
-<img src="images/robe.jpg" alt="Rob Elegant">
 
-<h3>👗 Rob Elegant</h3>
-
-<div class="stars">
-★★★★★
-</div>
-
-<p>2500 Gdes</p>
-
-<a href="https://wa.me/50955545291" class="buy">
-Kòmande
+<a href="index.html">
+🏠 Akèy
 </a>
 
-</div>
 
-
-
-
-<div class="product">
-
-<span class="tag">Promo</span>
-
-<img src="images/soulye.jpg" alt="Soulye Fashion">
-
-<h3>👟 Soulye Fashion</h3>
-
-<div class="stars">
-★★★★★
-</div>
-
-<p>3000 Gdes</p>
-
-<a href="https://wa.me/50955545291" class="buy">
-Kòmande
+<a href="boutik.html">
+🛍️ Boutik
 </a>
 
-</div>
 
-
-
-
-
-<div class="product">
-
-<img src="images/sak.jpg" alt="Sak Fashion">
-
-<h3>👜 Sak Fashion</h3>
-
-<div class="stars">
-★★★★★
-</div>
-
-<p>2000 Gdes</p>
-
-<a href="https://wa.me/50955545291" class="buy">
-Kòmande
+<a href="categories.html">
+👗 Kategori
 </a>
 
+
+<a href="cart.html">
+🛒 Panier 
+<span id="cartCount">0</span>
+</a>
+
+
+<a href="contact.html">
+📞 Kontak
+</a>
+
+
+
+</nav>
+
+
+
+
+
+
+
+
+<section class="hero">
+
+
+<h2>
+🔥 Koleksyon KAYLA MODE
+</h2>
+
+
+<p>
+Chwazi pwodwi ou renmen yo.
+</p>
+
+
+
+
+
+<div class="search">
+
+
+<input 
+type="text"
+id="searchBox"
+placeholder="Chèche pwodwi..."
+>
+
+
+<button onclick="searchProduct()">
+
+🔍 Chèche
+
+</button>
+
+
 </div>
+
 
 
 </section>
 
 
+
+
+
+
+
+
+<section id="products" class="products">
+
+
+<h2>
+🛍️ Tout pwodwi yo
+</h2>
+
+
+
+<div id="productList">
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+<footer>
+
+
+<p>
+
+© 2026 KAYLA MODE - Tout dwa rezève
+
+</p>
+
+
+</footer>
+
+
+
+
+
+
+
+<script src="script.js"></script>
+
+
+
 </body>
+
 
 </html>
