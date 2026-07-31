@@ -2,16 +2,27 @@
   {
     "nom": "Rob Elegant",
     "prix": "2500 Gdes",
-    "image": "images/robe.jpg"
+    "ancienPrix": "3000 Gdes",
+    "image": "images/robe.jpg",
+    "categorie": "Fanm",
+    "tag": "Nouvo"
   },
+
   {
     "nom": "Soulye Fashion",
     "prix": "3000 Gdes",
-    "image": "images/soulye.jpg"
+    "ancienPrix": "3500 Gdes",
+    "image": "images/soulye.jpg",
+    "categorie": "Soulye",
+    "tag": "Promo"
   },
+
   {
     "nom": "Sak Fashion",
     "prix": "2000 Gdes",
-    "image": "images/sak.jpg"
+    "ancienPrix": "2500 Gdes",
+    "image": "images/sak.jpg",
+    "categorie": "Sak",
+    "tag": "Nouvo"
   }
 ]
