@@ -1,4 +1,5 @@
-// KAYLA MODE - SCRIPT PRINCIPAL + PANIER
+// KAYLA MODE - SCRIPT PRINCIPAL
+// PANIER + FAVORI SYSTEM
 
 
 // ===============================
@@ -26,8 +27,6 @@ function ouvriDetay(index){
 
 
 
-
-
 // ===============================
 // PANIER SYSTEM
 // ===============================
@@ -38,8 +37,6 @@ function jwennPanier(){
     return JSON.parse(localStorage.getItem("panier")) || [];
 
 }
-
-
 
 
 
@@ -54,16 +51,12 @@ function sovePanier(panier){
 
 
 
-
-
 function ajoutePanier(index){
 
 
     let produits = JSON.parse(localStorage.getItem("produits")) || [];
 
-
     let produit = produits[index];
-
 
     let panier = jwennPanier();
 
@@ -77,12 +70,9 @@ function ajoutePanier(index){
 
 
 
-
     if(dejaGenyen){
 
-
         dejaGenyen.kantite++;
-
 
     }else{
 
@@ -104,9 +94,10 @@ function ajoutePanier(index){
 
 
 
-
     sovePanier(panier);
 
+
+    afficherBadgePanier();
 
 
     alert("Pwodwi ajoute nan panier 🛒");
@@ -118,14 +109,10 @@ function ajoutePanier(index){
 
 
 
-
-
-
 function totalPanier(){
 
 
     let panier = jwennPanier();
-
 
     let total = 0;
 
@@ -142,7 +129,6 @@ function totalPanier(){
         total += pri * item.kantite;
 
 
-
     });
 
 
@@ -152,6 +138,81 @@ function totalPanier(){
 
 }
 
+
+
+
+
+// ===============================
+// FAVORI SYSTEM ❤️
+// ===============================
+
+
+function jwennFavori(){
+
+    return JSON.parse(localStorage.getItem("favori")) || [];
+
+}
+
+
+
+
+
+function ajouteFavori(index){
+
+
+    let produits = JSON.parse(localStorage.getItem("produits")) || [];
+
+
+    let produit = produits[index];
+
+
+    let favori = jwennFavori();
+
+
+
+
+    let deja = favori.find(function(item){
+
+
+        return item.nom === produit.nom;
+
+
+    });
+
+
+
+
+    if(deja){
+
+
+        alert("Pwodwi sa deja nan favori ❤️");
+
+        return;
+
+
+    }
+
+
+
+
+    favori.push(produit);
+
+
+
+    localStorage.setItem(
+
+        "favori",
+
+        JSON.stringify(favori)
+
+    );
+
+
+
+    alert("Ajoute nan favori ❤️");
+
+
+}
 
 
 
@@ -168,6 +229,7 @@ function afficherProduits(){
     const productList = document.getElementById("productList");
 
 
+
     if(!productList){
 
         return;
@@ -181,7 +243,6 @@ function afficherProduits(){
 
 
     productList.innerHTML = "";
-
 
 
 
@@ -201,6 +262,7 @@ function afficherProduits(){
         
 
     }
+
     produits.forEach(function(produit,index){
 
 
@@ -286,6 +348,16 @@ function afficherProduits(){
 
 
 
+        <button onclick="ajouteFavori(${index})">
+
+        ❤️ Favori
+
+        </button>
+
+
+
+
+
         <button onclick="ouvriDetay(${index})">
 
         👁️ Gade detay
@@ -358,13 +430,7 @@ function searchProduct(){
     produits.filter(function(produit){
 
 
-
-        return (
-
-            produit.nom.toLowerCase().includes(rech)
-
-        );
-
+        return produit.nom.toLowerCase().includes(rech);
 
 
     }).forEach(function(produit,index){
@@ -374,7 +440,6 @@ function searchProduct(){
         productList.innerHTML += `
 
 
-
         <div class="product">
 
 
@@ -382,19 +447,11 @@ function searchProduct(){
 
 
 
-        <h3>
-
-        ${produit.nom}
-
-        </h3>
+        <h3>${produit.nom}</h3>
 
 
 
-        <p>
-
-        ${produit.prix}
-
-        </p>
+        <p>${produit.prix}</p>
 
 
 
@@ -402,6 +459,15 @@ function searchProduct(){
         <button onclick="ajoutePanier(${index})">
 
         🛒 Ajoute nan panier
+
+        </button>
+
+
+
+
+        <button onclick="ajouteFavori(${index})">
+
+        ❤️ Favori
 
         </button>
 
@@ -419,7 +485,6 @@ function searchProduct(){
         </div>
 
 
-
         `;
 
 
@@ -428,9 +493,17 @@ function searchProduct(){
 
 
 
-        }
+}
+
+
+
+
+
+
+
+
 // ===============================
-// AFFICHE PANIER NAN BADGE
+// BADGE PANIER
 // ===============================
 
 
@@ -438,6 +511,7 @@ function afficherBadgePanier(){
 
 
     const badge = document.getElementById("cartCount");
+
 
 
     if(!badge){
@@ -451,14 +525,15 @@ function afficherBadgePanier(){
     let panier = jwennPanier();
 
 
-
     let kantite = 0;
 
 
 
     panier.forEach(function(item){
 
+
         kantite += item.kantite;
+
 
     });
 
@@ -477,7 +552,7 @@ function afficherBadgePanier(){
 
 
 // ===============================
-// VIDER PANIER
+// VIDE PANIER
 // ===============================
 
 
@@ -491,6 +566,7 @@ function viderPanier(){
 
 
 }
+
 
 
 
@@ -529,10 +605,14 @@ function voyePanierWhatsApp(){
     panier.forEach(function(item){
 
 
-        message += 
+        message +=
+
         "👗 "+item.nom+
+
         "\n📦 Kantite: "+item.kantite+
+
         "\n💰 Pri: "+item.prix+
+
         "\n\n";
 
 
@@ -541,22 +621,23 @@ function voyePanierWhatsApp(){
 
 
 
-    message += 
-    "💵 Total: "+
-    totalPanier()+
-    " Gdes";
+    message += "💵 Total: "+totalPanier()+" Gdes";
 
 
 
 
-    let url = 
+    let url =
+
     "https://wa.me/50955545291?text="
+
     +
+
     encodeURIComponent(message);
 
 
 
     window.open(url,"_blank");
+
 
 }
 
@@ -567,7 +648,7 @@ function voyePanierWhatsApp(){
 
 
 // ===============================
-// CHAJMAN
+// START
 // ===============================
 
 
