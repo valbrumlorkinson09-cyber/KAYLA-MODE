@@ -1,6 +1,26 @@
 // KAYLA MODE - SCRIPT PRINCIPAL
 
 
+function ouvriDetay(index){
+
+    let produits = JSON.parse(localStorage.getItem("produits")) || [];
+
+    let produit = produits[index];
+
+    localStorage.setItem(
+        "produitChoisi",
+        JSON.stringify(produit)
+    );
+
+
+    window.location.href = "product.html";
+
+}
+
+
+
+
+
 function afficherProduits(){
 
 
@@ -45,8 +65,7 @@ function afficherProduits(){
 
 
 
-
-    produits.forEach(function(produit){
+    produits.forEach(function(produit,index){
 
 
 
@@ -56,72 +75,86 @@ function afficherProduits(){
         <div class="product">
 
 
-            <span class="tag">
+        <span class="tag">
 
-            ${produit.tag || "Nouvo"}
+        ${produit.tag || "Nouvo"}
 
-            </span>
-
-
-
-            <img src="${produit.image}" alt="${produit.nom}">
-
-
-
-            <h3>
-
-            ${produit.nom}
-
-            </h3>
+        </span>
 
 
 
 
-            <div class="stars">
-
-            ★★★★★
-
-            </div>
-
-
-
-
-            <p>
-
-            📂 ${produit.categorie || "Kategori"}
-
-            </p>
+        <img src="${produit.image}" alt="${produit.nom}">
 
 
 
 
 
-            ${
-            produit.ancienPrix 
-            ? `<p class="old-price">${produit.ancienPrix}</p>`
-            : ""
-            }
+        <h3>
+
+        ${produit.nom}
+
+        </h3>
 
 
 
 
 
-            <p class="new-price">
+        <div class="stars">
 
-            ${produit.prix}
+        ★★★★★
 
-            </p>
-
-
+        </div>
 
 
 
 
-            <a href="https://wa.me/50955545291" class="buy">
 
-            Achte
+        <p>
 
-            </a>
+        📂 ${produit.categorie || "Kategori"}
+
+        </p>
+
+
+
+
+
+        ${
+        produit.ancienPrix 
+        ? `<p class="old-price">${produit.ancienPrix}</p>`
+        : ""
+        }
+
+
+
+
+
+        <p class="new-price">
+
+        ${produit.prix}
+
+        </p>
+
+
+
+
+
+        <button onclick="ouvriDetay(${index})">
+
+        👁️ Gade detay
+
+        </button>
+
+
+
+
+
+        <a href="https://wa.me/50955545291" class="buy">
+
+        Achte
+
+        </a>
 
 
 
@@ -172,6 +205,7 @@ function searchProduct(){
 
 
 
+
     produits.filter(function(produit){
 
 
@@ -188,7 +222,7 @@ function searchProduct(){
 
 
 
-    }).forEach(function(produit){
+    }).forEach(function(produit,index){
 
 
 
@@ -199,67 +233,21 @@ function searchProduct(){
         <div class="product">
 
 
-        <span class="tag">
-
-        ${produit.tag || "Nouvo"}
-
-        </span>
-
-
-
         <img src="${produit.image}">
 
 
+        <h3>${produit.nom}</h3>
 
-        <h3>
 
-        ${produit.nom}
-
-        </h3>
+        <p>${produit.prix}</p>
 
 
 
-        <p>
+        <button onclick="ouvriDetay(${index})">
 
-        📂 ${produit.categorie}
+        👁️ Gade detay
 
-        </p>
-
-
-
-
-        <div class="stars">
-
-        ★★★★★
-
-        </div>
-
-
-
-
-        ${
-        produit.ancienPrix 
-        ? `<p class="old-price">${produit.ancienPrix}</p>`
-        : ""
-        }
-
-
-
-        <p class="new-price">
-
-        ${produit.prix}
-
-        </p>
-
-
-
-
-        <a href="https://wa.me/50955545291" class="buy">
-
-        Achte
-
-        </a>
-
+        </button>
 
 
 
