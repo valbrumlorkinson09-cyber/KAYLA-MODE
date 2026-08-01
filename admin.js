@@ -349,9 +349,7 @@ if(editIndex === -1){
 
 
 
-pwodwiYo.push(
-produi
-);
+pwodwiYo.push(produit);
 
 
 
