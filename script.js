@@ -401,7 +401,9 @@ function afficherProduits(){
 
         </h3>
 
-
+<p>
+📦 Disponib: ${produit.stock || 0}
+</p>
 
         <div class="stars">
 
