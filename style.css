@@ -545,3 +545,10 @@ nav,
 .admin-btn:hover{
     transform:scale(1.05);
 }
+.logo{
+    width:140px;
+    height:140px;
+    display:block;
+    margin:20px auto;
+    border-radius:50%;
+}
