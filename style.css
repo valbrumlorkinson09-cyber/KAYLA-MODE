@@ -552,3 +552,8 @@ nav,
     margin:20px auto;
     border-radius:50%;
 }
+.logo{
+    width:180px;
+    display:block;
+    margin:20px auto;
+}
