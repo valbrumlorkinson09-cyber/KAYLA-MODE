@@ -877,7 +877,38 @@ function voyeKommann(){
     soveKommann(kòmann);
 
 
+// DIMINYE STOCK PWODWI A
 
+let pwodwiYo = JSON.parse(
+    localStorage.getItem("produits")
+) || [];
+
+
+let indexPwodwi = pwodwiYo.findIndex(function(item){
+
+    return item.nom === produit.nom;
+
+});
+
+
+if(indexPwodwi !== -1){
+
+    pwodwiYo[indexPwodwi].stock -= Number(kantite);
+
+
+    if(pwodwiYo[indexPwodwi].stock < 0){
+
+        pwodwiYo[indexPwodwi].stock = 0;
+
+    }
+
+
+    localStorage.setItem(
+        "produits",
+        JSON.stringify(pwodwiYo)
+    );
+
+        }
 
 
 
