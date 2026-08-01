@@ -102,7 +102,13 @@ function ajoutePanier(index){
 
 
     let produit = produits[index];
+if(produit.stock <= 0){
 
+    alert("Pwodwi sa pa disponib ankò ❌");
+
+    return;
+
+}
 
 
     if(!produit){
