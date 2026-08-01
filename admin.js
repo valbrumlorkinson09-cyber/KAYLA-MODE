@@ -148,6 +148,7 @@ function ajouterProduit(){
 
     let pri = document.getElementById("prixProduit").value;
 
+    let stock = document.getElementById("stockProduit").value;
     let ansyen = document.getElementById("ancienPrix").value;
 
     let kategori = document.getElementById("categorieProduit").value;
@@ -172,9 +173,11 @@ function ajouterProduit(){
 
     let produit = {
 
-        nom: nom,
+    nom: nom,
 
-        prix: pri + " Gdes",
+    prix: pri + " Gdes",
+
+    stock: Number(stock) || 0,
 
         ancienPrix: ansyen ? ansyen + " Gdes" : "",
 
