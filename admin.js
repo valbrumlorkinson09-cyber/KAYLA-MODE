@@ -357,7 +357,9 @@ function afficherProduits(){
         📂 ${produit.categorie}
         </p>
 
-
+ <p>
+📦 Stock: ${produit.stock || 0}
+</p>
 
         <button onclick="modifierProduit(${index})">
         ✏️ Modifye
