@@ -356,7 +356,17 @@ function afficherProduits(){
         <p>
         📂 ${produit.categorie}
         </p>
-
+<p>
+${
+(produit.stock || 0) <= 0 
+? "🔴 Fini"
+:
+(produit.stock <= 3)
+? "🟠 Preske fini"
+:
+"🟢 Disponib"
+}
+</p>
  <p>
 📦 Stock: ${produit.stock || 0}
 </p>
