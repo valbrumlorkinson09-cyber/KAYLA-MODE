@@ -531,3 +531,17 @@ nav,
 
 
 }
+.admin-btn{
+    display:inline-block;
+    background:#d4af37;
+    color:black;
+    padding:12px 25px;
+    border-radius:25px;
+    text-decoration:none;
+    font-weight:bold;
+    margin:15px;
+}
+
+.admin-btn:hover{
+    transform:scale(1.05);
+}
