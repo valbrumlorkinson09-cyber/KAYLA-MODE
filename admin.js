@@ -1,32 +1,24 @@
 // =================================
 // KAYLA MODE - ADMIN SYSTEM
+// NOUVO VERSION
 // PATI 1/3
 // =================================
 
 
 let imageProduit = "";
-
 let editIndex = -1;
 
 
-
-
-// =================================
+// ===============================
 // LOGIN ADMIN
-// =================================
-
+// ===============================
 
 function loginAdmin(){
 
-
-    let password = document.getElementById(
-        "adminPassword"
-    ).value;
-
+    let password = document.getElementById("adminPassword").value;
 
 
     if(password === "KAYLA2026"){
-
 
         localStorage.setItem(
             "adminLogin",
@@ -34,17 +26,9 @@ function loginAdmin(){
         );
 
 
+        document.getElementById("loginBox").style.display="none";
 
-        document.getElementById(
-            "loginBox"
-        ).style.display="none";
-
-
-
-        document.getElementById(
-            "adminPanel"
-        ).style.display="block";
-
+        document.getElementById("adminPanel").style.display="block";
 
 
         afficherDashboard();
@@ -52,51 +36,26 @@ function loginAdmin(){
 
     }else{
 
-
-        alert(
-            "Modpas la pa bon ❌"
-        );
-
+        alert("Modpas la pa bon ❌");
 
     }
 
-
 }
-
-
-
 
 
 
 
 function checkLogin(){
 
+    if(localStorage.getItem("adminLogin") === "true"){
 
+        document.getElementById("loginBox").style.display="none";
 
-    if(
-        localStorage.getItem("adminLogin")
-        ===
-        "true"
-    ){
-
-
-        document.getElementById(
-            "loginBox"
-        ).style.display="none";
-
-
-
-        document.getElementById(
-            "adminPanel"
-        ).style.display="block";
-
+        document.getElementById("adminPanel").style.display="block";
 
     }
 
-
 }
-
-
 
 
 
@@ -104,24 +63,12 @@ function checkLogin(){
 
 function logoutAdmin(){
 
+    localStorage.removeItem("adminLogin");
 
 
-    localStorage.removeItem(
-        "adminLogin"
-    );
+    document.getElementById("loginBox").style.display="block";
 
-
-
-    document.getElementById(
-        "loginBox"
-    ).style.display="block";
-
-
-
-    document.getElementById(
-        "adminPanel"
-    ).style.display="none";
-
+    document.getElementById("adminPanel").style.display="none";
 
 }
 
@@ -130,82 +77,57 @@ function logoutAdmin(){
 
 
 
+// ===============================
+// CHARGE FOTO PWODWI
+// ===============================
 
 
-// =================================
-// PHOTO PRODUIT BASE64
-// =================================
+let photoInput = document.getElementById("photoProduit");
 
-
-let photoProduit =
-document.getElementById(
-    "photoProduit"
-);
+let preview = document.getElementById("previewPhoto");
 
 
 
-let previewPhoto =
-document.getElementById(
-    "previewPhoto"
-);
+if(photoInput){
 
 
+photoInput.addEventListener("change",function(){
 
 
-
-if(photoProduit){
-
+    let file = this.files[0];
 
 
-photoProduit.addEventListener(
-"change",
-function(){
+    if(file){
 
 
-let file=this.files[0];
+        let reader = new FileReader();
 
 
-
-if(file){
-
-
-let reader = new FileReader();
+        reader.onload=function(e){
 
 
+            imageProduit = e.target.result;
 
 
-reader.onload=function(e){
+            if(preview){
+
+                preview.src=imageProduit;
+
+            }
 
 
-
-imageProduit=e.target.result;
-
+        };
 
 
-if(previewPhoto){
-
-previewPhoto.src=imageProduit;
-
-}
+        reader.readAsDataURL(file);
 
 
-}
-
-
-
-
-reader.readAsDataURL(file);
-
-
-
-}
-
+    }
 
 
 });
 
 
-
 }
 
 
@@ -214,231 +136,128 @@ reader.readAsDataURL(file);
 
 
 
-
-
-// =================================
-// AJOUTE / MODIFYE PWODWI
-// =================================
+// ===============================
+// AJOUTE PWODWI
+// ===============================
 
 
 function ajouterProduit(){
 
 
+    let nom = document.getElementById("nomProduit").value;
 
-let nom =
-document.getElementById(
-"nomProduit"
-).value;
+    let pri = document.getElementById("prixProduit").value;
 
+    let ansyen = document.getElementById("ancienPrix").value;
 
+    let kategori = document.getElementById("categorieProduit").value;
 
-let pri =
-document.getElementById(
-"prixProduit"
-).value;
+    let tag = document.getElementById("tagProduit").value;
 
 
 
-let ansyen =
-document.getElementById(
-"ancienPrix"
-).value;
+    if(
+        nom === "" ||
+        pri === "" ||
+        imageProduit === ""
+    ){
 
+        alert("Ranpli tout enfòmasyon yo ❌");
 
+        return;
 
-let kategori =
-document.getElementById(
-"categorieProduit"
-).value;
+    }
 
 
 
-let tag =
-document.getElementById(
-"tagProduit"
-).value;
+    let produit = {
 
+        nom: nom,
 
+        prix: pri + " Gdes",
 
+        ancienPrix: ansyen ? ansyen + " Gdes" : "",
 
+        categorie: kategori,
 
+        tag: tag,
 
-if(
-nom==="" ||
-pri==="" ||
-imageProduit===""
+        image: imageProduit
 
-){
+    };
 
 
-alert(
-"Ranpli tout enfòmasyon yo ❌"
-);
 
 
-return;
+    let produits = JSON.parse(
+        localStorage.getItem("produits")
+    ) || [];
 
 
-}
 
+    if(editIndex === -1){
 
+        produits.push(produit);
 
 
+    }else{
 
 
+        produits[editIndex] = produit;
 
-let produit = {
+        editIndex = -1;
 
+    }
 
 
-nom:nom,
 
 
-prix:
-pri+" Gdes",
+    localStorage.setItem(
+        "produits",
+        JSON.stringify(produits)
+    );
 
 
 
-ancienPrix:
-ansyen
-?
-ansyen+" Gdes"
-:
-"",
+    alert("Pwodwi sove avèk siksè ✅");
 
 
+    afficherProduits();
 
-categorie:
-kategori,
 
+    netwayeForm();
 
 
-tag:
-tag,
-
-
-
-image:
-imageProduit
-
-
-
-};
-
-
-
-
-
-
-
-
-let pwodwiYo =
-JSON.parse(
-localStorage.getItem("produits")
-)
-||
-[];
-
-
-
-
-
-
-
-if(editIndex === -1){
-
-
-
-pwodwiYo.push(produit);
-
-
-
-}else{
-
-
-pwodwiYo[editIndex]=produit;
-
-
-editIndex=-1;
-
-
-
-}
-
-
-
-
-
-
-
-localStorage.setItem(
-
-"produits",
-
-JSON.stringify(pwodwiYo)
-
-);
-
-
-
-
-
-
-alert(
-"Pwodwi sove avèk siksè ✅"
-);
-
-
-
-afficherProduits();
-
-
-
-netwayeForm();
-
-
-
-               }
+              }
 // =================================
+// KAYLA MODE - ADMIN SYSTEM
 // PATI 2/3
 // PWODWI MANAGEMENT
 // =================================
 
 
 
+// ===============================
+// NETWAYE FÒM
+// ===============================
 
 function netwayeForm(){
 
+    document.getElementById("nomProduit").value="";
 
-document.getElementById(
-"nomProduit"
-).value="";
+    document.getElementById("prixProduit").value="";
 
-
-
-document.getElementById(
-"prixProduit"
-).value="";
+    document.getElementById("ancienPrix").value="";
 
 
+    if(preview){
 
-document.getElementById(
-"ancienPrix"
-).value="";
+        preview.src="";
 
-
-
-if(previewPhoto){
-
-previewPhoto.src="";
-
-}
+    }
 
 
-
-imageProduit="";
-
-
+    imageProduit="";
 
 }
 
@@ -446,185 +265,117 @@ imageProduit="";
 
 
 
-
-
-
-
-// =================================
-// AFFICHAGE PWODWI
-// =================================
+// ===============================
+// AFFICHE PWODWI
+// ===============================
 
 
 function afficherProduits(){
 
 
+    let liste = document.getElementById("listeProduits");
 
-let liste =
-document.getElementById(
-"listeProduits"
-);
 
+    if(!liste){
 
+        return;
 
-if(!liste){
+    }
 
-return;
 
-}
 
+    let produits = JSON.parse(
+        localStorage.getItem("produits")
+    ) || [];
 
 
 
+    liste.innerHTML="";
 
-let pwodwiYo =
-JSON.parse(
-localStorage.getItem("produits")
-)
-||
-[];
 
 
+    if(document.getElementById("totalProduits")){
 
+        document.getElementById("totalProduits").innerHTML =
+        produits.length;
 
+    }
 
-liste.innerHTML="";
 
 
 
+    if(produits.length === 0){
 
 
-if(
-document.getElementById("totalProduits")
-){
+        liste.innerHTML = `
+        <p>
+        🛍️ Pa gen pwodwi.
+        </p>
+        `;
 
 
-document.getElementById(
-"totalProduits"
-).innerHTML =
-pwodwiYo.length;
+        return;
 
+    }
 
-}
 
 
 
 
 
+    produits.forEach(function(produit,index){
 
 
-if(pwodwiYo.length===0){
 
+        liste.innerHTML += `
 
-liste.innerHTML=
 
-`
-<p>
-🛍️ Pa gen pwodwi.
-</p>
-`;
+        <div class="product-admin">
 
-return;
 
+        <img src="${produit.image}" width="120">
 
-}
 
 
+        <h3>
+        ${produit.tag || "Nouvo"} ${produit.nom}
+        </h3>
 
 
 
+        <p>
+        ${produit.ancienPrix ? produit.ancienPrix+" ➜ " : ""}
+        ${produit.prix}
+        </p>
 
 
 
-pwodwiYo.forEach(
-function(produit,index){
+        <p>
+        📂 ${produit.categorie}
+        </p>
 
 
 
-liste.innerHTML += `
+        <button onclick="modifierProduit(${index})">
+        ✏️ Modifye
+        </button>
 
 
 
-<div class="product-admin">
+        <button onclick="supprimerProduit(${index})">
+        🗑️ Efase
+        </button>
 
 
 
-<img 
-src="${produit.image}"
-width="120"
->
+        </div>
 
 
+        `;
 
 
-<h3>
 
-${produit.tag || "Nouvo"}
-
-${produit.nom}
-
-</h3>
-
-
-
-
-
-<p>
-
-${produit.ancienPrix
-?
-produit.ancienPrix+" ➜ "
-:
-""}
-
-${produit.prix}
-
-</p>
-
-
-
-
-<p>
-
-📂 ${produit.categorie}
-
-</p>
-
-
-
-
-
-
-
-<button onclick="modifierProduit(${index})">
-
-✏️ Modifye
-
-</button>
-
-
-
-
-
-
-
-<button onclick="supprimerProduit(${index})">
-
-🗑️ Efase
-
-</button>
-
-
-
-
-</div>
-
-
-
-`;
-
-
-
-});
+    });
 
 
 }
@@ -636,113 +387,66 @@ ${produit.prix}
 
 
 
-
-// =================================
+// ===============================
 // MODIFYE PWODWI
-// =================================
-
+// ===============================
 
 
 function modifierProduit(index){
 
 
-
-let pwodwiYo =
-JSON.parse(
-localStorage.getItem("produits")
-)
-||
-[];
+    let produits = JSON.parse(
+        localStorage.getItem("produits")
+    ) || [];
 
 
 
-
-let produit =
-pwodwiYo[index];
+    let produit = produits[index];
 
 
 
-
-
-document.getElementById(
-"nomProduit"
-).value =
-produit.nom;
+    document.getElementById("nomProduit").value =
+    produit.nom;
 
 
 
-
-
-document.getElementById(
-"prixProduit"
-).value =
-produit.prix.replace(
-" Gdes",
-""
-);
+    document.getElementById("prixProduit").value =
+    produit.prix.replace(" Gdes","");
 
 
 
+    document.getElementById("ancienPrix").value =
+    produit.ancienPrix
+    ?
+    produit.ancienPrix.replace(" Gdes","")
+    :
+    "";
 
 
 
-document.getElementById(
-"ancienPrix"
-).value =
-produit.ancienPrix
-?
-produit.ancienPrix.replace(
-" Gdes",
-""
-)
-:
-"";
+    document.getElementById("categorieProduit").value =
+    produit.categorie;
 
 
 
+    document.getElementById("tagProduit").value =
+    produit.tag;
 
 
 
-document.getElementById(
-"categorieProduit"
-).value =
-produit.categorie;
+    imageProduit = produit.image;
 
 
 
+    if(preview){
 
+        preview.src = produit.image;
 
-document.getElementById(
-"tagProduit"
-).value =
-produit.tag;
-
-
+    }
 
 
 
-
-imageProduit =
-produit.image;
-
-
-
-
-
-
-if(previewPhoto){
-
-previewPhoto.src =
-produit.image;
-
-}
-
-
-
-
-
-editIndex=index;
-
+    editIndex = index;
 
 
 }
@@ -754,63 +458,38 @@ editIndex=index;
 
 
 
-
-// =================================
+// ===============================
 // EFASE PWODWI
-// =================================
-
+// ===============================
 
 
 function supprimerProduit(index){
 
 
-
-let pwodwiYo =
-JSON.parse(
-localStorage.getItem("produits")
-)
-||
-[];
+    let produits = JSON.parse(
+        localStorage.getItem("produits")
+    ) || [];
 
 
 
+    if(confirm("Efase pwodwi sa?")){
 
 
-if(
-confirm(
-"Efase pwodwi sa?"
-)
-){
+        produits.splice(index,1);
 
 
 
-pwodwiYo.splice(
-index,
-1
-);
+        localStorage.setItem(
+            "produits",
+            JSON.stringify(produits)
+        );
 
 
 
+        afficherProduits();
 
 
-localStorage.setItem(
-
-"produits",
-
-JSON.stringify(pwodwiYo)
-
-);
-
-
-
-
-
-afficherProduits();
-
-
-
-}
-
+    }
 
 
 }
@@ -822,322 +501,220 @@ afficherProduits();
 
 
 
-
-// =================================
+// ===============================
 // RECHÈCH PWODWI
-// =================================
-
+// ===============================
 
 
 function rechercherProduit(){
 
 
+    let rech =
+    document.getElementById("searchAdmin").value.toLowerCase();
 
-let rech =
-document.getElementById(
-"searchAdmin"
-)
-.value
-.toLowerCase();
 
 
+    let produits = JSON.parse(
+        localStorage.getItem("produits")
+    ) || [];
 
 
 
+    let rezilta = produits.filter(function(item){
 
-let pwodwiYo =
-JSON.parse(
-localStorage.getItem("produits")
-)
-||
-[];
 
+        return item.nom.toLowerCase().includes(rech);
 
 
+    });
 
 
 
 
-let rezilta =
-pwodwiYo.filter(
-function(item){
+    let liste = document.getElementById("listeProduits");
 
 
-return item.nom
-.toLowerCase()
-.includes(rech);
 
+    liste.innerHTML="";
 
 
-});
 
 
+    rezilta.forEach(function(produit){
 
 
 
+        liste.innerHTML += `
 
 
-let liste =
-document.getElementById(
-"listeProduits"
-);
+        <div class="product-admin">
 
 
+        <img src="${produit.image}" width="120">
 
 
+        <h3>
+        ${produit.nom}
+        </h3>
 
-liste.innerHTML="";
 
+        <p>
+        ${produit.prix}
+        </p>
 
 
+        </div>
 
 
+        `;
 
-rezilta.forEach(
-function(produit){
 
+    });
 
 
-liste.innerHTML += `
 
-
-
-<div class="product-admin">
-
-
-<img 
-src="${produit.image}"
-width="120"
->
-
-
-
-<h3>
-
-${produit.nom}
-
-</h3>
-
-
-
-
-<p>
-
-${produit.prix}
-
-</p>
-
-
-
-
-</div>
-
-
-
-`;
-
-
-
-});
-
-
-
-}
- // =================================
+    }
+// =================================
+// KAYLA MODE - ADMIN SYSTEM
 // PATI 3/3
-// KOMANN + DASHBOARD
+// KÒMANN + DASHBOARD + START
 // =================================
 
 
 
-
-
-// =================================
-// AFFICHAGE KÒMANN
-// =================================
-
+// ===============================
+// AFFICHE KÒMANN
+// ===============================
 
 function afficherKommann(){
 
 
+    let liste = document.getElementById("listeKommann");
 
-let liste =
-document.getElementById(
-"listeKommann"
-);
 
+    if(!liste){
 
+        return;
 
-if(!liste){
+    }
 
-return;
 
-}
 
+    let kommann = JSON.parse(
+        localStorage.getItem("kommann")
+    ) || [];
 
 
 
+    liste.innerHTML="";
 
-let kommann =
-JSON.parse(
-localStorage.getItem("kommann")
-)
-||
-[];
 
 
+    if(document.getElementById("totalKommann")){
 
+        document.getElementById("totalKommann").innerHTML =
+        kommann.length;
 
+    }
 
 
 
-liste.innerHTML="";
 
+    if(kommann.length === 0){
 
 
+        liste.innerHTML = `
+        <p>
+        📦 Pa gen kòmann.
+        </p>
+        `;
 
 
+        return;
 
-if(
-document.getElementById("totalKommann")
-){
+    }
 
 
-document.getElementById(
-"totalKommann"
-).innerHTML =
-kommann.length;
 
 
-}
 
+    kommann.forEach(function(item,index){
 
 
+        liste.innerHTML += `
 
 
+        <div class="product-admin">
 
 
-if(kommann.length===0){
+        <h3>
+        🛍️ ${item.produit}
+        </h3>
 
 
 
-liste.innerHTML =
+        <p>
+        💰 ${item.pri}
+        </p>
 
-`
-<p>
-📦 Pa gen kòmann.
-</p>
-`;
 
-return;
 
+        <p>
+        📦 Kantite: ${item.kantite}
+        </p>
 
-}
 
 
+        <p>
+        👤 ${item.non || "Pa bay"}
+        </p>
 
 
 
+        <p>
+        📞 ${item.telephone || "Pa bay"}
+        </p>
 
 
 
-kommann.forEach(
-function(item,index){
+        <p>
+        📍 ${item.adresse || "Pa bay"}
+        </p>
 
 
 
-liste.innerHTML += `
+        <p>
+        💳 ${item.peman || "Pa bay"}
+        </p>
 
 
 
-<div class="product-admin">
+        <h3>
+        📌 ${item.status || "An atant"}
+        </h3>
 
 
-<h3>
-🛍️ ${item.produit}
-</h3>
 
 
+        <button onclick="livreKomann(${index})">
+        ✅ Livre
+        </button>
 
 
-<p>
-💰 ${item.pri}
-</p>
 
+        <button onclick="efaseKomann(${index})">
+        🗑️ Efase
+        </button>
 
 
-<p>
-📦 Kantite: ${item.kantite}
-</p>
 
+        </div>
 
 
+        `;
 
-<p>
-👤 ${item.non || "Pa bay"}
-</p>
 
-
-
-
-<p>
-📞 ${item.telephone || "Pa bay"}
-</p>
-
-
-
-
-<p>
-📍 ${item.adresse || "Pa bay"}
-</p>
-
-
-
-
-<p>
-💳 ${item.peman || "Pa bay"}
-</p>
-
-
-
-
-
-<h3>
-📌 ${item.status || "An atant"}
-</h3>
-
-
-
-
-
-
-<button onclick="livreKomann(${index})">
-
-✅ Livre
-
-</button>
-
-
-
-
-
-<button onclick="efaseKomann(${index})">
-
-🗑️ Efase
-
-</button>
-
-
-
-</div>
-
-
-
-`;
-
-
-
-});
+    });
 
 
 
@@ -1149,49 +726,32 @@ liste.innerHTML += `
 
 
 
-
-
-// =================================
-// CHANJE STATUS KÒMANN
-// =================================
+// ===============================
+// LIVRE KÒMANN
+// ===============================
 
 
 function livreKomann(index){
 
 
-
-let kommann =
-JSON.parse(
-localStorage.getItem("kommann")
-)
-||
-[];
+    let kommann = JSON.parse(
+        localStorage.getItem("kommann")
+    ) || [];
 
 
 
-
-
-kommann[index].status =
-"Livre ✅";
+    kommann[index].status = "Livre ✅";
 
 
 
-
-
-localStorage.setItem(
-
-"kommann",
-
-JSON.stringify(kommann)
-
-);
+    localStorage.setItem(
+        "kommann",
+        JSON.stringify(kommann)
+    );
 
 
 
-
-
-afficherKommann();
-
+    afficherKommann();
 
 
 }
@@ -1202,52 +762,32 @@ afficherKommann();
 
 
 
-
-// =================================
+// ===============================
 // EFASE KÒMANN
-// =================================
+// ===============================
 
 
 function efaseKomann(index){
 
 
-
-let kommann =
-JSON.parse(
-localStorage.getItem("kommann")
-)
-||
-[];
+    let kommann = JSON.parse(
+        localStorage.getItem("kommann")
+    ) || [];
 
 
 
-
-
-kommann.splice(
-index,
-1
-);
+    kommann.splice(index,1);
 
 
 
-
-
-localStorage.setItem(
-
-"kommann",
-
-JSON.stringify(kommann)
-
-);
+    localStorage.setItem(
+        "kommann",
+        JSON.stringify(kommann)
+    );
 
 
 
-
-
-afficherKommann();
-
-
-
+    afficherKommann();
 
 
 }
@@ -1258,217 +798,30 @@ afficherKommann();
 
 
 
-
-
-// =================================
+// ===============================
 // DASHBOARD
-// =================================
+// ===============================
 
 
 function afficherDashboard(){
 
 
+    let produits = JSON.parse(
+        localStorage.getItem("produits")
+    ) || [];
 
-let pwodwiYo =
-JSON.parse(
-localStorage.getItem("produits")
-)
-||
-[];
 
 
+    let kommann = JSON.parse(
+        localStorage.getItem("kommann")
+    ) || [];
 
 
 
-let kommann =
-JSON.parse(
-localStorage.getItem("kommann")
-)
-||
-[];
+    let total = 0;
 
+    let kliyan = [];
 
 
 
-
-
-let total =
-0;
-
-
-
-let kliyan=[];
-
-
-
-
-
-
-kommann.forEach(
-function(item){
-
-
-
-let pri =
-parseInt(
-String(item.pri)
-.replace(/\D/g,"")
-)
-||0;
-
-
-
-total +=
-pri *
-Number(item.kantite || 1);
-
-
-
-
-
-
-let tel =
-item.telephone;
-
-
-
-if(
-tel &&
-!kliyan.includes(tel)
-){
-
-
-kliyan.push(tel);
-
-
-}
-
-
-
-});
-
-
-
-
-
-
-
-let p =
-document.getElementById(
-"totalProduits"
-);
-
-
-
-let k =
-document.getElementById(
-"totalKommann"
-);
-
-
-
-let v =
-document.getElementById(
-"totalVant"
-);
-
-
-
-let c =
-document.getElementById(
-"totalKliyan"
-);
-
-
-
-
-
-
-
-if(p){
-
-p.innerHTML =
-pwodwiYo.length;
-
-}
-
-
-
-
-
-if(k){
-
-k.innerHTML =
-kommann.length;
-
-}
-
-
-
-
-
-
-if(v){
-
-v.innerHTML =
-total+" Gdes";
-
-}
-
-
-
-
-
-
-if(c){
-
-c.innerHTML =
-kliyan.length;
-
-}
-
-
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// =================================
-// START ADMIN
-// =================================
-
-
-
-document.addEventListener(
-
-"DOMContentLoaded",
-
-function(){
-
-
-
-checkLogin();
-
-
-
-afficherProduits();
-
-
-
-afficherKommann();
-
-
-
-afficherDashboard();
-
-
-
-});
+   
