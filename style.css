@@ -444,3 +444,72 @@ footer{
     margin:15px auto;
     object-fit:contain;
 }
+/* =====================
+   PEMAN
+===================== */
+
+.payment-box{
+    text-align:center;
+    padding:40px 20px;
+}
+
+
+.payment-box h2{
+    color:#d4af37;
+    margin-bottom:25px;
+}
+
+
+.payment-container{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:20px;
+}
+
+
+.pay-card{
+    background:#181818;
+    border:1px solid #d4af37;
+    border-radius:20px;
+    padding:25px;
+    width:260px;
+}
+
+
+.pay-card h3{
+    margin-bottom:15px;
+}
+
+
+.moncash h3{
+    color:#ff9800;
+}
+
+
+.natcash h3{
+    color:#2196f3;
+}
+
+
+.pay-number{
+    font-size:25px;
+    font-weight:bold;
+    color:white;
+    margin:10px 0;
+}
+
+
+.pay-info{
+    margin:25px;
+    color:#ddd;
+    font-size:16px;
+}
+
+
+/* FOOTER */
+
+footer p{
+    color:#ddd;
+    font-size:14px;
+}
