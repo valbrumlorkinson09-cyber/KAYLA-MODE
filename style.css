@@ -563,3 +563,21 @@ height:auto;
 display:block;
 margin:auto;
 }
+.main-header{
+    text-align:center;
+    padding:20px;
+}
+
+.main-header img{
+    width:120px;
+    display:block;
+    margin:auto;
+}
+
+.main-header h1{
+    margin-top:10px;
+    font-size:28px;
+    font-weight:bold;
+    letter-spacing:2px;
+    color:white;
+}
