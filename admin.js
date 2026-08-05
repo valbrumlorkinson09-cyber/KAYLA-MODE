@@ -1,6 +1,6 @@
 // =================================
 // KAYLA MODE ADMIN
-// APPWRITE VERSION
+// APPWRITE TABLESDB VERSION
 // PATI 1/3
 // =================================
 
@@ -11,16 +11,16 @@
 
 
 const {
-    Client,
-    Databases,
-    Storage,
-    ID,
-    Query
+Client,
+TablesDB,
+Storage,
+ID,
+Query
 } = Appwrite;
 
 
 
-const client = new Client();
+const client = new Appwrite.Client();
 
 
 client
@@ -33,15 +33,16 @@ client
 
 
 
-const databases = new Databases(client);
 
-const storage = new Storage(client);
+const tablesDB = new Appwrite.TablesDB(client);
+
+const storage = new Appwrite.Storage(client);
 
 
 
 
 // ================================
-// DATABASE INFO
+// ID APPWRITE
 // ================================
 
 
@@ -64,11 +65,13 @@ const BUCKET_ID =
 // ================================
 
 
-let imageProduit = "";
-
 let fileImage = null;
 
-let editID = null;
+let preview =
+document.getElementById(
+"previewPhoto"
+);
+
 
 
 
@@ -126,8 +129,8 @@ alert(
 }
 
 
-
 }
+
 
 
 
@@ -148,6 +151,7 @@ document.getElementById(
 ).style.display="none";
 
 
+
 document.getElementById(
 "adminPanel"
 ).style.display="block";
@@ -156,8 +160,8 @@ document.getElementById(
 }
 
 
-
 }
+
 
 
 
@@ -173,16 +177,7 @@ localStorage.removeItem(
 
 
 
-document.getElementById(
-"loginBox"
-).style.display="block";
-
-
-
-document.getElementById(
-"adminPanel"
-).style.display="none";
-
+location.reload();
 
 
 }
@@ -192,8 +187,9 @@ document.getElementById(
 
 
 
+
 // ================================
-// PHOTO UPLOAD
+// CHWA FOTO
 // ================================
 
 
@@ -203,14 +199,6 @@ document.getElementById(
 );
 
 
-let preview =
-document.getElementById(
-"previewPhoto"
-);
-
-
-
-
 
 if(photoInput){
 
@@ -218,7 +206,6 @@ if(photoInput){
 photoInput.addEventListener(
 "change",
 function(){
-
 
 
 fileImage =
@@ -238,15 +225,10 @@ reader.onload =
 function(e){
 
 
-imageProduit =
-e.target.result;
-
-
-
 if(preview){
 
 preview.src =
-imageProduit;
+e.target.result;
 
 }
 
@@ -270,11 +252,11 @@ fileImage
 );
 
 
+    }
 
-}
 // =================================
 // PATI 2/3
-// AJOUTE + AFFICHE PWODWI APPWRITE
+// AJOUTE + AFFICHE PWODWI
 // =================================
 
 
@@ -348,12 +330,11 @@ return;
 
 
 
-
 try{
 
 
 
-// UPLOAD FOTO APPWRITE
+// UPLOAD FOTO
 
 
 let upload =
@@ -366,6 +347,7 @@ ID.unique(),
 fileImage
 
 );
+
 
 
 
@@ -384,10 +366,10 @@ upload.$id
 
 
 
-// SAVE PWODWI DATABASE
+// AJOUTE NAN TABLE
 
 
-await databases.createDocument(
+await tablesDB.createRow(
 
 DATABASE_ID,
 
@@ -398,38 +380,29 @@ ID.unique(),
 {
 
 
-name:
-nom,
+name: nom,
 
 
-price:
-Number(pri),
+price: Number(pri),
 
 
-stock:
-Number(stock)||0,
+stock: Number(stock) || 0,
 
 
-image:
-imageURL.href,
+image: imageURL.href,
 
 
-ancienPrix:
-ansyen,
+ancienPrix: ansyen,
 
 
-categorie:
-kategori,
+categorie: kategori,
 
 
-tag:
-tag
+tag: tag
 
 
 
 }
-
-
 
 );
 
@@ -458,8 +431,9 @@ afficherProduits();
 console.log(error);
 
 
+
 alert(
-"Erè pandan ajoute pwodwi ❌"
+error.message
 );
 
 
@@ -477,7 +451,7 @@ alert(
 
 
 // ================================
-// NETWAYE FORM
+// NETWAYE FÒM
 // ================================
 
 
@@ -509,6 +483,9 @@ document.getElementById(
 
 
 
+fileImage=null;
+
+
 
 if(preview){
 
@@ -517,14 +494,8 @@ preview.src="";
 }
 
 
-
-fileImage=null;
-
-imageProduit="";
-
-
-
 }
+
 
 
 
@@ -555,9 +526,8 @@ return;
 
 
 
-
 liste.innerHTML =
-"⏳ Chajman pwodwi...";
+"⏳ Chajman...";
 
 
 
@@ -565,9 +535,8 @@ liste.innerHTML =
 try{
 
 
-
 let result =
-await databases.listDocuments(
+await tablesDB.listRows(
 
 DATABASE_ID,
 
@@ -583,16 +552,22 @@ liste.innerHTML="";
 
 
 
+document.getElementById(
+"totalProduits"
+).innerHTML =
+result.total;
 
 
 
-if(
-result.documents.length === 0
-){
+
+
+
+if(result.rows.length === 0){
 
 
 liste.innerHTML =
-"<p>🛍️ Pa gen pwodwi.</p>";
+"🛍️ Pa gen pwodwi";
+
 
 return;
 
@@ -604,18 +579,7 @@ return;
 
 
 
-document.getElementById(
-"totalProduits"
-).innerHTML =
-result.total;
-
-
-
-
-
-
-
-result.documents.forEach(
+result.rows.forEach(
 function(produit){
 
 
@@ -623,9 +587,7 @@ function(produit){
 liste.innerHTML += `
 
 
-
 <div class="product-admin">
-
 
 
 <img 
@@ -649,11 +611,9 @@ ${produit.name}
 </p>
 
 
-
 <p>
 📂 ${produit.categorie}
 </p>
-
 
 
 <p>
@@ -674,13 +634,11 @@ ${produit.name}
 </div>
 
 
-
 `;
 
 
 
 });
-
 
 
 
@@ -692,18 +650,20 @@ ${produit.name}
 console.log(error);
 
 
+
 liste.innerHTML =
-"❌ Erè chajman pwodwi";
+"❌ " + error.message;
 
 
 }
 
 
 
-    }
+}
+
 // =================================
 // PATI 3/3
-// EFASE + DASHBOARD + START
+// EFASE + RECHÈCH + DASHBOARD + START
 // =================================
 
 
@@ -716,14 +676,14 @@ async function supprimerProduit(id){
 
 
 if(
-confirm("Efase pwodwi sa?") 
+confirm("Efase pwodwi sa?")
 ){
 
 
 try{
 
 
-await databases.deleteDocument(
+await tablesDB.deleteRow(
 
 DATABASE_ID,
 
@@ -748,12 +708,12 @@ afficherProduits();
 }catch(error){
 
 
-
 console.log(error);
 
 
+
 alert(
-"Erè pandan efase ❌"
+error.message
 );
 
 
@@ -785,16 +745,7 @@ async function rechercherProduit(){
 let rech =
 document.getElementById(
 "searchAdmin"
-).value.toLowerCase();
-
-
-
-
-let liste =
-document.getElementById(
-"listeProduits"
-);
-
+).value;
 
 
 
@@ -802,7 +753,7 @@ try{
 
 
 let result =
-await databases.listDocuments(
+await tablesDB.listRows(
 
 DATABASE_ID,
 
@@ -822,6 +773,12 @@ rech
 
 
 
+let liste =
+document.getElementById(
+"listeProduits"
+);
+
+
 
 liste.innerHTML="";
 
@@ -829,7 +786,7 @@ liste.innerHTML="";
 
 
 
-result.documents.forEach(
+result.rows.forEach(
 function(produit){
 
 
@@ -860,12 +817,13 @@ ${produit.name}
 </div>
 
 
-
 `;
 
 
 
 });
+
+
 
 
 
@@ -875,12 +833,12 @@ ${produit.name}
 console.log(error);
 
 
-
 }
 
 
 
 }
+
 
 
 
@@ -896,13 +854,11 @@ console.log(error);
 async function afficherDashboard(){
 
 
-
 try{
 
 
-
-let produits =
-await databases.listDocuments(
+let result =
+await tablesDB.listRows(
 
 DATABASE_ID,
 
@@ -923,11 +879,10 @@ document.getElementById(
 document.getElementById(
 "totalProduits"
 ).innerHTML =
-produits.total;
+result.total;
 
 
 }
-
 
 
 
@@ -937,13 +892,11 @@ produits.total;
 console.log(error);
 
 
-
 }
 
 
 
 }
-
 
 
 
