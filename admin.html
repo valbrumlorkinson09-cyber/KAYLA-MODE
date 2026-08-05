@@ -33,16 +33,11 @@ placeholder="Antre modpas la"
 
 
 <button class="buy" onclick="loginAdmin()">
-
 Antre
-
 </button>
 
 
-
 </div>
-
-
 
 
 
@@ -51,30 +46,20 @@ Antre
 <div id="adminPanel" style="display:none;">
 
 
-
-
-
 <header>
-
 
 <h1>
 🔐 KAYLA MODE ADMIN
 </h1>
-
 
 <p>
 Jere pwodwi ak kòmann yo
 </p>
 
 
-
-
 <button class="buy" onclick="logoutAdmin()">
-
 🚪 Dekonekte
-
 </button>
-
 
 
 </header>
@@ -83,85 +68,60 @@ Jere pwodwi ak kòmann yo
 
 
 
-
-
-
-
 <section class="dashboard">
-
 
 
 <div class="stat">
 
-<h3>
-📦 Total pwodwi
-</h3>
+<h3>📦 Total pwodwi</h3>
 
 <p id="totalProduits">
 0
 </p>
 
-
 </div>
-
 
 
 
 
 <div class="stat">
 
-<h3>
-🛒 Total kòmann
-</h3>
+<h3>🛒 Total kòmann</h3>
 
 <p id="totalKommann">
 0
 </p>
 
-
 </div>
-
 
 
 
 
 <div class="stat">
 
-<h3>
-💰 Total lavant
-</h3>
+<h3>💰 Total lavant</h3>
 
 <p id="totalVant">
 0 Gdes
 </p>
 
-
 </div>
-
-
 
 
 
 
 <div class="stat">
 
-<h3>
-👥 Kliyan
-</h3>
+<h3>👥 Kliyan</h3>
 
 <p id="totalKliyan">
 0
 </p>
 
-
 </div>
 
 
-
 </section>
-
-
-
 
 
 
@@ -176,16 +136,13 @@ Jere pwodwi ak kòmann yo
 
 
 
-
 <label 
 for="photoProduit"
-class="btn-photo"
->
+class="btn-photo">
 
 📸 Chwazi foto
 
 </label>
-
 
 
 
@@ -199,14 +156,10 @@ hidden
 
 
 
-
 <img 
 id="previewPhoto"
 width="200"
 >
-
-
-
 
 
 
@@ -218,22 +171,19 @@ placeholder="Non pwodwi"
 
 
 
-
-
-
 <input 
 id="prixProduit"
 type="number"
 placeholder="Pri nouvo"
 >
 
+
+
 <input 
 id="stockProduit"
 type="number"
 placeholder="Kantite stock"
 >
-
-
 
 
 
@@ -244,75 +194,38 @@ placeholder="Ansyen pri"
 >
 
 
-
-
-
-
-
-
-
 <select id="categorieProduit">
 
-
 <option value="Fanm">
-
 👗 Fanm
-
 </option>
-
 
 <option value="Gason">
-
 👔 Gason
-
 </option>
-
 
 <option value="Soulye">
-
 👟 Soulye
-
 </option>
-
 
 <option value="Sak">
-
 👜 Sak
-
 </option>
 
-
 </select>
-
-
-
-
-
 
 
 <select id="tagProduit">
 
-
 <option value="Nouvo">
-
 🆕 Nouvo
-
 </option>
-
 
 <option value="Promo">
-
 🔥 Promo
-
 </option>
 
-
 </select>
-
-
-
-
-
 
 
 <button class="buy" onclick="ajouterProduit()">
@@ -322,16 +235,7 @@ placeholder="Ansyen pri"
 </button>
 
 
-
 </section>
-
-
-
-
-
-
-
-
 
 <section class="admin-box">
 
@@ -341,12 +245,10 @@ placeholder="Ansyen pri"
 </h2>
 
 
-
 <input 
 id="searchAdmin"
 placeholder="Chèche pwodwi..."
 >
-
 
 
 
@@ -357,10 +259,7 @@ placeholder="Chèche pwodwi..."
 </button>
 
 
-
 </section>
-
-
 
 
 
@@ -376,16 +275,12 @@ placeholder="Chèche pwodwi..."
 </h2>
 
 
-
 <div id="listeProduits">
 
 </div>
 
 
-
 </section>
-
-
 
 
 
@@ -401,23 +296,17 @@ placeholder="Chèche pwodwi..."
 </h2>
 
 
-
 <div id="listeKommann">
 
 </div>
 
 
-
 </section>
 
 
 
 
 
-
-
-
-
 </div>
 
 
@@ -425,445 +314,17 @@ placeholder="Chèche pwodwi..."
 
 
 
-
-<!DOCTYPE html>
-<html lang="ht">
-
-<head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>KAYLA MODE Admin</title>
-
-<link rel="stylesheet" href="admin.css">
-
-</head>
-
-
-<body>
-
-
-<div id="loginBox">
-
-
-<h2>
-🔐 KAYLA MODE ADMIN
-</h2>
-
-
-<input 
-type="password"
-id="adminPassword"
-placeholder="Antre modpas la"
->
-
-
-<button class="buy" onclick="loginAdmin()">
-
-Antre
-
-</button>
-
-
-
-</div>
-
-
-
-
-
-
-
-<div id="adminPanel" style="display:none;">
-
-
-
-
-
-<header>
-
-
-<h1>
-🔐 KAYLA MODE ADMIN
-</h1>
-
-
-<p>
-Jere pwodwi ak kòmann yo
-</p>
-
-
-
-
-<button class="buy" onclick="logoutAdmin()">
-
-🚪 Dekonekte
-
-</button>
-
-
-
-</header>
-
-
-
-
-
-
-
-
-
-<section class="dashboard">
-
-
-
-<div class="stat">
-
-<h3>
-📦 Total pwodwi
-</h3>
-
-<p id="totalProduits">
-0
-</p>
-
-
-</div>
-
-
-
-
-
-<div class="stat">
-
-<h3>
-🛒 Total kòmann
-</h3>
-
-<p id="totalKommann">
-0
-</p>
-
-
-</div>
-
-
-
-
-
-<div class="stat">
-
-<h3>
-💰 Total lavant
-</h3>
-
-<p id="totalVant">
-0 Gdes
-</p>
-
-
-</div>
-
-
-
-
-
-
-<div class="stat">
-
-<h3>
-👥 Kliyan
-</h3>
-
-<p id="totalKliyan">
-0
-</p>
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-<section class="admin-box">
-
-
-<h2>
-📸 Ajoute pwodwi
-</h2>
-
-
-
-
-<label 
-for="photoProduit"
-class="btn-photo"
->
-
-📸 Chwazi foto
-
-</label>
-
-
-
-
-<input 
-type="file"
-id="photoProduit"
-accept="image/*"
-hidden
->
-
-
-
-
-
-<img 
-id="previewPhoto"
-width="200"
->
-
-
-
-
-
-
-
-<input 
-id="nomProduit"
-placeholder="Non pwodwi"
->
-
-
-
-
-
-
-<input 
-id="prixProduit"
-type="number"
-placeholder="Pri nouvo"
->
-
-<input 
-id="stockProduit"
-type="number"
-placeholder="Kantite stock"
->
-
-
-
-
-
-<input 
-id="ancienPrix"
-type="number"
-placeholder="Ansyen pri"
->
-
-
-
-
-
-
-
-
-
-<select id="categorieProduit">
-
-
-<option value="Fanm">
-
-👗 Fanm
-
-</option>
-
-
-<option value="Gason">
-
-👔 Gason
-
-</option>
-
-
-<option value="Soulye">
-
-👟 Soulye
-
-</option>
-
-
-<option value="Sak">
-
-👜 Sak
-
-</option>
-
-
-</select>
-
-
-
-
-
-
-
-<select id="tagProduit">
-
-
-<option value="Nouvo">
-
-🆕 Nouvo
-
-</option>
-
-
-<option value="Promo">
-
-🔥 Promo
-
-</option>
-
-
-</select>
-
-
-
-
-
-
-
-<button class="buy" onclick="ajouterProduit()">
-
-➕ Sove pwodwi
-
-</button>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<section class="admin-box">
-
-
-<h2>
-🔍 Chèche pwodwi
-</h2>
-
-
-
-<input 
-id="searchAdmin"
-placeholder="Chèche pwodwi..."
->
-
-
-
-
-<button onclick="rechercherProduit()">
-
-🔍 Chèche
-
-</button>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<section class="admin-box">
-
-
-<h2>
-🛍️ Lis pwodwi yo
-</h2>
-
-
-
-<div id="listeProduits">
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<section class="admin-box">
-
-
-<h2>
-📦 Kòmann kliyan yo
-</h2>
-
-
-
-<div id="listeKommann">
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-</div>
-
-
-
-
-
-
+<!-- APPWRITE -->
 
 <script src="https://cdn.jsdelivr.net/npm/appwrite@17.0.0"></script>
+
+
+<!-- ADMIN JS -->
 
 <script src="admin.js"></script>
 
 
-</body>
-
-</html>
-
 
 </body>
 
-</html>
+  </html>
