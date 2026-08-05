@@ -18,7 +18,7 @@ ID,
 Query
 } = Appwrite;
 
-
+console.log(Appwrite);
 
 const client = new Appwrite.Client();
 
