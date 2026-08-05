@@ -1,49 +1,131 @@
 // =================================
-// KAYLA MODE - ADMIN SYSTEM
-// NOUVO VERSION
+// KAYLA MODE ADMIN
+// APPWRITE VERSION
 // PATI 1/3
 // =================================
 
 
+// ================================
+// APPWRITE CONFIG
+// ================================
+
+
+const {
+    Client,
+    Databases,
+    Storage,
+    ID,
+    Query
+} = Appwrite;
+
+
+
+const client = new Client();
+
+
+client
+.setEndpoint(
+"https://fra.cloud.appwrite.io/v1"
+)
+.setProject(
+"6a7128570039e2aca907"
+);
+
+
+
+const databases = new Databases(client);
+
+const storage = new Storage(client);
+
+
+
+
+// ================================
+// DATABASE INFO
+// ================================
+
+
+const DATABASE_ID =
+"6a7128c7002e61a9b790";
+
+
+const TABLE_ID =
+"6a738074001c390f0373";
+
+
+const BUCKET_ID =
+"6a717118002542ff6ac8";
+
+
+
+
+// ================================
+// VARIABLES
+// ================================
+
+
 let imageProduit = "";
-let editIndex = -1;
+
+let fileImage = null;
+
+let editID = null;
 
 
-// =================================
+
+
+
+// ================================
 // LOGIN ADMIN
-// =================================
+// ================================
 
 
 function loginAdmin(){
 
-    let password = document.getElementById("adminPassword").value;
+
+let password =
+document.getElementById(
+"adminPassword"
+).value;
 
 
-    if(password === "KAYLA2026"){
+
+if(password === "KAYLA2026"){
 
 
-        localStorage.setItem(
-            "adminLogin",
-            "true"
-        );
+localStorage.setItem(
+"adminLogin",
+"true"
+);
 
 
-        document.getElementById("loginBox").style.display = "none";
+
+document.getElementById(
+"loginBox"
+).style.display="none";
 
 
-        document.getElementById("adminPanel").style.display = "block";
+
+document.getElementById(
+"adminPanel"
+).style.display="block";
 
 
-        afficherDashboard();
+
+afficherDashboard();
 
 
-    }else{
+
+}else{
 
 
-        alert("Modpas la pa bon ❌");
+alert(
+"Modpas la pa bon ❌"
+);
 
 
-    }
+}
+
+
 
 }
 
@@ -54,18 +136,29 @@ function loginAdmin(){
 function checkLogin(){
 
 
-    if(localStorage.getItem("adminLogin") === "true"){
+if(
+localStorage.getItem(
+"adminLogin"
+)==="true"
+){
 
 
-        document.getElementById("loginBox").style.display="none";
+document.getElementById(
+"loginBox"
+).style.display="none";
 
 
-        document.getElementById("adminPanel").style.display="block";
+document.getElementById(
+"adminPanel"
+).style.display="block";
 
-
-    }
 
 }
+
+
+
+}
+
 
 
 
@@ -74,13 +167,22 @@ function checkLogin(){
 function logoutAdmin(){
 
 
-    localStorage.removeItem("adminLogin");
+localStorage.removeItem(
+"adminLogin"
+);
 
 
-    document.getElementById("loginBox").style.display="block";
+
+document.getElementById(
+"loginBox"
+).style.display="block";
 
 
-    document.getElementById("adminPanel").style.display="none";
+
+document.getElementById(
+"adminPanel"
+).style.display="none";
+
 
 
 }
@@ -90,240 +192,336 @@ function logoutAdmin(){
 
 
 
-// =================================
-// FOTO PWODWI
-// =================================
+// ================================
+// PHOTO UPLOAD
+// ================================
 
 
-let photoInput = document.getElementById("photoProduit");
+let photoInput =
+document.getElementById(
+"photoProduit"
+);
 
-let preview = document.getElementById("previewPhoto");
+
+let preview =
+document.getElementById(
+"previewPhoto"
+);
+
+
 
 
 
 if(photoInput){
 
 
-    photoInput.addEventListener(
-    "change",
-    function(){
-
-
-        let file = this.files[0];
-
-
-        if(file){
-
-
-            let reader = new FileReader();
+photoInput.addEventListener(
+"change",
+function(){
 
 
 
-            reader.onload = function(e){
+fileImage =
+this.files[0];
 
 
-                imageProduit = e.target.result;
+
+if(fileImage){
 
 
-                if(preview){
-
-                    preview.src = imageProduit;
-
-                }
+let reader =
+new FileReader();
 
 
-            };
+
+reader.onload =
+function(e){
 
 
-            reader.readAsDataURL(file);
+imageProduit =
+e.target.result;
 
 
-        }
 
+if(preview){
 
-    });
+preview.src =
+imageProduit;
+
+}
 
 
 }
 
 
 
+reader.readAsDataURL(
+fileImage
+);
 
 
 
-// =================================
-// AJOUTE PWODWI
-// =================================
+}
 
 
-function ajouterProduit(){
 
+}
 
-    let nom =
-    document.getElementById("nomProduit").value;
-
-
-    let pri =
-    document.getElementById("prixProduit").value;
-
-
-    let stock =
-    document.getElementById("stockProduit").value;
-
-
-    let ansyen =
-    document.getElementById("ancienPrix").value;
-
-
-    let kategori =
-    document.getElementById("categorieProduit").value;
-
-
-    let tag =
-    document.getElementById("tagProduit").value;
-
-
-
-
-
-    if(
-        nom === "" ||
-        pri === "" ||
-        imageProduit === ""
-    ){
-
-
-        alert("Ranpli tout enfòmasyon yo ❌");
-
-
-        return;
-
-
-    }
-
-
-
-
-
-
-    let produit = {
-
-
-        nom: nom,
-
-
-        prix: pri + " Gdes",
-
-
-        stock: Number(stock) || 0,
-
-
-        ancienPrix: ansyen ? ansyen + " Gdes" : "",
-
-
-        categorie: kategori,
-
-
-        tag: tag,
-
-
-        image: imageProduit
-
-
-
-    };
-
-
-
-
-
-
-
-    let produits = JSON.parse(
-
-        localStorage.getItem("produits")
-
-    ) || [];
-
-
-
-
-
-    if(editIndex === -1){
-
-
-        produits.push(produit);
-
-
-
-    }else{
-
-
-        produits[editIndex] = produit;
-
-
-        editIndex = -1;
-
-
-    }
-
-
-
-
-
-
-    localStorage.setItem(
-
-        "produits",
-
-        JSON.stringify(produits)
-
-    );
-
-
-
-
-
-
-    alert("Pwodwi sove avèk siksè ✅");
-
-
-
-    afficherProduits();
-
-
-    netwayeForm();
+);
 
 
 
 }
 // =================================
 // PATI 2/3
-// PWODWI MANAGEMENT
+// AJOUTE + AFFICHE PWODWI APPWRITE
 // =================================
 
+
+// ================================
+// AJOUTE PWODWI
+// ================================
+
+
+async function ajouterProduit(){
+
+
+let nom =
+document.getElementById(
+"nomProduit"
+).value;
+
+
+
+let pri =
+document.getElementById(
+"prixProduit"
+).value;
+
+
+
+let stock =
+document.getElementById(
+"stockProduit"
+).value;
+
+
+
+let ansyen =
+document.getElementById(
+"ancienPrix"
+).value;
+
+
+
+let kategori =
+document.getElementById(
+"categorieProduit"
+).value;
+
+
+
+let tag =
+document.getElementById(
+"tagProduit"
+).value;
+
+
+
+
+if(
+nom === "" ||
+pri === "" ||
+!fileImage
+){
+
+
+alert(
+"Ranpli tout enfòmasyon yo ❌"
+);
+
+
+return;
+
+
+}
+
+
+
+
+try{
+
+
+
+// UPLOAD FOTO APPWRITE
+
+
+let upload =
+await storage.createFile(
+
+BUCKET_ID,
+
+ID.unique(),
+
+fileImage
+
+);
+
+
+
+
+let imageURL =
+storage.getFileView(
+
+BUCKET_ID,
+
+upload.$id
+
+);
+
+
+
+
+
+
+// SAVE PWODWI DATABASE
+
+
+await databases.createDocument(
+
+DATABASE_ID,
+
+TABLE_ID,
+
+ID.unique(),
+
+{
+
+
+name:
+nom,
+
+
+price:
+Number(pri),
+
+
+stock:
+Number(stock)||0,
+
+
+image:
+imageURL.href,
+
+
+ancienPrix:
+ansyen,
+
+
+categorie:
+kategori,
+
+
+tag:
+tag
+
+
+
+}
+
+
+
+);
+
+
+
+
+
+alert(
+"Pwodwi ajoute avèk siksè ✅"
+);
+
+
+
+netwayeForm();
+
+
+
+afficherProduits();
+
+
+
+}catch(error){
+
+
+
+console.log(error);
+
+
+alert(
+"Erè pandan ajoute pwodwi ❌"
+);
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+// ================================
+// NETWAYE FORM
+// ================================
 
 
 function netwayeForm(){
 
 
-    document.getElementById("nomProduit").value = "";
 
-    document.getElementById("prixProduit").value = "";
-
-    document.getElementById("stockProduit").value = "";
-
-    document.getElementById("ancienPrix").value = "";
+document.getElementById(
+"nomProduit"
+).value="";
 
 
-    if(preview){
 
-        preview.src = "";
+document.getElementById(
+"prixProduit"
+).value="";
 
-    }
 
 
-    imageProduit = "";
+document.getElementById(
+"stockProduit"
+).value="";
+
+
+
+document.getElementById(
+"ancienPrix"
+).value="";
+
+
+
+
+if(preview){
+
+preview.src="";
+
+}
+
+
+
+fileImage=null;
+
+imageProduit="";
+
 
 
 }
@@ -333,147 +531,70 @@ function netwayeForm(){
 
 
 
-
-// =================================
+// ================================
 // AFFICHE PWODWI
-// =================================
+// ================================
 
 
-function afficherProduits(){
+async function afficherProduits(){
 
 
-    let liste = document.getElementById("listeProduits");
 
+let liste =
+document.getElementById(
+"listeProduits"
+);
 
-    if(!liste){
 
-        return;
 
-    }
+if(!liste){
 
+return;
 
+}
 
-    let produits = JSON.parse(
 
-        localStorage.getItem("produits")
 
-    ) || [];
 
+liste.innerHTML =
+"⏳ Chajman pwodwi...";
 
 
-    liste.innerHTML = "";
 
 
+try{
 
 
-    if(document.getElementById("totalProduits")){
 
+let result =
+await databases.listDocuments(
 
-        document.getElementById("totalProduits").innerHTML = produits.length;
+DATABASE_ID,
 
+TABLE_ID
 
-    }
+);
 
 
 
 
 
+liste.innerHTML="";
 
-    if(produits.length === 0){
 
 
-        liste.innerHTML = `
 
-        <p>
-        🛍️ Pa gen pwodwi.
-        </p>
 
-        `;
 
+if(
+result.documents.length === 0
+){
 
-        return;
 
+liste.innerHTML =
+"<p>🛍️ Pa gen pwodwi.</p>";
 
-    }
-
-
-
-
-
-
-    produits.forEach(function(produit,index){
-
-
-
-        liste.innerHTML += `
-
-
-        <div class="product-admin">
-
-
-        <img src="${produit.image}" width="120">
-
-
-
-        <h3>
-
-        ${produit.tag || "Nouvo"} ${produit.nom}
-
-        </h3>
-
-
-
-        <p>
-
-        ${produit.prix}
-
-        </p>
-
-
-
-        <p>
-
-        📂 ${produit.categorie}
-
-        </p>
-
-
-
-        <p>
-
-        📦 Stock: ${produit.stock || 0}
-
-        </p>
-
-
-
-
-        <button onclick="modifierProduit(${index})">
-
-        ✏️ Modifye
-
-        </button>
-
-
-
-
-        <button onclick="supprimerProduit(${index})">
-
-        🗑️ Efase
-
-        </button>
-
-
-
-        </div>
-
-
-        `;
-
-
-
-    });
-
+return;
 
 
 }
@@ -483,364 +604,165 @@ function afficherProduits(){
 
 
 
-
-
-// =================================
-// MODIFYE PWODWI
-// =================================
-
-
-
-function modifierProduit(index){
-
-
-    let produits = JSON.parse(
-
-        localStorage.getItem("produits")
-
-    ) || [];
-
-
-
-    let produit = produits[index];
+document.getElementById(
+"totalProduits"
+).innerHTML =
+result.total;
 
 
 
 
 
-    document.getElementById("nomProduit").value = produit.nom;
 
 
-    document.getElementById("prixProduit").value =
-    produit.prix.replace(" Gdes","");
-
-
-
-    document.getElementById("stockProduit").value =
-    produit.stock || 0;
+result.documents.forEach(
+function(produit){
 
 
 
-    document.getElementById("ancienPrix").value =
-    produit.ancienPrix
-    ?
-    produit.ancienPrix.replace(" Gdes","")
-    :
-    "";
+liste.innerHTML += `
 
 
 
-    document.getElementById("categorieProduit").value =
-    produit.categorie;
+<div class="product-admin">
 
 
 
-    document.getElementById("tagProduit").value =
-    produit.tag;
+<img 
+src="${produit.image}"
+width="120"
+>
 
 
 
-    imageProduit = produit.image;
+<h3>
+
+${produit.tag || "Nouvo"}
+${produit.name}
+
+</h3>
 
 
 
-    if(preview){
-
-        preview.src = produit.image;
-
-    }
+<p>
+💰 ${produit.price} Gdes
+</p>
 
 
 
-    editIndex = index;
+<p>
+📂 ${produit.categorie}
+</p>
+
+
+
+<p>
+📦 Stock: ${produit.stock}
+</p>
+
+
+
+
+<button onclick="supprimerProduit('${produit.$id}')">
+
+🗑️ Efase
+
+</button>
+
+
+
+</div>
+
+
+
+`;
+
+
+
+});
+
+
+
+
+
+}catch(error){
+
+
+
+console.log(error);
+
+
+liste.innerHTML =
+"❌ Erè chajman pwodwi";
 
 
 }
 
-
-
-
-
-
-
-
-// =================================
-// EFASE PWODWI
-// =================================
-
-
-
-function supprimerProduit(index){
-
-
-    let produits = JSON.parse(
-
-        localStorage.getItem("produits")
-
-    ) || [];
-
-
-
-    if(confirm("Efase pwodwi sa?")){
-
-
-        produits.splice(index,1);
-
-
-
-        localStorage.setItem(
-
-            "produits",
-
-            JSON.stringify(produits)
-
-        );
-
-
-
-        afficherProduits();
 
 
     }
-
-
-}
-
-
-
-
-
-
-
-
-// =================================
-// RECHÈCH PWODWI
-// =================================
-
-
-function rechercherProduit(){
-
-
-    let rech = document.getElementById("searchAdmin").value.toLowerCase();
-
-
-
-    let produits = JSON.parse(
-
-        localStorage.getItem("produits")
-
-    ) || [];
-
-
-
-
-    let rezilta = produits.filter(function(item){
-
-
-        return item.nom.toLowerCase().includes(rech);
-
-
-    });
-
-
-
-
-    let liste = document.getElementById("listeProduits");
-
-
-
-    liste.innerHTML = "";
-
-
-
-
-    rezilta.forEach(function(produit){
-
-
-
-        liste.innerHTML += `
-
-
-        <div class="product-admin">
-
-
-        <img src="${produit.image}" width="120">
-
-
-        <h3>${produit.nom}</h3>
-
-
-        <p>${produit.prix}</p>
-
-
-        </div>
-
-
-        `;
-
-
-
-    });
-
-
-
-}
 // =================================
 // PATI 3/3
-// KÒMANN + DASHBOARD + START
+// EFASE + DASHBOARD + START
 // =================================
 
 
+// ================================
+// EFASE PWODWI
+// ================================
 
-// =================================
-// AFFICHE KÒMANN
-// =================================
 
+async function supprimerProduit(id){
 
-function afficherKommann(){
 
+if(
+confirm("Efase pwodwi sa?") 
+){
 
-    let liste = document.getElementById("listeKommann");
 
+try{
 
-    if(!liste){
 
-        return;
+await databases.deleteDocument(
 
-    }
+DATABASE_ID,
 
+TABLE_ID,
 
+id
 
-    let kommann = JSON.parse(
+);
 
-        localStorage.getItem("kommann")
 
-    ) || [];
 
+alert(
+"Pwodwi efase ✅"
+);
 
 
-    liste.innerHTML = "";
 
+afficherProduits();
 
 
 
-    if(document.getElementById("totalKommann")){
+}catch(error){
 
 
-        document.getElementById("totalKommann").innerHTML =
-        kommann.length;
 
+console.log(error);
 
-    }
 
+alert(
+"Erè pandan efase ❌"
+);
 
 
 
+}
 
 
-    if(kommann.length === 0){
 
-
-        liste.innerHTML = `
-
-        <p>
-        📦 Pa gen kòmann.
-        </p>
-
-        `;
-
-
-        return;
-
-
-    }
-
-
-
-
-
-
-    kommann.forEach(function(item,index){
-
-
-
-        liste.innerHTML += `
-
-
-        <div class="product-admin">
-
-
-        <h3>
-        🛍️ ${item.produit}
-        </h3>
-
-
-        <p>
-        💰 ${item.pri}
-        </p>
-
-
-        <p>
-        📦 Kantite: ${item.kantite}
-        </p>
-
-
-        <p>
-        👤 ${item.non || "Pa bay"}
-        </p>
-
-
-        <p>
-        📞 ${item.telephone || "Pa bay"}
-        </p>
-
-
-        <p>
-        📍 ${item.adresse || "Pa bay"}
-        </p>
-
-
-        <p>
-        💳 ${item.peman || "Pa bay"}
-        </p>
-
-
-
-        <h3>
-        📌 ${item.status || "An atant"}
-        </h3>
-
-
-
-
-
-        <button onclick="livreKomann(${index})">
-
-        ✅ Livre
-
-        </button>
-
-
-
-
-
-        <button onclick="efaseKomann(${index})">
-
-        🗑️ Efase
-
-        </button>
-
-
-
-        </div>
-
-
-
-        `;
-
-
-
-    });
+}
 
 
 
@@ -852,37 +774,110 @@ function afficherKommann(){
 
 
 
-// =================================
-// LIVRE KÒMANN
-// =================================
+// ================================
+// RECHÈCH PWODWI
+// ================================
 
 
-function livreKomann(index){
+async function rechercherProduit(){
 
 
-    let kommann = JSON.parse(
-
-        localStorage.getItem("kommann")
-
-    ) || [];
-
-
-
-    kommann[index].status = "Livre ✅";
+let rech =
+document.getElementById(
+"searchAdmin"
+).value.toLowerCase();
 
 
 
-    localStorage.setItem(
 
-        "kommann",
-
-        JSON.stringify(kommann)
-
-    );
+let liste =
+document.getElementById(
+"listeProduits"
+);
 
 
 
-    afficherKommann();
+
+try{
+
+
+let result =
+await databases.listDocuments(
+
+DATABASE_ID,
+
+TABLE_ID,
+
+[
+
+Query.search(
+"name",
+rech
+)
+
+]
+
+);
+
+
+
+
+
+liste.innerHTML="";
+
+
+
+
+
+result.documents.forEach(
+function(produit){
+
+
+
+liste.innerHTML += `
+
+
+<div class="product-admin">
+
+
+<img 
+src="${produit.image}"
+width="120"
+>
+
+
+<h3>
+${produit.name}
+</h3>
+
+
+<p>
+💰 ${produit.price} Gdes
+</p>
+
+
+
+</div>
+
+
+
+`;
+
+
+
+});
+
+
+
+}catch(error){
+
+
+console.log(error);
+
+
+
+}
+
 
 
 }
@@ -893,148 +888,58 @@ function livreKomann(index){
 
 
 
-// =================================
-// EFASE KÒMANN
-// =================================
-
-
-function efaseKomann(index){
-
-
-    let kommann = JSON.parse(
-
-        localStorage.getItem("kommann")
-
-    ) || [];
-
-
-
-    kommann.splice(index,1);
-
-
-
-    localStorage.setItem(
-
-        "kommann",
-
-        JSON.stringify(kommann)
-
-    );
-
-
-
-    afficherKommann();
-
-
-}
-
-
-
-
-
-
-
-// =================================
+// ================================
 // DASHBOARD
-// =================================
+// ================================
 
 
-function afficherDashboard(){
-
-
-    let produits = JSON.parse(
-
-        localStorage.getItem("produits")
-
-    ) || [];
+async function afficherDashboard(){
 
 
 
-    let kommann = JSON.parse(
-
-        localStorage.getItem("kommann")
-
-    ) || [];
+try{
 
 
 
-    let total = 0;
+let produits =
+await databases.listDocuments(
 
-    let kliyan = [];
+DATABASE_ID,
+
+TABLE_ID
+
+);
 
 
 
 
-
-    kommann.forEach(function(item){
-
-
-
-        let pri = parseInt(
-
-            String(item.pri).replace(/\D/g,"")
-
-        ) || 0;
+if(
+document.getElementById(
+"totalProduits"
+)
+){
 
 
-
-        total += pri * Number(item.kantite || 1);
-
-
-
-
-
-        if(
-            item.telephone &&
-            !kliyan.includes(item.telephone)
-        ){
-
-            kliyan.push(item.telephone);
-
-        }
+document.getElementById(
+"totalProduits"
+).innerHTML =
+produits.total;
 
 
-
-    });
+}
 
 
 
 
+}catch(error){
 
 
-    if(document.getElementById("totalProduits")){
-
-        document.getElementById("totalProduits").innerHTML =
-        produits.length;
-
-    }
+console.log(error);
 
 
 
-    if(document.getElementById("totalKommann")){
+}
 
-        document.getElementById("totalKommann").innerHTML =
-        kommann.length;
-
-    }
-
-
-
-    if(document.getElementById("totalVant")){
-
-        document.getElementById("totalVant").innerHTML =
-        total + " Gdes";
-
-    }
-
-
-
-    if(document.getElementById("totalKliyan")){
-
-        document.getElementById("totalKliyan").innerHTML =
-        kliyan.length;
-
-    }
 
 
 }
@@ -1044,9 +949,11 @@ function afficherDashboard(){
 
 
 
-// =================================
+
+
+// ================================
 // DEMARAJ ADMIN
-// =================================
+// ================================
 
 
 document.addEventListener(
@@ -1056,16 +963,19 @@ document.addEventListener(
 function(){
 
 
-    checkLogin();
+
+checkLogin();
 
 
-    afficherProduits();
+
+afficherProduits();
 
 
-    afficherKommann();
+
+afficherDashboard();
 
 
-    afficherDashboard();
 
+}
 
-});
+);
