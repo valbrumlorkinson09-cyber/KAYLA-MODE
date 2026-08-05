@@ -426,17 +426,11 @@ afficherProduits();
 
 }catch(error){
 
-
-
-console.log(error);
-
-
+console.log("APPWRITE ERREUR:", error);
 
 alert(
-error.message
+JSON.stringify(error, null, 2)
 );
-
-
 
 }
 
