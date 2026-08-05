@@ -1,6 +1,6 @@
 // =================================
 // KAYLA MODE ADMIN
-// APPWRITE TABLESDB VERSION
+// FINAL APPWRITE TABLESDB VERSION
 // PATI 1/3
 // =================================
 
@@ -9,16 +9,6 @@
 // APPWRITE CONFIG
 // ================================
 
-
-const {
-Client,
-TablesDB,
-Storage,
-ID,
-Query
-} = Appwrite;
-
-console.log(Appwrite);
 
 const client = new Appwrite.Client();
 
@@ -33,16 +23,19 @@ client
 
 
 
-
 const tablesDB = new Appwrite.TablesDB(client);
 
 const storage = new Appwrite.Storage(client);
+
+const ID = Appwrite.ID;
+
+const Query = Appwrite.Query;
 
 
 
 
 // ================================
-// ID APPWRITE
+// APPWRITE ID
 // ================================
 
 
@@ -60,6 +53,7 @@ const BUCKET_ID =
 
 
 
+
 // ================================
 // VARIABLES
 // ================================
@@ -67,10 +61,8 @@ const BUCKET_ID =
 
 let fileImage = null;
 
-let preview =
-document.getElementById(
-"previewPhoto"
-);
+let previewPhoto =
+null;
 
 
 
@@ -107,7 +99,6 @@ document.getElementById(
 ).style.display="none";
 
 
-
 document.getElementById(
 "adminPanel"
 ).style.display="block";
@@ -135,7 +126,6 @@ alert(
 
 
 
-
 function checkLogin(){
 
 
@@ -149,7 +139,6 @@ localStorage.getItem(
 document.getElementById(
 "loginBox"
 ).style.display="none";
-
 
 
 document.getElementById(
@@ -167,14 +156,12 @@ document.getElementById(
 
 
 
-
 function logoutAdmin(){
 
 
 localStorage.removeItem(
 "adminLogin"
 );
-
 
 
 location.reload();
@@ -189,21 +176,33 @@ location.reload();
 
 
 // ================================
-// CHWA FOTO
+// PHOTO
 // ================================
 
 
-let photoInput =
+document.addEventListener(
+"DOMContentLoaded",
+function(){
+
+
+previewPhoto =
+document.getElementById(
+"previewPhoto"
+);
+
+
+
+let input =
 document.getElementById(
 "photoProduit"
 );
 
 
 
-if(photoInput){
+if(input){
 
 
-photoInput.addEventListener(
+input.addEventListener(
 "change",
 function(){
 
@@ -225,12 +224,8 @@ reader.onload =
 function(e){
 
 
-if(preview){
-
-preview.src =
+previewPhoto.src =
 e.target.result;
-
-}
 
 
 }
@@ -252,7 +247,11 @@ fileImage
 );
 
 
-    }
+}
+
+
+
+});
 
 // =================================
 // PATI 2/3
@@ -314,7 +313,7 @@ document.getElementById(
 if(
 nom === "" ||
 pri === "" ||
-!fileImage
+fileImage === null
 ){
 
 
@@ -333,9 +332,7 @@ return;
 try{
 
 
-
 // UPLOAD FOTO
-
 
 let upload =
 await storage.createFile(
@@ -365,9 +362,7 @@ upload.$id
 
 
 
-
-// AJOUTE NAN TABLE
-
+// SAVE NAN TABLE
 
 await tablesDB.createRow(
 
@@ -382,24 +377,17 @@ ID.unique(),
 
 name: nom,
 
-
 price: Number(pri),
-
 
 stock: Number(stock) || 0,
 
-
 image: imageURL.href,
-
 
 ancienPrix: ansyen,
 
-
 categorie: kategori,
 
-
 tag: tag
-
 
 
 }
@@ -419,18 +407,21 @@ alert(
 netwayeForm();
 
 
-
 afficherProduits();
 
 
 
 }catch(error){
 
-console.log("APPWRITE ERREUR:", error);
+
+console.log(error);
+
 
 alert(
-JSON.stringify(error, null, 2)
+"ERÈ: " + error.message
 );
+
+
 
 }
 
@@ -445,12 +436,11 @@ JSON.stringify(error, null, 2)
 
 
 // ================================
-// NETWAYE FÒM
+// NETWAYE FORM
 // ================================
 
 
 function netwayeForm(){
-
 
 
 document.getElementById(
@@ -458,17 +448,14 @@ document.getElementById(
 ).value="";
 
 
-
 document.getElementById(
 "prixProduit"
 ).value="";
 
 
-
 document.getElementById(
 "stockProduit"
 ).value="";
-
 
 
 document.getElementById(
@@ -481,14 +468,16 @@ fileImage=null;
 
 
 
-if(preview){
+if(previewPhoto){
 
-preview.src="";
-
-}
+previewPhoto.src="";
 
 
 }
+
+
+}
+
 
 
 
@@ -502,7 +491,6 @@ preview.src="";
 
 
 async function afficherProduits(){
-
 
 
 let liste =
@@ -520,8 +508,9 @@ return;
 
 
 
+
 liste.innerHTML =
-"⏳ Chajman...";
+"⏳ Chajman pwodwi...";
 
 
 
@@ -555,7 +544,6 @@ result.total;
 
 
 
-
 if(result.rows.length === 0){
 
 
@@ -567,7 +555,6 @@ return;
 
 
 }
-
 
 
 
@@ -605,15 +592,16 @@ ${produit.name}
 </p>
 
 
+
 <p>
 📂 ${produit.categorie}
 </p>
 
 
+
 <p>
 📦 Stock: ${produit.stock}
 </p>
-
 
 
 
@@ -637,23 +625,23 @@ ${produit.name}
 
 
 
+
 }catch(error){
 
 
-
 console.log(error);
-
 
 
 liste.innerHTML =
 "❌ " + error.message;
 
 
-}
-
-
 
 }
+
+
+
+    }
 
 // =================================
 // PATI 3/3
@@ -669,9 +657,19 @@ liste.innerHTML =
 async function supprimerProduit(id){
 
 
-if(
-confirm("Efase pwodwi sa?")
-){
+let konfime =
+confirm(
+"Efase pwodwi sa?"
+);
+
+
+
+if(!konfime){
+
+return;
+
+}
+
 
 
 try{
@@ -705,14 +703,9 @@ afficherProduits();
 console.log(error);
 
 
-
 alert(
-error.message
+"ERÈ: " + error.message
 );
-
-
-
-}
 
 
 
@@ -766,7 +759,6 @@ rech
 
 
 
-
 let liste =
 document.getElementById(
 "listeProduits"
@@ -819,12 +811,11 @@ ${produit.name}
 
 
 
-
-
 }catch(error){
 
 
 console.log(error);
+
 
 
 }
@@ -848,6 +839,7 @@ console.log(error);
 async function afficherDashboard(){
 
 
+
 try{
 
 
@@ -863,18 +855,17 @@ TABLE_ID
 
 
 
-if(
+let total =
 document.getElementById(
 "totalProduits"
-)
-){
+);
 
 
-document.getElementById(
-"totalProduits"
-).innerHTML =
+
+if(total){
+
+total.innerHTML =
 result.total;
-
 
 }
 
@@ -899,7 +890,7 @@ console.log(error);
 
 
 // ================================
-// DEMARAJ ADMIN
+// DEMARAJ
 // ================================
 
 
