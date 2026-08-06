@@ -1,7 +1,8 @@
 // =================================
 // KAYLA MODE
-// APPWRITE PRODUITS SYSTEM
-// PATI 1
+// APPWRITE ONLINE SHOP
+// SCRIPT.JS NOUVO VERSION
+// PATI 1/3
 // =================================
 
 
@@ -10,6 +11,7 @@
 // ================================
 
 const client = new Appwrite.Client();
+
 
 client
 .setEndpoint(
@@ -20,12 +22,17 @@ client
 );
 
 
+
 const tablesDB = new Appwrite.TablesDB(client);
 
+const storage = new Appwrite.Storage(client);
+
+
 
 // ================================
-// DATABASE
+// ID APPWRITE
 // ================================
+
 
 const DATABASE_ID =
 "6a7128c7002e61a9b790";
@@ -35,10 +42,25 @@ const TABLE_ID =
 "6a738074001c390f0373";
 
 
+const BUCKET_ID =
+"6a717118002542ff6ac8";
+
+
+
 
 // ================================
-// JWENN PWODWI APPWRITE
+// PWODWI GLOBAL
 // ================================
+
+let toutPwodwi = [];
+
+
+
+
+// ================================
+// CHÈCHE PWODWI NAN APPWRITE
+// ================================
+
 
 async function jwennProduits(){
 
@@ -56,7 +78,6 @@ tableId: TABLE_ID
 });
 
 
-
 return result.rows;
 
 
@@ -64,7 +85,10 @@ return result.rows;
 }catch(error){
 
 
-console.log(error);
+console.log(
+"Erè pwodwi:",
+error
+);
 
 
 return [];
@@ -76,8 +100,40 @@ return [];
 
 }
 
+
+
+
+
 // ================================
-// AFFICHAGE PWODWI APPWRITE
+// KREYE LIEN FOTO APPWRITE
+// ================================
+
+
+function jwennFoto(id){
+
+
+if(!id){
+
+return "images/logo.png";
+
+}
+
+
+
+return storage.getFileView(
+
+BUCKET_ID,
+
+id
+
+);
+
+
+
+}
+
+// ================================
+// AFFICHE PWODWI SOU SIT LA
 // ================================
 
 
@@ -87,6 +143,7 @@ async function afficherProduits(){
 let box = document.getElementById(
 "productList"
 );
+
 
 
 if(!box){
@@ -102,7 +159,7 @@ box.innerHTML =
 
 
 
-let produits = await jwennProduits();
+toutPwodwi = await jwennProduits();
 
 
 
@@ -110,7 +167,8 @@ box.innerHTML = "";
 
 
 
-if(produits.length === 0){
+
+if(toutPwodwi.length === 0){
 
 
 box.innerHTML =
@@ -125,7 +183,21 @@ return;
 
 
 
-produits.forEach(function(produit,index){
+toutPwodwi.forEach(function(produit,index){
+
+
+
+let foto = produit.image;
+
+
+
+if(foto && !foto.startsWith("http")){
+
+
+foto = jwennFoto(foto);
+
+
+}
 
 
 
@@ -143,7 +215,10 @@ ${produit.tag || "Nouvo"}
 
 
 
-<img src="${produit.image || ''}">
+<img 
+src="${foto || 'images/logo.png'}"
+alt="${produit.nom}"
+>
 
 
 
@@ -179,18 +254,9 @@ ${produit.prix} Gdes
 
 
 
+<button onclick="achteProduit(${index})">
 
-<button onclick="ajoutePanier(${index})">
-
-🛒 Panier
-
-</button>
-
-
-
-<button onclick="ajouteFavori(${index})">
-
-❤️ Favori
+🛒 Achte Kounya
 
 </button>
 
@@ -206,19 +272,191 @@ ${produit.prix} Gdes
 });
 
 
+
 }
 
+
+
+
 // ================================
-// DEMARAJ KAYLA MODE
+// BOUTON ACHTE
+// ================================
+
+
+function achteProduit(index){
+
+
+let produit = toutPwodwi[index];
+
+
+
+if(!produit){
+
+return;
+
+}
+
+
+
+let mesaj =
+
+"🛍️ KAYLA MODE\n\n"+
+"👗 Pwodwi: "+produit.nom+
+"\n💰 Pri: "+produit.prix+
+" Gdes"+
+"\n📦 Stock: "+produit.stock;
+
+
+
+window.open(
+
+"https://wa.me/50955545291?text="+
+
+encodeURIComponent(mesaj),
+
+"_blank"
+
+);
+
+
+
+    }
+
+// ================================
+// RECHÈCH PWODWI
+// ================================
+
+
+function searchProduct(){
+
+
+let input =
+document.getElementById(
+"searchBox"
+);
+
+
+
+let box =
+document.getElementById(
+"productList"
+);
+
+
+
+if(!input || !box){
+
+return;
+
+}
+
+
+
+let rech =
+input.value.toLowerCase();
+
+
+
+let rezilta =
+toutPwodwi.filter(function(produit){
+
+
+return produit.nom
+.toLowerCase()
+.includes(rech);
+
+
+});
+
+
+
+box.innerHTML = "";
+
+
+
+rezilta.forEach(function(produit){
+
+
+
+let foto = produit.image;
+
+
+
+if(foto && !foto.startsWith("http")){
+
+
+foto = jwennFoto(foto);
+
+
+}
+
+
+
+box.innerHTML += `
+
+
+<div class="product">
+
+
+<img src="${foto || 'images/logo.png'}">
+
+
+<h3>
+
+${produit.nom}
+
+</h3>
+
+
+<p>
+
+${produit.prix} Gdes
+
+</p>
+
+
+
+<button onclick="achteProduit(${toutPwodwi.indexOf(produit)})">
+
+🛒 Achte Kounya
+
+</button>
+
+
+
+</div>
+
+
+`;
+
+
+
+});
+
+
+
+}
+
+
+
+
+
+
+// ================================
+// DEMARAJ SIT LA
 // ================================
 
 
 document.addEventListener(
+
 "DOMContentLoaded",
+
 function(){
 
 
-    afficherProduits();
+afficherProduits();
 
 
-});
+}
+
+);
