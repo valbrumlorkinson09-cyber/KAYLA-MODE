@@ -1,5 +1,8 @@
- // KAYLA MODE - SCRIPT PRINCIPAL
+// =================================
+// KAYLA MODE
+// SCRIPT PRINCIPAL
 // PANIER + FAVORI SYSTEM
+// =================================
 
 
 // ===============================
@@ -77,6 +80,7 @@ function jwennPanier(){
 
 
 
+
 function sovePanier(panier){
 
 
@@ -95,6 +99,8 @@ function sovePanier(panier){
 
 
 
+
+
 function ajoutePanier(index){
 
 
@@ -102,13 +108,7 @@ function ajoutePanier(index){
 
 
     let produit = produits[index];
-if(produit.stock <= 0){
 
-    alert("Pwodwi sa pa disponib ankò ❌");
-
-    return;
-
-}
 
 
     if(!produit){
@@ -116,6 +116,24 @@ if(produit.stock <= 0){
         return;
 
     }
+
+
+
+
+    if(Number(produit.stock) <= 0){
+
+
+        alert(
+        "Pwodwi sa pa disponib ankò ❌"
+        );
+
+
+        return;
+
+
+    }
+
+
 
 
 
@@ -132,6 +150,7 @@ if(produit.stock <= 0){
 
 
     });
+
 
 
 
@@ -170,13 +189,19 @@ if(produit.stock <= 0){
 
 
 
+
+
     sovePanier(panier);
+
 
 
     afficherBadgePanier();
 
 
-    alert("Pwodwi ajoute nan panier 🛒");
+
+    alert(
+    "Pwodwi ajoute nan panier 🛒"
+    );
 
 
 }
@@ -249,6 +274,7 @@ function jwennFavori(){
 
 
 
+
 function ajouteFavori(index){
 
 
@@ -291,7 +317,10 @@ function ajouteFavori(index){
     if(deja){
 
 
-        alert("Pwodwi sa deja nan favori ❤️");
+        alert(
+        "Pwodwi sa deja nan favori ❤️"
+        );
+
 
         return;
 
@@ -316,16 +345,12 @@ function ajouteFavori(index){
 
 
 
-    alert("Ajoute nan favori ❤️");
+    alert(
+    "Ajoute nan favori ❤️"
+    );
 
 
 }
-
-
-
-
-
-
 
 // ===============================
 // AFFICHAGE PWODWI
@@ -336,9 +361,7 @@ function afficherProduits(){
 
 
     let box = document.getElementById(
-
         "productList"
-
     );
 
 
@@ -363,12 +386,12 @@ function afficherProduits(){
 
 
 
-    if(produits.length===0){
+    if(produits.length === 0){
 
 
-        box.innerHTML=
-
+        box.innerHTML =
         "<p>🛍️ Pa gen pwodwi pou kounya.</p>";
+
 
         return;
 
@@ -407,15 +430,13 @@ function afficherProduits(){
 
         </h3>
 
-<p>
-📦 Disponib: ${produit.stock || 0}
-</p>
 
-        <div class="stars">
 
-        ★★★★★
+        <p>
 
-        </div>
+        📦 Stock: ${produit.stock || 0}
+
+        </p>
 
 
 
@@ -427,11 +448,21 @@ function afficherProduits(){
 
 
 
+        <div class="stars">
+
+        ★★★★★
+
+        </div>
+
+
+
         <p class="new-price">
 
         ${produit.prix || "0 Gdes"}
 
         </p>
+
+
 
 
 
@@ -443,11 +474,15 @@ function afficherProduits(){
 
 
 
+
+
         <button onclick="ajouteFavori(${index})">
 
         ❤️ Favori
 
         </button>
+
+
 
 
 
@@ -459,10 +494,12 @@ function afficherProduits(){
 
 
 
+
         </div>
 
 
         `;
+
 
 
     });
@@ -477,8 +514,10 @@ function afficherProduits(){
 
 
 
+
+
 // ===============================
-// RECHÈCH
+// RECHÈCH PWODWI
 // ===============================
 
 
@@ -486,18 +525,16 @@ function searchProduct(){
 
 
 
-    let input=document.getElementById(
-
+    let input =
+    document.getElementById(
         "searchBox"
-
     );
 
 
 
-    let box=document.getElementById(
-
+    let box =
+    document.getElementById(
         "productList"
-
     );
 
 
@@ -512,17 +549,21 @@ function searchProduct(){
 
 
 
-    let rech=input.value.toLowerCase();
-
-
-
-    let produits=jwennProduits();
-
+    let rech =
+    input.value.toLowerCase();
 
 
 
 
-    let rezilta=produits.filter(function(item){
+    let produits =
+    jwennProduits();
+
+
+
+
+
+    let rezilta =
+    produits.filter(function(item){
 
 
 
@@ -546,11 +587,14 @@ function searchProduct(){
 
 
 
+
     rezilta.forEach(function(produit){
 
 
 
-        let index=produits.indexOf(produit);
+        let index =
+        produits.indexOf(produit);
+
 
 
 
@@ -563,10 +607,18 @@ function searchProduct(){
         <img src="${produit.image}">
 
 
-        <h3>${produit.nom}</h3>
+
+        <h3>
+        ${produit.nom}
+        </h3>
 
 
-        <p>${produit.prix}</p>
+
+        <p>
+        ${produit.prix}
+        </p>
+
+
 
 
         <button onclick="ajoutePanier(${index})">
@@ -576,11 +628,15 @@ function searchProduct(){
         </button>
 
 
+
+
         <button onclick="ouvriDetay(${index})">
 
         👁️ Detay
 
         </button>
+
+
 
 
         </div>
@@ -589,12 +645,13 @@ function searchProduct(){
         `;
 
 
-
     });
 
 
 
 }
+
+
 
 
 
@@ -610,10 +667,10 @@ function searchProduct(){
 function afficherBadgePanier(){
 
 
-    let badge=document.getElementById(
 
+    let badge =
+    document.getElementById(
         "cartCount"
-
     );
 
 
@@ -628,7 +685,7 @@ function afficherBadgePanier(){
 
 
 
-    let total=0;
+    let total = 0;
 
 
 
@@ -643,7 +700,9 @@ function afficherBadgePanier(){
 
 
 
-    badge.innerHTML=total;
+
+    badge.innerHTML = total;
+
 
 
 }
@@ -663,16 +722,22 @@ function afficherBadgePanier(){
 function voyePanierWhatsApp(){
 
 
-    let panier=jwennPanier();
+    let panier =
+    jwennPanier();
 
 
 
-    if(panier.length===0){
+
+    if(panier.length === 0){
 
 
-        alert("Panier la vid ❌");
+        alert(
+        "Panier la vid ❌"
+        );
+
 
         return;
+
 
     }
 
@@ -680,8 +745,7 @@ function voyePanierWhatsApp(){
 
 
 
-    let mesaj=
-
+    let mesaj =
     "🛒 KAYLA MODE\n\n";
 
 
@@ -711,6 +775,7 @@ function voyePanierWhatsApp(){
     mesaj +=
 
     "💵 Total: "+totalPanier()+" Gdes";
+
 
 
 
@@ -748,10 +813,13 @@ document.addEventListener(
 function(){
 
 
+
     afficherProduits();
 
 
+
     afficherBadgePanier();
+
 
 
 });
