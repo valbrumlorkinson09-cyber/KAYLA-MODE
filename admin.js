@@ -1,70 +1,13 @@
 // =================================
 // KAYLA MODE ADMIN
-// FINAL APPWRITE TABLESDB VERSION
+// LOCALSTORAGE VERSION
 // PATI 1/3
 // =================================
 
 
-// ================================
-// APPWRITE CONFIG
-// ================================
+let imageProduit = "";
 
-
-const client = new Appwrite.Client();
-
-
-client
-.setEndpoint(
-"https://fra.cloud.appwrite.io/v1"
-)
-.setProject(
-"6a7128570039e2aca907"
-);
-
-
-
-const tablesDB = new Appwrite.TablesDB(client);
-
-const storage = new Appwrite.Storage(client);
-
-const ID = Appwrite.ID;
-
-const Query = Appwrite.Query;
-
-
-
-
-// ================================
-// APPWRITE ID
-// ================================
-
-
-const DATABASE_ID =
-"6a7128c7002e61a9b790";
-
-
-const TABLE_ID =
-"6a738074001c390f0373";
-
-
-const BUCKET_ID =
-"6a717118002542ff6ac8";
-
-
-
-
-
-// ================================
-// VARIABLES
-// ================================
-
-
-let fileImage = null;
-
-let previewPhoto =
-null;
-
-
+let editIndex = -1;
 
 
 
@@ -76,12 +19,10 @@ null;
 
 function loginAdmin(){
 
-
 let password =
 document.getElementById(
 "adminPassword"
 ).value;
-
 
 
 if(password === "KAYLA2026"){
@@ -97,6 +38,7 @@ localStorage.setItem(
 document.getElementById(
 "loginBox"
 ).style.display="none";
+
 
 
 document.getElementById(
@@ -155,7 +97,6 @@ document.getElementById(
 
 
 
-
 function logoutAdmin(){
 
 
@@ -174,9 +115,8 @@ location.reload();
 
 
 
-
 // ================================
-// PHOTO
+// FOTO PWODWI
 // ================================
 
 
@@ -185,34 +125,38 @@ document.addEventListener(
 function(){
 
 
-previewPhoto =
-document.getElementById(
-"previewPhoto"
-);
 
-
-
-let input =
+let photoInput =
 document.getElementById(
 "photoProduit"
 );
 
 
 
-if(input){
+let preview =
+document.getElementById(
+"previewPhoto"
+);
 
 
-input.addEventListener(
+
+
+
+if(photoInput){
+
+
+photoInput.addEventListener(
 "change",
 function(){
 
 
-fileImage =
+
+let file =
 this.files[0];
 
 
 
-if(fileImage){
+if(file){
 
 
 let reader =
@@ -224,8 +168,17 @@ reader.onload =
 function(e){
 
 
-previewPhoto.src =
+imageProduit =
 e.target.result;
+
+
+
+if(preview){
+
+preview.src =
+imageProduit;
+
+}
 
 
 }
@@ -233,7 +186,7 @@ e.target.result;
 
 
 reader.readAsDataURL(
-fileImage
+file
 );
 
 
@@ -264,7 +217,7 @@ fileImage
 // ================================
 
 
-async function ajouterProduit(){
+function ajouterProduit(){
 
 
 let nom =
@@ -313,7 +266,7 @@ document.getElementById(
 if(
 nom === "" ||
 pri === "" ||
-fileImage === null
+imageProduit === ""
 ){
 
 
@@ -329,68 +282,84 @@ return;
 
 
 
-try{
+
+let produit = {
 
 
-// UPLOAD FOTO
-
-let upload =
-await storage.createFile(
-
-BUCKET_ID,
-
-ID.unique(),
-
-fileImage
-
-);
+nom: nom,
 
 
+prix: pri + " Gdes",
 
-
-
-let imageURL =
-storage.getFileView(
-
-BUCKET_ID,
-
-upload.$id
-
-);
-
-
-
-
-
-// SAVE NAN TABLE
-
-await tablesDB.createRow(
-
-DATABASE_ID,
-
-TABLE_ID,
-
-ID.unique(),
-
-{
-
-
-name: nom,
-
-price: Number(pri),
 
 stock: Number(stock) || 0,
 
-image: imageURL.href,
 
-ancienPrix: ansyen,
+ancienPrix:
+ansyen ?
+ansyen + " Gdes"
+:
+"",
+
+
 
 categorie: kategori,
 
-tag: tag
+
+tag: tag,
+
+
+image: imageProduit
+
+
+
+};
+
+
+
+
+
+let produits =
+JSON.parse(
+localStorage.getItem(
+"produits"
+)
+) || [];
+
+
+
+
+
+if(editIndex === -1){
+
+
+produits.push(
+produit
+);
+
+
+}else{
+
+
+produits[editIndex] =
+produit;
+
+
+editIndex = -1;
 
 
 }
+
+
+
+
+
+
+localStorage.setItem(
+
+"produits",
+
+JSON.stringify(produits)
 
 );
 
@@ -399,7 +368,7 @@ tag: tag
 
 
 alert(
-"Pwodwi ajoute avèk siksè ✅"
+"Pwodwi sove avèk siksè ✅"
 );
 
 
@@ -407,27 +376,13 @@ alert(
 netwayeForm();
 
 
+
 afficherProduits();
 
 
 
-}catch(error){
-
-
-console.log(error);
-
-
-alert(
-"ERÈ: " + error.message
-);
-
-
-
 }
 
-
-
-}
 
 
 
@@ -443,9 +398,11 @@ alert(
 function netwayeForm(){
 
 
+
 document.getElementById(
 "nomProduit"
 ).value="";
+
 
 
 document.getElementById(
@@ -453,9 +410,11 @@ document.getElementById(
 ).value="";
 
 
+
 document.getElementById(
 "stockProduit"
 ).value="";
+
 
 
 document.getElementById(
@@ -464,16 +423,23 @@ document.getElementById(
 
 
 
-fileImage=null;
+imageProduit="";
 
 
 
-if(previewPhoto){
+let preview =
+document.getElementById(
+"previewPhoto"
+);
 
-previewPhoto.src="";
 
+
+if(preview){
+
+preview.src="";
 
 }
+
 
 
 }
@@ -490,7 +456,8 @@ previewPhoto.src="";
 // ================================
 
 
-async function afficherProduits(){
+function afficherProduits(){
+
 
 
 let liste =
@@ -509,23 +476,13 @@ return;
 
 
 
-liste.innerHTML =
-"⏳ Chajman pwodwi...";
 
-
-
-
-try{
-
-
-let result =
-await tablesDB.listRows(
-
-DATABASE_ID,
-
-TABLE_ID
-
-);
+let produits =
+JSON.parse(
+localStorage.getItem(
+"produits"
+)
+) || [];
 
 
 
@@ -535,16 +492,30 @@ liste.innerHTML="";
 
 
 
+
+
+if(
+document.getElementById(
+"totalProduits"
+)
+){
+
+
 document.getElementById(
 "totalProduits"
 ).innerHTML =
-result.total;
+produits.length;
+
+
+}
 
 
 
 
 
-if(result.rows.length === 0){
+
+
+if(produits.length === 0){
 
 
 liste.innerHTML =
@@ -560,8 +531,9 @@ return;
 
 
 
-result.rows.forEach(
-function(produit){
+
+produits.forEach(
+function(produit,index){
 
 
 
@@ -577,18 +549,16 @@ width="120"
 >
 
 
-
 <h3>
 
 ${produit.tag || "Nouvo"}
-${produit.name}
+${produit.nom}
 
 </h3>
 
 
-
 <p>
-💰 ${produit.price} Gdes
+💰 ${produit.prix}
 </p>
 
 
@@ -605,7 +575,17 @@ ${produit.name}
 
 
 
-<button onclick="supprimerProduit('${produit.$id}')">
+
+<button onclick="modifierProduit(${index})">
+
+✏️ Modifye
+
+</button>
+
+
+
+
+<button onclick="supprimerProduit(${index})">
 
 🗑️ Efase
 
@@ -624,29 +604,114 @@ ${produit.name}
 
 
 
+}
+
+// =================================
+// PATI 3/3
+// MODIFYE + EFASE + DASHBOARD + START
+// =================================
 
 
-}catch(error){
+// ================================
+// MODIFYE PWODWI
+// ================================
 
 
-console.log(error);
+function modifierProduit(index){
 
 
-liste.innerHTML =
-"❌ " + error.message;
+let produits =
+JSON.parse(
+localStorage.getItem(
+"produits"
+)
+) || [];
 
+
+
+let produit =
+produits[index];
+
+
+
+document.getElementById(
+"nomProduit"
+).value =
+produit.nom;
+
+
+
+document.getElementById(
+"prixProduit"
+).value =
+produit.prix.replace(
+" Gdes",
+""
+);
+
+
+
+document.getElementById(
+"stockProduit"
+).value =
+produit.stock;
+
+
+
+document.getElementById(
+"ancienPrix"
+).value =
+produit.ancienPrix.replace(
+" Gdes",
+""
+);
+
+
+
+document.getElementById(
+"categorieProduit"
+).value =
+produit.categorie;
+
+
+
+document.getElementById(
+"tagProduit"
+).value =
+produit.tag;
+
+
+
+imageProduit =
+produit.image;
+
+
+
+let preview =
+document.getElementById(
+"previewPhoto"
+);
+
+
+
+if(preview){
+
+preview.src =
+produit.image;
+
+}
+
+
+
+editIndex = index;
 
 
 }
 
 
 
-    }
 
-// =================================
-// PATI 3/3
-// EFASE + RECHÈCH + DASHBOARD + START
-// =================================
+
 
 
 // ================================
@@ -654,58 +719,45 @@ liste.innerHTML =
 // ================================
 
 
-async function supprimerProduit(id){
+function supprimerProduit(index){
 
 
-let konfime =
+let produits =
+JSON.parse(
+localStorage.getItem(
+"produits"
+)
+) || [];
+
+
+
+
+if(
 confirm(
 "Efase pwodwi sa?"
+)
+){
+
+
+
+produits.splice(
+index,
+1
 );
 
 
 
-if(!konfime){
+localStorage.setItem(
 
-return;
+"produits",
 
-}
+JSON.stringify(produits)
 
-
-
-try{
-
-
-await tablesDB.deleteRow(
-
-DATABASE_ID,
-
-TABLE_ID,
-
-id
-
-);
-
-
-
-alert(
-"Pwodwi efase ✅"
 );
 
 
 
 afficherProduits();
-
-
-
-}catch(error){
-
-
-console.log(error);
-
-
-alert(
-"ERÈ: " + error.message
-);
 
 
 
@@ -726,36 +778,42 @@ alert(
 // ================================
 
 
-async function rechercherProduit(){
+function rechercherProduit(){
 
 
 let rech =
 document.getElementById(
 "searchAdmin"
-).value;
+).value.toLowerCase();
 
 
 
-try{
 
-
-let result =
-await tablesDB.listRows(
-
-DATABASE_ID,
-
-TABLE_ID,
-
-[
-
-Query.search(
-"name",
-rech
+let produits =
+JSON.parse(
+localStorage.getItem(
+"produits"
 )
+) || [];
 
-]
+
+
+
+let rezilta =
+produits.filter(
+function(p){
+
+
+return p.nom
+.toLowerCase()
+.includes(rech);
+
+
+}
 
 );
+
+
 
 
 
@@ -772,8 +830,8 @@ liste.innerHTML="";
 
 
 
-result.rows.forEach(
-function(produit){
+rezilta.forEach(
+function(produit,index){
 
 
 
@@ -783,21 +841,17 @@ liste.innerHTML += `
 <div class="product-admin">
 
 
-<img 
-src="${produit.image}"
-width="120"
->
+<img src="${produit.image}" width="120">
 
 
 <h3>
-${produit.name}
+${produit.nom}
 </h3>
 
 
 <p>
-💰 ${produit.price} Gdes
+${produit.prix}
 </p>
-
 
 
 </div>
@@ -808,17 +862,6 @@ ${produit.name}
 
 
 });
-
-
-
-}catch(error){
-
-
-console.log(error);
-
-
-
-}
 
 
 
@@ -836,52 +879,67 @@ console.log(error);
 // ================================
 
 
-async function afficherDashboard(){
+function afficherDashboard(){
 
 
 
-try{
-
-
-let result =
-await tablesDB.listRows(
-
-DATABASE_ID,
-
-TABLE_ID
-
-);
+let produits =
+JSON.parse(
+localStorage.getItem(
+"produits"
+)
+) || [];
 
 
 
+let kommann =
+JSON.parse(
+localStorage.getItem(
+"kommann"
+)
+) || [];
 
-let total =
+
+
+
+
+if(
 document.getElementById(
 "totalProduits"
-);
+)
+){
 
 
-
-if(total){
-
-total.innerHTML =
-result.total;
-
-}
-
-
-
-}catch(error){
-
-
-console.log(error);
+document.getElementById(
+"totalProduits"
+).innerHTML =
+produits.length;
 
 
 }
 
 
 
+
+if(
+document.getElementById(
+"totalKommann"
+)
+){
+
+
+document.getElementById(
+"totalKommann"
+).innerHTML =
+kommann.length;
+
+
 }
+
+
+
+}
+
 
 
 
@@ -890,7 +948,7 @@ console.log(error);
 
 
 // ================================
-// DEMARAJ
+// DEMARAJ ADMIN
 // ================================
 
 
@@ -901,19 +959,14 @@ document.addEventListener(
 function(){
 
 
-
 checkLogin();
 
 
-
 afficherProduits();
-
 
 
 afficherDashboard();
 
 
 
-}
-
-);
+});
